@@ -1,5 +1,20 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
-    <h1 class="text-4xl font-display font-black text-brand">Geestock</h1>
+  <div>
+    <HeroSection />
+    <ProblemSection />
+    <FeaturesSection />
+    <GallerySection />
+    <TestimonialsSection />
+    <OrderSection />
+    <FaqSection />
   </div>
 </template>
+
+<script setup lang="ts">
+useHead({
+  htmlAttrs: {
+    lang: 'fr',
+    class: 'scroll-smooth',
+  },
+})
+</script>
