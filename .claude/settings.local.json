@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.aliexpress.com)",
+      "WebFetch(domain:fr.aliexpress.com)",
+      "Bash(node:*)",
+      "Bash(npx:*)",
+      "Bash(rm:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}
