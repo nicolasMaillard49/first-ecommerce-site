@@ -167,12 +167,33 @@
               </div>
             </div>
 
+            <!-- Error message -->
+            <div
+              v-if="error"
+              class="mt-6 bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3"
+            >
+              {{ error }}
+            </div>
+
             <!-- Submit button -->
             <button
               type="submit"
-              class="w-full mt-8 bg-brand hover:bg-brand-dark text-white font-display font-bold text-lg py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-[1.02] cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface-light shadow-lg shadow-brand/20 hover:shadow-brand/40"
+              :disabled="loading"
+              :class="[
+                'w-full mt-8 text-white font-display font-bold text-lg py-4 px-8 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface-light shadow-lg',
+                loading
+                  ? 'bg-brand/60 cursor-not-allowed'
+                  : 'bg-brand hover:bg-brand-dark transform hover:scale-[1.02] cursor-pointer shadow-brand/20 hover:shadow-brand/40',
+              ]"
             >
-              Commander &mdash; {{ formattedTotal }}
+              <span v-if="loading" class="inline-flex items-center gap-2">
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Traitement en cours...
+              </span>
+              <span v-else>Commander &mdash; {{ formattedTotal }}</span>
             </button>
 
             <!-- Trust badges -->
@@ -196,8 +217,12 @@
 <script setup lang="ts">
 import { h, computed } from 'vue'
 
+const productStore = useProductStore()
+
 const selectedColor = ref('black')
 const quantity = ref(1)
+const loading = ref(false)
+const error = ref('')
 
 const form = reactive({
   name: '',
@@ -236,22 +261,38 @@ const formattedTotal = computed(() => {
   return `${total}\u20AC`
 })
 
-const emit = defineEmits<{
-  (e: 'order-submitted', data: {
-    color: string
-    quantity: number
-    customer: typeof form
-  }): void
-}>()
+const handleSubmit = async () => {
+  loading.value = true
+  error.value = ''
 
-const handleSubmit = () => {
-  const orderData = {
-    color: selectedColor.value,
-    quantity: quantity.value,
-    customer: { ...form },
+  try {
+    const { apiFetch } = useApi()
+    const response = await apiFetch<{ sessionId: string; url: string }>('/payments/create-checkout', {
+      method: 'POST',
+      body: {
+        productId: productStore.product?.id || '',
+        quantity: quantity.value,
+        variant: selectedColor.value,
+        customerEmail: form.email,
+        customerName: form.name,
+        shippingAddress: {
+          line1: form.address,
+          city: form.city,
+          postalCode: form.zip,
+          country: 'FR',
+        },
+      },
+    })
+
+    // Redirect to Stripe Checkout
+    if (response.url) {
+      window.location.href = response.url
+    }
+  } catch (e: any) {
+    error.value = e?.data?.message || 'Une erreur est survenue. Veuillez réessayer.'
+  } finally {
+    loading.value = false
   }
-  console.log('Order submitted:', orderData)
-  emit('order-submitted', orderData)
 }
 
 // Trust badge icons
