@@ -34,6 +34,10 @@ model Order {
   stripePaymentId String?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([customerEmail])
 }
 
 model OrderItem {
@@ -45,6 +49,9 @@ model OrderItem {
   quantity  Int
   price     Float
   variant   String?
+
+  @@index([orderId])
+  @@index([productId])
 }
 
 enum OrderStatus {

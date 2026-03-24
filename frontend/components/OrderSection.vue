@@ -1,213 +1,148 @@
 <template>
-  <section id="order-section" class="py-20 sm:py-28 px-4 sm:px-6">
-    <div class="max-w-5xl mx-auto">
-      <h2
-        class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-center text-white mb-4"
-      >
-        Commandez Votre <span class="text-brand">Geestock</span>
-      </h2>
-      <p class="text-gray-400 text-center text-lg mb-16 max-w-2xl mx-auto">
-        Profitez de l'offre de lancement avant qu'il ne soit trop tard.
-      </p>
+  <section id="order-section" class="py-20 sm:py-28 px-4 sm:px-6 bg-surface-light relative overflow-hidden">
+    <!-- Background effects -->
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand/3 rounded-full blur-[150px]"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand/3 rounded-full blur-[120px]"></div>
 
-      <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
-        <!-- Product preview -->
-        <div>
-          <!-- Product image -->
-          <div
-            class="aspect-square bg-surface-light rounded-2xl overflow-hidden border border-surface-lighter mb-6"
-          >
-            <img
-              :src="selectedImage"
-              alt="Geestock Sac Magnétique pour Bouteille"
-              class="w-full h-full object-contain"
-              loading="lazy"
-            />
+    <div class="relative max-w-2xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Commander</span>
+        <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
+          Commandez Votre <span class="text-brand">Geestock</span>
+        </h2>
+        <p class="text-gray-400 text-lg max-w-xl mx-auto">
+          Profitez de l'offre de lancement. Paiement securise, livraison gratuite.
+        </p>
+
+        <!-- Live viewers -->
+        <div class="mt-6 mb-2">
+          <LiveViewers />
+        </div>
+
+        <!-- Countdown timer -->
+        <div class="inline-flex items-center gap-3 mt-4 bg-surface/80 border border-surface-lighter rounded-2xl px-6 py-3">
+          <svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-sm text-gray-300">Offre valable encore</span>
+          <span class="font-display font-bold text-white text-lg tabular-nums">{{ countdownDisplay }}</span>
+        </div>
+      </div>
+
+      <!-- Product card -->
+      <div class="bg-surface rounded-3xl border border-surface-lighter p-6 sm:p-8 animate-on-scroll">
+        <!-- Product image -->
+        <div class="aspect-[4/3] bg-surface-light rounded-2xl overflow-hidden mb-8 relative group">
+          <img
+            :src="productImage"
+            alt="Geestock Sac Magnetique pour Bouteille"
+            class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute top-4 right-4 bg-red-500/90 text-white text-sm font-bold px-3 py-1.5 rounded-xl">
+            -40%
           </div>
+        </div>
 
-          <!-- Color picker -->
-          <div class="mb-6">
-            <p class="text-sm text-gray-400 mb-3 font-medium">
-              Couleur : <span class="text-white">{{ selectedColorLabel }}</span>
-            </p>
-            <div class="flex gap-3">
-              <button
-                v-for="color in colors"
-                :key="color.value"
-                :class="[
-                  'w-11 h-11 rounded-full border-2 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface',
-                  selectedColor === color.value
-                    ? 'border-brand scale-110 shadow-lg'
-                    : 'border-surface-lighter hover:border-gray-500',
-                ]"
-                :style="{ backgroundColor: color.hex }"
-                :aria-label="`Couleur ${color.label}`"
-                :title="color.label"
-                @click="selectedColor = color.value"
-              ></button>
+        <!-- Price + Quantity row -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
+          <!-- Price -->
+          <div>
+            <div class="flex items-baseline gap-3">
+              <span class="text-gray-500 line-through text-lg">{{ originalTotal }}</span>
+              <span class="font-display font-black text-4xl text-brand">{{ formattedTotal }}</span>
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+              <svg class="w-4 h-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-brand text-sm font-semibold">Vous economisez {{ savedAmount }}</span>
             </div>
           </div>
 
           <!-- Quantity -->
-          <div class="mb-6">
-            <p class="text-sm text-gray-400 mb-3 font-medium">Quantité</p>
-            <div class="inline-flex items-center bg-surface-light border border-surface-lighter rounded-xl">
+          <div>
+            <p class="text-xs text-gray-500 mb-2 text-center font-medium">Quantite</p>
+            <div class="inline-flex items-center bg-surface-light border border-surface-lighter rounded-2xl">
               <button
-                class="flex items-center justify-center w-12 h-12 text-white hover:text-brand transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand rounded-l-xl disabled:opacity-40 disabled:cursor-not-allowed"
+                class="flex items-center justify-center w-11 h-11 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer focus:outline-none rounded-l-2xl disabled:opacity-30 disabled:cursor-not-allowed"
                 :disabled="quantity <= 1"
-                aria-label="Diminuer la quantité"
+                aria-label="Diminuer la quantite"
                 @click="quantity > 1 && quantity--"
               >
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                 </svg>
               </button>
-              <span class="w-12 text-center text-white font-semibold text-lg select-none">{{ quantity }}</span>
+              <span class="w-12 text-center text-white font-display font-bold text-lg select-none">{{ quantity }}</span>
               <button
-                class="flex items-center justify-center w-12 h-12 text-white hover:text-brand transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand rounded-r-xl disabled:opacity-40 disabled:cursor-not-allowed"
+                class="flex items-center justify-center w-11 h-11 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer focus:outline-none rounded-r-2xl disabled:opacity-30 disabled:cursor-not-allowed"
                 :disabled="quantity >= 10"
-                aria-label="Augmenter la quantité"
+                aria-label="Augmenter la quantite"
                 @click="quantity < 10 && quantity++"
               >
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
               </button>
             </div>
           </div>
-
-          <!-- Price -->
-          <div class="flex items-center gap-4 mb-3">
-            <span class="text-gray-500 line-through text-lg">49,99&euro;</span>
-            <span class="font-display font-black text-4xl text-brand">29,99&euro;</span>
-          </div>
-          <div
-            class="inline-flex items-center gap-2 bg-brand/10 border border-brand/30 text-brand text-sm font-semibold px-4 py-1.5 rounded-full mb-2"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Économisez 20&euro; !
-          </div>
         </div>
 
-        <!-- Order form -->
-        <div>
-          <form
-            class="bg-surface-light border border-surface-lighter rounded-2xl p-6 sm:p-8"
-            @submit.prevent="handleSubmit"
+        <!-- Error message -->
+        <div
+          v-if="error"
+          class="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3 flex items-center gap-2"
+        >
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          {{ error }}
+        </div>
+
+        <!-- 1-click CTA -->
+        <button
+          :disabled="loading"
+          :class="[
+            'group w-full text-white font-display font-bold text-xl py-5 px-8 rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl flex items-center justify-center gap-3',
+            loading
+              ? 'bg-brand/50 cursor-not-allowed'
+              : 'bg-brand hover:bg-brand-dark cursor-pointer shadow-brand/25 hover:shadow-brand/40 hover:scale-[1.02] animate-pulse-glow',
+          ]"
+          @click="handleCheckout"
+        >
+          <span v-if="loading" class="inline-flex items-center gap-2">
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Redirection vers le paiement...
+          </span>
+          <template v-else>
+            Commander &mdash; {{ formattedTotal }}
+            <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </template>
+        </button>
+
+        <p class="text-center text-xs text-gray-500 mt-3">
+          Adresse et paiement geres par Stripe. 100% securise.
+        </p>
+
+        <!-- Trust badges -->
+        <div class="grid grid-cols-3 gap-3 mt-8 pt-6 border-t border-surface-lighter/50">
+          <div
+            v-for="(badge, idx) in trustBadges"
+            :key="idx"
+            class="flex flex-col items-center text-center gap-2 py-2"
           >
-            <h3 class="font-display font-bold text-xl text-white mb-6">Vos informations</h3>
-
-            <div class="space-y-4">
-              <div>
-                <label for="order-name" class="block text-sm text-gray-400 mb-1.5 font-medium">Nom complet</label>
-                <input
-                  id="order-name"
-                  v-model="form.name"
-                  type="text"
-                  required
-                  autocomplete="name"
-                  placeholder="Jean Dupont"
-                  class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white placeholder-gray-600 transition-colors duration-200 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-                />
-              </div>
-
-              <div>
-                <label for="order-email" class="block text-sm text-gray-400 mb-1.5 font-medium">Email</label>
-                <input
-                  id="order-email"
-                  v-model="form.email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                  placeholder="jean@exemple.fr"
-                  class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white placeholder-gray-600 transition-colors duration-200 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-                />
-              </div>
-
-              <div>
-                <label for="order-address" class="block text-sm text-gray-400 mb-1.5 font-medium">Adresse</label>
-                <input
-                  id="order-address"
-                  v-model="form.address"
-                  type="text"
-                  required
-                  autocomplete="street-address"
-                  placeholder="12 Rue de la Paix"
-                  class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white placeholder-gray-600 transition-colors duration-200 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-                />
-              </div>
-
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label for="order-city" class="block text-sm text-gray-400 mb-1.5 font-medium">Ville</label>
-                  <input
-                    id="order-city"
-                    v-model="form.city"
-                    type="text"
-                    required
-                    autocomplete="address-level2"
-                    placeholder="Paris"
-                    class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white placeholder-gray-600 transition-colors duration-200 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-                  />
-                </div>
-                <div>
-                  <label for="order-zip" class="block text-sm text-gray-400 mb-1.5 font-medium">Code Postal</label>
-                  <input
-                    id="order-zip"
-                    v-model="form.zip"
-                    type="text"
-                    required
-                    autocomplete="postal-code"
-                    placeholder="75001"
-                    class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white placeholder-gray-600 transition-colors duration-200 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-                  />
-                </div>
-              </div>
+            <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand/10">
+              <component :is="badge.icon" />
             </div>
-
-            <!-- Error message -->
-            <div
-              v-if="error"
-              class="mt-6 bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3"
-            >
-              {{ error }}
-            </div>
-
-            <!-- Submit button -->
-            <button
-              type="submit"
-              :disabled="loading"
-              :class="[
-                'w-full mt-8 text-white font-display font-bold text-lg py-4 px-8 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface-light shadow-lg',
-                loading
-                  ? 'bg-brand/60 cursor-not-allowed'
-                  : 'bg-brand hover:bg-brand-dark transform hover:scale-[1.02] cursor-pointer shadow-brand/20 hover:shadow-brand/40',
-              ]"
-            >
-              <span v-if="loading" class="inline-flex items-center gap-2">
-                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Traitement en cours...
-              </span>
-              <span v-else>Commander &mdash; {{ formattedTotal }}</span>
-            </button>
-
-            <!-- Trust badges -->
-            <div class="grid grid-cols-3 gap-3 mt-6">
-              <div
-                v-for="(badge, idx) in trustBadges"
-                :key="idx"
-                class="flex flex-col items-center text-center gap-2 py-3"
-              >
-                <component :is="badge.icon" />
-                <span class="text-xs text-gray-400 leading-tight">{{ badge.label }}</span>
-              </div>
-            </div>
-          </form>
+            <span class="text-xs text-gray-400 leading-tight font-medium">{{ badge.label }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -219,49 +154,69 @@ import { h, computed } from 'vue'
 
 const productStore = useProductStore()
 
-const selectedColor = ref('black')
 const quantity = ref(1)
 const loading = ref(false)
 const error = ref('')
 
-const form = reactive({
-  name: '',
-  email: '',
-  address: '',
-  city: '',
-  zip: '',
-})
-
-const colors = [
-  { value: 'black', label: 'Noir', hex: '#1a1a1a' },
-  { value: 'blue', label: 'Bleu', hex: '#2563eb' },
-  { value: 'green', label: 'Vert', hex: '#16a34a' },
-  { value: 'red', label: 'Rouge', hex: '#dc2626' },
-]
-
-const images = [
-  'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg',
-  'https://ae01.alicdn.com/kf/S12e824863ec645dea0aef595f904c0eaf.jpg',
-  'https://ae01.alicdn.com/kf/S4d8bac28c4794424a382b37bf383cac4d.jpg',
-  'https://ae01.alicdn.com/kf/Scb8b59e6be9442c292b42251f3afd438u.jpg',
-]
-
-const selectedColorLabel = computed(() => {
-  const c = colors.find((c) => c.value === selectedColor.value)
-  return c?.label || ''
-})
-
-const selectedImage = computed(() => {
-  const idx = colors.findIndex((c) => c.value === selectedColor.value)
-  return images[idx >= 0 ? idx : 0]
-})
+const productImage = 'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg'
 
 const formattedTotal = computed(() => {
   const total = (29.99 * quantity.value).toFixed(2).replace('.', ',')
   return `${total}\u20AC`
 })
 
-const handleSubmit = async () => {
+const originalTotal = computed(() => {
+  const total = (49.99 * quantity.value).toFixed(2).replace('.', ',')
+  return `${total}\u20AC`
+})
+
+const savedAmount = computed(() => {
+  const saved = (20 * quantity.value).toFixed(2).replace('.', ',')
+  return `${saved}\u20AC`
+})
+
+// Countdown timer
+const countdown = ref({ hours: 2, minutes: 47, seconds: 33 })
+
+const countdownDisplay = computed(() => {
+  const hh = String(countdown.value.hours).padStart(2, '0')
+  const mm = String(countdown.value.minutes).padStart(2, '0')
+  const ss = String(countdown.value.seconds).padStart(2, '0')
+  return `${hh}:${mm}:${ss}`
+})
+
+let countdownInterval: ReturnType<typeof setInterval> | null = null
+
+const startCountdown = () => {
+  countdownInterval = setInterval(() => {
+    if (countdown.value.seconds > 0) {
+      countdown.value.seconds--
+    } else if (countdown.value.minutes > 0) {
+      countdown.value.minutes--
+      countdown.value.seconds = 59
+    } else if (countdown.value.hours > 0) {
+      countdown.value.hours--
+      countdown.value.minutes = 59
+      countdown.value.seconds = 59
+    } else {
+      countdown.value.hours = 2
+      countdown.value.minutes = 47
+      countdown.value.seconds = 33
+    }
+  }, 1000)
+}
+
+onMounted(() => {
+  startCountdown()
+})
+
+onUnmounted(() => {
+  if (countdownInterval) {
+    clearInterval(countdownInterval)
+  }
+})
+
+const handleCheckout = async () => {
   loading.value = true
   error.value = ''
 
@@ -272,24 +227,18 @@ const handleSubmit = async () => {
       body: {
         productId: productStore.product?.id || '',
         quantity: quantity.value,
-        variant: selectedColor.value,
-        customerEmail: form.email,
-        customerName: form.name,
-        shippingAddress: {
-          line1: form.address,
-          city: form.city,
-          postalCode: form.zip,
-          country: 'FR',
-        },
       },
     })
 
-    // Redirect to Stripe Checkout
     if (response.url) {
       window.location.href = response.url
     }
   } catch (e: any) {
-    error.value = e?.data?.message || 'Une erreur est survenue. Veuillez réessayer.'
+    if (e?.message?.includes('fetch') || e?.cause?.code === 'ECONNREFUSED' || !navigator.onLine) {
+      error.value = 'Le serveur est temporairement indisponible. Veuillez reessayer dans quelques instants.'
+    } else {
+      error.value = e?.data?.message || 'Une erreur est survenue. Veuillez reessayer.'
+    }
   } finally {
     loading.value = false
   }
@@ -297,65 +246,23 @@ const handleSubmit = async () => {
 
 // Trust badge icons
 const LockIcon = () =>
-  h(
-    'svg',
-    {
-      class: 'w-6 h-6 text-brand',
-      fill: 'none',
-      viewBox: '0 0 24 24',
-      stroke: 'currentColor',
-      'stroke-width': '2',
-    },
-    [
-      h('path', {
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round',
-        d: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
-      }),
-    ]
-  )
+  h('svg', { class: 'w-5 h-5 text-brand', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': '2' }, [
+    h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' }),
+  ])
 
 const TruckIcon = () =>
-  h(
-    'svg',
-    {
-      class: 'w-6 h-6 text-brand',
-      fill: 'none',
-      viewBox: '0 0 24 24',
-      stroke: 'currentColor',
-      'stroke-width': '2',
-    },
-    [
-      h('path', {
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round',
-        d: 'M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0',
-      }),
-    ]
-  )
+  h('svg', { class: 'w-5 h-5 text-brand', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': '2' }, [
+    h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0' }),
+  ])
 
 const ShieldCheckIcon = () =>
-  h(
-    'svg',
-    {
-      class: 'w-6 h-6 text-brand',
-      fill: 'none',
-      viewBox: '0 0 24 24',
-      stroke: 'currentColor',
-      'stroke-width': '2',
-    },
-    [
-      h('path', {
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round',
-        d: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-      }),
-    ]
-  )
+  h('svg', { class: 'w-5 h-5 text-brand', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': '2' }, [
+    h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' }),
+  ])
 
 const trustBadges = [
-  { label: 'Paiement Sécurisé', icon: LockIcon },
-  { label: 'Livraison Gratuite', icon: TruckIcon },
-  { label: 'Garantie 30 jours', icon: ShieldCheckIcon },
+  { label: 'Paiement\nSecurise', icon: LockIcon },
+  { label: 'Livraison\nGratuite', icon: TruckIcon },
+  { label: 'Garantie\n30 Jours', icon: ShieldCheckIcon },
 ]
 </script>

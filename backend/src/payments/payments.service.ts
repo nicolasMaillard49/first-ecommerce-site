@@ -22,16 +22,15 @@ export class PaymentsService {
 
     const order = await this.prisma.order.create({
       data: {
-        customerEmail: dto.customerEmail,
-        customerName: dto.customerName,
-        shippingAddress: dto.shippingAddress,
+        customerEmail: '',
+        customerName: '',
+        shippingAddress: {},
         total: product.price * dto.quantity,
         items: {
           create: {
             productId: product.id,
             quantity: dto.quantity,
             price: product.price,
-            variant: dto.variant,
           },
         },
       },
@@ -40,13 +39,16 @@ export class PaymentsService {
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      customer_email: dto.customerEmail,
+      shipping_address_collection: {
+        allowed_countries: ['FR'],
+      },
       line_items: [
         {
           price_data: {
             currency: 'eur',
             product_data: {
               name: product.name,
+              description: product.description,
               images: [product.images[0]],
             },
             unit_amount: Math.round(product.price * 100),
@@ -76,11 +78,22 @@ export class PaymentsService {
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
+      const shipping = session.collected_information?.shipping_details;
+
       await this.prisma.order.update({
         where: { stripeSessionId: session.id },
         data: {
           status: 'PAID',
           stripePaymentId: session.payment_intent as string,
+          customerEmail: session.customer_details?.email || '',
+          customerName: shipping?.name || session.customer_details?.name || '',
+          shippingAddress: shipping?.address ? {
+            line1: shipping.address.line1 || '',
+            line2: shipping.address.line2 || '',
+            city: shipping.address.city || '',
+            postalCode: shipping.address.postal_code || '',
+            country: shipping.address.country || 'FR',
+          } : {},
         },
       });
     }

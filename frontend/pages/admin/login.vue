@@ -83,7 +83,7 @@ const handleLogin = async () => {
           <button
             type="submit"
             :disabled="loading"
-            class="w-full py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span v-if="loading">Connexion en cours...</span>
             <span v-else>Connexion</span>

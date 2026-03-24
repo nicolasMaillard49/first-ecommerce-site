@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class AdminService {
@@ -48,7 +49,7 @@ export class AdminService {
     });
   }
 
-  async updateProduct(id: string, data: any) {
+  async updateProduct(id: string, data: UpdateProductDto) {
     return this.prisma.product.update({ where: { id }, data });
   }
 

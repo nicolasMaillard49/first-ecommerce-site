@@ -1,13 +1,11 @@
+import { IsString, IsInt, Min, Max } from 'class-validator';
+
 export class CreateCheckoutDto {
+  @IsString()
   productId: string;
+
+  @IsInt()
+  @Min(1)
+  @Max(10)
   quantity: number;
-  variant?: string;
-  customerEmail: string;
-  customerName: string;
-  shippingAddress: {
-    line1: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
 }

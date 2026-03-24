@@ -1,21 +1,55 @@
 <template>
-  <section class="py-20 sm:py-28 px-4 sm:px-6">
+  <section id="gallery-section" class="py-20 sm:py-28 px-4 sm:px-6 bg-surface-light">
     <div class="max-w-5xl mx-auto">
-      <h2
-        class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-center text-white mb-16"
-      >
-        Découvrez le <span class="text-brand">Geestock</span>
-      </h2>
+      <!-- Section header -->
+      <div class="text-center mb-16 animate-on-scroll">
+        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Galerie</span>
+        <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
+          Decouvrez le <span class="text-brand">Geestock</span>
+        </h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          Chaque detail a ete pense pour la performance et l'elegance.
+        </p>
+      </div>
 
       <!-- Main image -->
       <div
-        class="relative aspect-[4/3] sm:aspect-[16/10] bg-surface-light rounded-2xl overflow-hidden mb-4 sm:mb-6 border border-surface-lighter"
+        class="animate-on-scroll-scale relative aspect-[4/3] sm:aspect-[16/10] bg-surface rounded-3xl overflow-hidden mb-4 sm:mb-6 border border-surface-lighter group cursor-pointer"
+        @mouseenter="zoomed = true"
+        @mouseleave="zoomed = false"
+        @mousemove="handleZoomMove"
       >
+        <!-- Navigation arrows -->
+        <button
+          class="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-surface/70 backdrop-blur-sm border border-surface-lighter text-white hover:bg-surface hover:text-brand transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:opacity-100"
+          aria-label="Image precedente"
+          @click="prevImage"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          class="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-surface/70 backdrop-blur-sm border border-surface-lighter text-white hover:bg-surface hover:text-brand transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:opacity-100"
+          aria-label="Image suivante"
+          @click="nextImage"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Image counter -->
+        <div class="absolute top-4 right-4 z-20 bg-surface/70 backdrop-blur-sm border border-surface-lighter rounded-full px-3 py-1 text-sm text-gray-300 font-medium">
+          {{ activeIndex + 1 }}/{{ images.length }}
+        </div>
+
+        <!-- Main image with crossfade -->
         <Transition
-          enter-active-class="transition-opacity duration-300 ease-out"
+          enter-active-class="transition-opacity duration-500 ease-out"
           enter-from-class="opacity-0"
           enter-to-class="opacity-100"
-          leave-active-class="transition-opacity duration-200 ease-in absolute inset-0"
+          leave-active-class="transition-opacity duration-300 ease-in absolute inset-0"
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
           mode="out-in"
@@ -23,23 +57,27 @@
           <img
             :key="activeIndex"
             :src="images[activeIndex]"
-            :alt="`Geestock Sac Magnétique pour Bouteille - Vue ${activeIndex + 1}`"
-            class="w-full h-full object-contain"
+            :alt="`Geestock Sac Magnetique pour Bouteille - Vue ${activeIndex + 1}`"
+            :class="[
+              'w-full h-full object-contain transition-transform duration-300',
+              zoomed ? 'scale-150' : 'scale-100',
+            ]"
+            :style="zoomed ? { transformOrigin: `${zoomX}% ${zoomY}%` } : {}"
             loading="lazy"
           />
         </Transition>
       </div>
 
-      <!-- Thumbnails -->
-      <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+      <!-- Thumbnail strip -->
+      <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide justify-center">
         <button
           v-for="(image, idx) in images"
           :key="idx"
           :class="[
-            'flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface',
+            'flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface-light',
             activeIndex === idx
-              ? 'border-brand shadow-lg shadow-brand/20'
-              : 'border-surface-lighter hover:border-brand/40',
+              ? 'border-2 border-brand shadow-lg shadow-brand/20 ring-2 ring-brand/20 scale-105'
+              : 'border-2 border-surface-lighter hover:border-brand/40 opacity-60 hover:opacity-100',
           ]"
           :aria-label="`Voir image ${idx + 1}`"
           @click="activeIndex = idx"
@@ -58,6 +96,9 @@
 
 <script setup lang="ts">
 const activeIndex = ref(0)
+const zoomed = ref(false)
+const zoomX = ref(50)
+const zoomY = ref(50)
 
 const images = [
   'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg',
@@ -67,4 +108,34 @@ const images = [
   'https://ae01.alicdn.com/kf/Sc9f337cce8ce48f199695e18ca515bbcH.jpg',
   'https://ae01.alicdn.com/kf/S3841ddcdd72d4eac91362fc44339f0a34.jpg',
 ]
+
+const nextImage = () => {
+  activeIndex.value = (activeIndex.value + 1) % images.length
+}
+
+const prevImage = () => {
+  activeIndex.value = (activeIndex.value - 1 + images.length) % images.length
+}
+
+const handleZoomMove = (e: MouseEvent) => {
+  if (!zoomed.value) return
+  const target = e.currentTarget as HTMLElement
+  const rect = target.getBoundingClientRect()
+  zoomX.value = ((e.clientX - rect.left) / rect.width) * 100
+  zoomY.value = ((e.clientY - rect.top) / rect.height) * 100
+}
+
+// Keyboard navigation
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'ArrowLeft') prevImage()
+  if (e.key === 'ArrowRight') nextImage()
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 </script>

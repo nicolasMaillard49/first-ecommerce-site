@@ -1,14 +1,8 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Param,
-  Body,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Put, Param, Body, Query, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';
+import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('admin')
 @UseGuards(AuthGuard)
@@ -26,11 +20,8 @@ export class AdminController {
   }
 
   @Put('orders/:id/status')
-  updateOrderStatus(
-    @Param('id') id: string,
-    @Body('status') status: string,
-  ) {
-    return this.adminService.updateOrderStatus(id, status);
+  updateOrderStatus(@Param('id') id: string, @Body() dto: UpdateOrderStatusDto) {
+    return this.adminService.updateOrderStatus(id, dto.status);
   }
 
   @Get('product')
@@ -39,7 +30,7 @@ export class AdminController {
   }
 
   @Put('product/:id')
-  updateProduct(@Param('id') id: string, @Body() data: any) {
-    return this.adminService.updateProduct(id, data);
+  updateProduct(@Param('id') id: string, @Body() dto: UpdateProductDto) {
+    return this.adminService.updateProduct(id, dto);
   }
 }

@@ -6,7 +6,12 @@
       "Bash(node:*)",
       "Bash(npx:*)",
       "Bash(rm:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "Bash(python:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker exec:*)",
+      "Bash(curl:*)"
     ]
   }
 }

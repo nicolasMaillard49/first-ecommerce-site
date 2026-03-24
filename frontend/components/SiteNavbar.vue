@@ -1,37 +1,54 @@
 <template>
   <nav
     :class="[
-      'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-      scrolled ? 'bg-surface/95 backdrop-blur-md shadow-lg shadow-black/20' : 'bg-transparent',
+      'fixed z-50 transition-all duration-500',
+      scrolled
+        ? 'top-0 left-0 right-0 bg-surface/90 backdrop-blur-xl shadow-lg shadow-black/30 border-b border-surface-lighter/50'
+        : 'top-4 left-4 right-4 bg-surface-light/70 backdrop-blur-xl rounded-2xl border border-surface-lighter/40',
     ]"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20">
+      <div class="flex items-center justify-between h-16 sm:h-18">
         <!-- Logo -->
         <a
           href="#"
-          class="font-display font-black text-2xl sm:text-3xl text-brand tracking-tight cursor-pointer select-none"
+          class="font-display font-black text-xl sm:text-2xl text-brand tracking-tight cursor-pointer select-none transition-colors duration-200 hover:text-brand-light"
           @click.prevent="scrollToTop"
         >
           GEESTOCK
         </a>
 
+        <!-- Desktop nav links -->
+        <div class="hidden md:flex items-center gap-1">
+          <a
+            v-for="link in navLinks"
+            :key="link.href"
+            :href="link.href"
+            class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer rounded-lg hover:bg-white/5"
+            @click.prevent="scrollToSection(link.href)"
+          >
+            {{ link.label }}
+          </a>
+        </div>
+
         <!-- Desktop CTA -->
         <button
-          class="hidden sm:inline-flex btn-primary cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface"
-          @click="scrollToOrder"
+          class="hidden md:inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold text-sm py-2.5 px-6 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-brand/20 hover:shadow-brand/30 hover:scale-105"
+          @click="scrollToSection('#order-section')"
         >
           Commander
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
         </button>
 
         <!-- Mobile hamburger -->
         <button
-          class="sm:hidden flex items-center justify-center w-11 h-11 rounded-lg text-white hover:text-brand transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand"
+          class="md:hidden flex items-center justify-center w-11 h-11 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand"
           :aria-expanded="mobileOpen"
           aria-label="Menu de navigation"
           @click="mobileOpen = !mobileOpen"
         >
-          <!-- Hamburger icon -->
           <svg
             v-if="!mobileOpen"
             class="w-6 h-6"
@@ -42,7 +59,6 @@
           >
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <!-- Close icon -->
           <svg
             v-else
             class="w-6 h-6"
@@ -57,25 +73,42 @@
       </div>
     </div>
 
-    <!-- Mobile menu -->
+    <!-- Mobile menu slide-in -->
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
-      enter-from-class="opacity-0 -translate-y-2"
-      enter-to-class="opacity-100 translate-y-0"
+      enter-from-class="opacity-0 max-h-0"
+      enter-to-class="opacity-100 max-h-96"
       leave-active-class="transition-all duration-200 ease-in"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 -translate-y-2"
+      leave-from-class="opacity-100 max-h-96"
+      leave-to-class="opacity-0 max-h-0"
     >
       <div
         v-if="mobileOpen"
-        class="sm:hidden bg-surface-light/95 backdrop-blur-md border-t border-surface-lighter px-4 py-4"
+        class="md:hidden overflow-hidden border-t border-surface-lighter/40 bg-surface-light/95 backdrop-blur-xl"
+        :class="[scrolled ? '' : 'rounded-b-2xl']"
       >
-        <button
-          class="w-full btn-primary cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface"
-          @click="scrollToOrder(); mobileOpen = false"
-        >
-          Commander
-        </button>
+        <div class="px-4 py-4 space-y-1">
+          <a
+            v-for="link in navLinks"
+            :key="link.href"
+            :href="link.href"
+            class="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors duration-200 cursor-pointer"
+            @click.prevent="scrollToSection(link.href); mobileOpen = false"
+          >
+            {{ link.label }}
+          </a>
+          <div class="pt-2">
+            <button
+              class="w-full bg-brand hover:bg-brand-dark text-white font-display font-bold text-base py-3.5 px-6 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface flex items-center justify-center gap-2"
+              @click="scrollToSection('#order-section'); mobileOpen = false"
+            >
+              Commander Maintenant
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </Transition>
   </nav>
@@ -85,12 +118,20 @@
 const scrolled = ref(false)
 const mobileOpen = ref(false)
 
+const navLinks = [
+  { label: 'Avantages', href: '#features-section' },
+  { label: 'Galerie', href: '#gallery-section' },
+  { label: 'Avis', href: '#testimonials-section' },
+  { label: 'FAQ', href: '#faq-section' },
+]
+
 const handleScroll = () => {
-  scrolled.value = window.scrollY > 20
+  scrolled.value = window.scrollY > 40
 }
 
-const scrollToOrder = () => {
-  const el = document.getElementById('order-section')
+const scrollToSection = (href: string) => {
+  const id = href.replace('#', '')
+  const el = document.getElementById(id)
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' })
   }

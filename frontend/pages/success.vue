@@ -1,55 +1,9 @@
-<template>
-  <div class="min-h-screen flex items-center justify-center px-4 py-20">
-    <div class="max-w-md w-full text-center">
-      <!-- Loading state -->
-      <div v-if="loading" class="animate-pulse">
-        <div class="w-20 h-20 bg-surface-lighter rounded-full mx-auto mb-6"></div>
-        <div class="h-6 bg-surface-lighter rounded w-48 mx-auto mb-4"></div>
-        <div class="h-4 bg-surface-lighter rounded w-64 mx-auto"></div>
-      </div>
-
-      <!-- Success state -->
-      <div v-else>
-        <!-- Green checkmark circle -->
-        <div class="w-20 h-20 bg-brand/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg class="w-10 h-10 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-
-        <h1 class="font-display font-black text-3xl text-white mb-3">Commande Confirmée !</h1>
-        <p class="text-gray-400 mb-8">Merci pour votre achat. Vous recevrez un email de confirmation.</p>
-
-        <!-- Order details card -->
-        <div v-if="order" class="bg-surface-light border border-surface-lighter rounded-2xl p-6 text-left mb-8">
-          <div class="space-y-3">
-            <div class="flex justify-between">
-              <span class="text-gray-400">Produit</span>
-              <span class="text-white font-medium">{{ order.items?.[0]?.product?.name }}</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-400">Quantité</span>
-              <span class="text-white font-medium">{{ order.items?.[0]?.quantity }}</span>
-            </div>
-            <div class="border-t border-surface-lighter pt-3 flex justify-between">
-              <span class="text-gray-400 font-medium">Total</span>
-              <span class="text-brand font-display font-bold text-lg">{{ order.total?.toFixed(2).replace('.', ',') }}&euro;</span>
-            </div>
-          </div>
-        </div>
-
-        <NuxtLink
-          to="/"
-          class="btn-primary inline-block"
-        >
-          Retour à l'accueil
-        </NuxtLink>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Commande Confirmée - Geestock',
+  robots: 'noindex',
+})
+
 const route = useRoute()
 const loading = ref(true)
 const order = ref<any>(null)
@@ -68,3 +22,100 @@ onMounted(async () => {
   loading.value = false
 })
 </script>
+
+<template>
+  <div class="min-h-screen flex items-center justify-center px-4 py-24">
+    <div class="max-w-lg w-full">
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center">
+        <div class="animate-pulse">
+          <div class="w-24 h-24 bg-surface-lighter rounded-full mx-auto mb-8"></div>
+          <div class="h-8 bg-surface-lighter rounded-lg w-64 mx-auto mb-4"></div>
+          <div class="h-5 bg-surface-lighter rounded w-80 mx-auto"></div>
+        </div>
+      </div>
+
+      <!-- Success state -->
+      <div v-else class="text-center">
+        <!-- Animated checkmark -->
+        <div class="relative w-24 h-24 mx-auto mb-8">
+          <div class="absolute inset-0 bg-brand/20 rounded-full motion-safe:animate-ping opacity-20"></div>
+          <div class="relative w-24 h-24 bg-brand/20 rounded-full flex items-center justify-center">
+            <svg class="w-12 h-12 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        </div>
+
+        <h1 class="font-display font-black text-3xl sm:text-4xl text-white mb-3">Commande Confirmée !</h1>
+        <p class="text-gray-400 text-lg mb-10 max-w-sm mx-auto">
+          Merci pour votre achat. Vous recevrez un email de confirmation sous quelques minutes.
+        </p>
+
+        <!-- Order details card -->
+        <div v-if="order" class="bg-surface-light border border-surface-lighter rounded-2xl p-6 sm:p-8 text-left mb-10">
+          <h2 class="font-display font-bold text-lg text-white mb-5">Récapitulatif</h2>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-400">Produit</span>
+              <span class="text-white font-medium">{{ order.items?.[0]?.product?.name }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-400">Quantité</span>
+              <span class="text-white font-medium">{{ order.items?.[0]?.quantity }}</span>
+            </div>
+            <div v-if="order.items?.[0]?.variant" class="flex justify-between items-center">
+              <span class="text-gray-400">Variante</span>
+              <span class="text-white font-medium capitalize">{{ order.items?.[0]?.variant }}</span>
+            </div>
+            <div class="border-t border-surface-lighter pt-4 flex justify-between items-center">
+              <span class="text-white font-semibold">Total</span>
+              <span class="text-brand font-display font-bold text-2xl">{{ order.total?.toFixed(2).replace('.', ',') }}&euro;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next steps -->
+        <div class="bg-surface-light/50 border border-surface-lighter rounded-xl p-5 text-left mb-10">
+          <h3 class="font-semibold text-white text-sm mb-3">Prochaines étapes</h3>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-brand mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Email de confirmation envoyé
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              Préparation et expédition sous 48h
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              Numéro de suivi envoyé par email
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              Livraison estimée : 10 à 20 jours ouvrés
+            </li>
+          </ul>
+        </div>
+
+        <NuxtLink
+          to="/"
+          class="btn-primary inline-flex items-center gap-2 cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          Retour à l'accueil
+        </NuxtLink>
+      </div>
+    </div>
+  </div>
+</template>
