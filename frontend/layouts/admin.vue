@@ -34,7 +34,7 @@ const isActive = (path: string) => {
       <!-- Logo -->
       <div class="flex items-center gap-2 px-5 py-5 border-b border-white/10">
         <span class="text-xl font-display font-bold text-white tracking-tight">GEESTOCK</span>
-        <span class="text-[10px] font-semibold bg-brand/20 text-brand px-1.5 py-0.5 rounded uppercase tracking-wider">
+        <span class="text-xs font-semibold bg-brand/20 text-brand px-1.5 py-0.5 rounded uppercase tracking-wider">
           Admin
         </span>
       </div>
@@ -63,7 +63,7 @@ const isActive = (path: string) => {
       <!-- Logout -->
       <div class="px-3 py-4 border-t border-white/10">
         <button
-          class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+          class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors cursor-pointer"
           @click="authStore.logout()"
         >
           <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -79,7 +79,8 @@ const isActive = (path: string) => {
       <!-- Mobile header -->
       <header class="lg:hidden flex items-center gap-3 px-4 py-3 bg-surface-light border-b border-white/10">
         <button
-          class="text-gray-400 hover:text-white"
+          aria-label="Ouvrir le menu"
+          class="text-gray-400 hover:text-white cursor-pointer p-2 -ml-2 rounded-lg hover:bg-white/5 transition-colors"
           @click="sidebarOpen = true"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -87,7 +88,7 @@ const isActive = (path: string) => {
           </svg>
         </button>
         <span class="text-lg font-display font-bold text-white">GEESTOCK</span>
-        <span class="text-[10px] font-semibold bg-brand/20 text-brand px-1.5 py-0.5 rounded uppercase tracking-wider">
+        <span class="text-xs font-semibold bg-brand/20 text-brand px-1.5 py-0.5 rounded uppercase tracking-wider">
           Admin
         </span>
       </header>

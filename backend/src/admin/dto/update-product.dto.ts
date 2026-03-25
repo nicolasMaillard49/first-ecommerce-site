@@ -23,4 +23,8 @@ export class UpdateProductDto {
   @IsArray()
   @IsString({ each: true })
   images?: string[];
+
+  @IsOptional()
+  @IsString()
+  supplierUrl?: string;
 }

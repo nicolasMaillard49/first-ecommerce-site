@@ -11,6 +11,7 @@ interface Product {
   price: number
   comparePrice: number | null
   images: string[]
+  supplierUrl: string | null
 }
 
 const { apiFetch } = useApi()
@@ -28,6 +29,7 @@ const form = reactive({
   price: 0,
   comparePrice: 0,
   images: [] as string[],
+  supplierUrl: '',
   socialVideos: [] as { url: string; title: string; thumbnail: string }[],
 })
 
@@ -43,6 +45,7 @@ const fetchProduct = async () => {
     form.price = product.value.price
     form.comparePrice = product.value.comparePrice || 0
     form.images = [...product.value.images]
+    form.supplierUrl = product.value.supplierUrl || ''
     // Load social videos from localStorage (not stored in DB)
     const saved = localStorage.getItem('geestock_social_videos')
     if (saved) {
@@ -92,6 +95,7 @@ const saveProduct = async () => {
         price: form.price,
         comparePrice: form.comparePrice || null,
         images: cleanImages,
+        supplierUrl: form.supplierUrl || null,
       },
     })
     // Also save social videos to localStorage
@@ -181,6 +185,22 @@ onMounted(fetchProduct)
                 class="w-full px-3 py-2.5 bg-surface border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
               />
             </div>
+          </div>
+        </div>
+
+        <!-- Supplier URL -->
+        <div class="bg-surface-light rounded-xl p-6 border border-orange-500/20 space-y-4">
+          <h2 class="text-lg font-semibold text-orange-400">Fournisseur</h2>
+          <div>
+            <label for="supplier-url" class="block text-sm font-medium text-gray-300 mb-1.5">Lien produit AliExpress</label>
+            <input
+              id="supplier-url"
+              v-model="form.supplierUrl"
+              type="url"
+              placeholder="https://www.aliexpress.com/item/123456789.html"
+              class="w-full px-3 py-2.5 bg-surface border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-colors"
+            />
+            <p class="text-xs text-gray-600 mt-1.5">Ce lien sera utilise dans les commandes pour ouvrir directement la page produit AliExpress.</p>
           </div>
         </div>
 

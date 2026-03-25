@@ -3,6 +3,7 @@ import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { UpdateOrderTrackingDto } from './dto/update-order-tracking.dto';
+import { UpdateOrderSupplierDto } from './dto/update-order-supplier.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('admin')
@@ -28,6 +29,11 @@ export class AdminController {
   @Put('orders/:id/tracking')
   updateOrderTracking(@Param('id') id: string, @Body() dto: UpdateOrderTrackingDto) {
     return this.adminService.updateOrderTracking(id, dto);
+  }
+
+  @Put('orders/:id/supplier')
+  updateOrderSupplier(@Param('id') id: string, @Body() dto: UpdateOrderSupplierDto) {
+    return this.adminService.updateOrderSupplier(id, dto);
   }
 
   @Get('product')

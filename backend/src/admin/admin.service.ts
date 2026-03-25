@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateOrderTrackingDto } from './dto/update-order-tracking.dto';
+import { UpdateOrderSupplierDto } from './dto/update-order-supplier.dto';
 
 @Injectable()
 export class AdminService {
@@ -57,6 +58,16 @@ export class AdminService {
         trackingNumber: data.trackingNumber,
         trackingUrl: data.trackingUrl,
       },
+    });
+  }
+
+  async updateOrderSupplier(id: string, data: UpdateOrderSupplierDto) {
+    const updateData: Record<string, string | null> = {};
+    if (data.supplierOrderId !== undefined) updateData.supplierOrderId = data.supplierOrderId || null;
+    if (data.supplierUrl !== undefined) updateData.supplierUrl = data.supplierUrl || null;
+    return this.prisma.order.update({
+      where: { id },
+      data: updateData,
     });
   }
 

@@ -99,6 +99,87 @@ describe('AdminService', () => {
     });
   });
 
+  describe('updateOrderTracking', () => {
+    it('should update tracking number and URL', async () => {
+      const updated = { id: 'order-1', trackingNumber: 'LP123CN', trackingUrl: 'https://track.example.com/LP123CN' };
+      prisma.order.update.mockResolvedValue(updated);
+
+      const result = await service.updateOrderTracking('order-1', {
+        trackingNumber: 'LP123CN',
+        trackingUrl: 'https://track.example.com/LP123CN',
+      });
+
+      expect(prisma.order.update).toHaveBeenCalledWith({
+        where: { id: 'order-1' },
+        data: {
+          trackingNumber: 'LP123CN',
+          trackingUrl: 'https://track.example.com/LP123CN',
+        },
+      });
+      expect(result).toEqual(updated);
+    });
+
+    it('should update only tracking number when URL is omitted', async () => {
+      prisma.order.update.mockResolvedValue({ id: 'order-1', trackingNumber: 'LP456CN' });
+
+      await service.updateOrderTracking('order-1', { trackingNumber: 'LP456CN' });
+
+      expect(prisma.order.update).toHaveBeenCalledWith({
+        where: { id: 'order-1' },
+        data: {
+          trackingNumber: 'LP456CN',
+          trackingUrl: undefined,
+        },
+      });
+    });
+  });
+
+  describe('updateOrderSupplier', () => {
+    it('should save supplier order ID and URL', async () => {
+      const updated = { id: 'order-1', supplierOrderId: '82156372849', supplierUrl: 'https://aliexpress.com/order/82156372849' };
+      prisma.order.update.mockResolvedValue(updated);
+
+      const result = await service.updateOrderSupplier('order-1', {
+        supplierOrderId: '82156372849',
+        supplierUrl: 'https://aliexpress.com/order/82156372849',
+      });
+
+      expect(prisma.order.update).toHaveBeenCalledWith({
+        where: { id: 'order-1' },
+        data: {
+          supplierOrderId: '82156372849',
+          supplierUrl: 'https://aliexpress.com/order/82156372849',
+        },
+      });
+      expect(result).toEqual(updated);
+    });
+
+    it('should set null when supplier ID is empty string', async () => {
+      prisma.order.update.mockResolvedValue({ id: 'order-1', supplierOrderId: null });
+
+      await service.updateOrderSupplier('order-1', {
+        supplierOrderId: '',
+      });
+
+      expect(prisma.order.update).toHaveBeenCalledWith({
+        where: { id: 'order-1' },
+        data: expect.objectContaining({ supplierOrderId: null }),
+      });
+    });
+
+    it('should only update provided fields', async () => {
+      prisma.order.update.mockResolvedValue({ id: 'order-1' });
+
+      await service.updateOrderSupplier('order-1', {
+        supplierOrderId: '12345',
+      });
+
+      const callData = prisma.order.update.mock.calls[0][0].data;
+      expect(callData.supplierOrderId).toBe('12345');
+      expect(callData).not.toHaveProperty('supplierUrl');
+    });
+  });
+
   describe('getProduct', () => {
     it('should return the product', async () => {
       const product = { id: 'prod-1', name: 'Test' };
@@ -125,6 +206,32 @@ describe('AdminService', () => {
         data: { name: 'Updated', price: 39.99 },
       });
       expect(result).toEqual(updated);
+    });
+
+    it('should update product with supplierUrl', async () => {
+      const updated = { id: 'prod-1', supplierUrl: 'https://aliexpress.com/item/123.html' };
+      prisma.product.update.mockResolvedValue(updated);
+
+      const result = await service.updateProduct('prod-1', {
+        supplierUrl: 'https://aliexpress.com/item/123.html',
+      });
+
+      expect(prisma.product.update).toHaveBeenCalledWith({
+        where: { id: 'prod-1' },
+        data: { supplierUrl: 'https://aliexpress.com/item/123.html' },
+      });
+      expect(result).toEqual(updated);
+    });
+
+    it('should clear supplierUrl when set to null', async () => {
+      prisma.product.update.mockResolvedValue({ id: 'prod-1', supplierUrl: null });
+
+      await service.updateProduct('prod-1', { supplierUrl: undefined });
+
+      expect(prisma.product.update).toHaveBeenCalledWith({
+        where: { id: 'prod-1' },
+        data: { supplierUrl: undefined },
+      });
     });
   });
 });
