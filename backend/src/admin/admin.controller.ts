@@ -2,6 +2,7 @@ import { Controller, Get, Put, Param, Body, Query, UseGuards } from '@nestjs/com
 import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { UpdateOrderTrackingDto } from './dto/update-order-tracking.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('admin')
@@ -22,6 +23,11 @@ export class AdminController {
   @Put('orders/:id/status')
   updateOrderStatus(@Param('id') id: string, @Body() dto: UpdateOrderStatusDto) {
     return this.adminService.updateOrderStatus(id, dto.status);
+  }
+
+  @Put('orders/:id/tracking')
+  updateOrderTracking(@Param('id') id: string, @Body() dto: UpdateOrderTrackingDto) {
+    return this.adminService.updateOrderTracking(id, dto);
   }
 
   @Get('product')

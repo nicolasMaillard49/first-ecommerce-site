@@ -10,25 +10,37 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-18">
         <!-- Logo -->
-        <a
-          href="#"
+        <NuxtLink
+          to="/"
           class="font-display font-black text-xl sm:text-2xl text-brand tracking-tight cursor-pointer select-none transition-colors duration-200 hover:text-brand-light"
-          @click.prevent="scrollToTop"
         >
           GEESTOCK
-        </a>
+        </NuxtLink>
 
         <!-- Desktop nav links -->
         <div class="hidden md:flex items-center gap-1">
-          <a
-            v-for="link in navLinks"
-            :key="link.href"
-            :href="link.href"
-            class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer rounded-lg hover:bg-white/5"
-            @click.prevent="scrollToSection(link.href)"
-          >
-            {{ link.label }}
-          </a>
+          <template v-for="link in navLinks" :key="link.href">
+            <NuxtLink
+              v-if="link.isPage"
+              :to="link.href"
+              :class="[
+                'px-4 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer rounded-lg',
+                link.highlight
+                  ? 'text-brand hover:text-brand-light hover:bg-brand/5'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+              ]"
+            >
+              {{ link.label }}
+            </NuxtLink>
+            <a
+              v-else
+              :href="link.href"
+              class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer rounded-lg hover:bg-white/5"
+              @click.prevent="scrollToSection(link.href)"
+            >
+              {{ link.label }}
+            </a>
+          </template>
         </div>
 
         <!-- Desktop CTA -->
@@ -88,15 +100,29 @@
         :class="[scrolled ? '' : 'rounded-b-2xl']"
       >
         <div class="px-4 py-4 space-y-1">
-          <a
-            v-for="link in navLinks"
-            :key="link.href"
-            :href="link.href"
-            class="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors duration-200 cursor-pointer"
-            @click.prevent="scrollToSection(link.href); mobileOpen = false"
-          >
-            {{ link.label }}
-          </a>
+          <template v-for="link in navLinks" :key="link.href">
+            <NuxtLink
+              v-if="link.isPage"
+              :to="link.href"
+              :class="[
+                'flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-colors duration-200 cursor-pointer',
+                link.highlight
+                  ? 'text-brand hover:text-brand-light hover:bg-brand/5'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5'
+              ]"
+              @click="mobileOpen = false"
+            >
+              {{ link.label }}
+            </NuxtLink>
+            <a
+              v-else
+              :href="link.href"
+              class="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors duration-200 cursor-pointer"
+              @click.prevent="scrollToSection(link.href); mobileOpen = false"
+            >
+              {{ link.label }}
+            </a>
+          </template>
           <div class="pt-2">
             <button
               class="w-full bg-brand hover:bg-brand-dark text-white font-display font-bold text-base py-3.5 px-6 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface flex items-center justify-center gap-2"
@@ -123,14 +149,22 @@ const navLinks = [
   { label: 'Galerie', href: '#gallery-section' },
   { label: 'Avis', href: '#testimonials-section' },
   { label: 'FAQ', href: '#faq-section' },
+  { label: 'Suivre ma commande', href: '/suivi', isPage: true, highlight: true },
 ]
 
 const handleScroll = () => {
   scrolled.value = window.scrollY > 40
 }
 
+const route = useRoute()
+
 const scrollToSection = (href: string) => {
   const id = href.replace('#', '')
+  // If we're not on the homepage, navigate there with the anchor
+  if (route.path !== '/') {
+    navigateTo(`/${href}`)
+    return
+  }
   const el = document.getElementById(id)
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' })

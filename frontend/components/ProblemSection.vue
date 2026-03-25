@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
+  <section id="problem-section" class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
     <!-- Subtle background glow -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand/3 rounded-full blur-[120px]"></div>
 

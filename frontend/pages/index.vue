@@ -5,6 +5,7 @@
     <FeaturesSection />
     <GallerySection />
     <TestimonialsSection />
+    <SocialVideoSection />
     <OrderSection />
     <FaqSection />
 
@@ -28,6 +29,9 @@
         </svg>
       </button>
     </Transition>
+
+    <!-- Purchase notification toast -->
+    <PurchaseNotification />
   </div>
 </template>
 
@@ -37,7 +41,7 @@ useSeoMeta({
   ogTitle: 'Geestock - Le Sac Magnetique pour Bouteille',
   description: 'Le sac magnetique revolutionnaire pour vos bouteilles d\'eau. Fixation instantanee, ultra leger (120g), compatible toutes bouteilles. Livraison gratuite. -40% en ce moment.',
   ogDescription: 'Plus jamais les mains encombrees pendant le sport. Decouvrez le sac magnetique Geestock - Fixation instantanee, 120g seulement. 29,99 EUR au lieu de 49,99 EUR.',
-  ogImage: 'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg',
+  ogImage: 'https://geestock.fr/images/product/product-1.jpg',
   ogType: 'website',
   ogLocale: 'fr_FR',
   twitterCard: 'summary_large_image',
@@ -49,6 +53,9 @@ useHead({
     class: 'scroll-smooth',
   },
 })
+
+const productStore = useProductStore()
+productStore.fetchProduct()
 
 const showFloatingCta = ref(false)
 

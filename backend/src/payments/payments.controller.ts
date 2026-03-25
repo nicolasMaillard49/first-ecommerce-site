@@ -1,5 +1,4 @@
 import { Controller, Post, Body, Headers, Req, Get, Query } from '@nestjs/common';
-import type { RawBodyRequest } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
 import type { Request } from 'express';
@@ -15,10 +14,12 @@ export class PaymentsController {
 
   @Post('webhook')
   webhook(
-    @Req() req: RawBodyRequest<Request>,
+    @Req() req: Request,
     @Headers('stripe-signature') signature: string,
   ) {
-    return this.paymentsService.handleWebhook(req.rawBody!, signature);
+    // With bodyParser disabled for this route + express.raw(), req.body is a Buffer
+    const payload = req.body as Buffer;
+    return this.paymentsService.handleWebhook(payload, signature);
   }
 
   @Get('session-status')

@@ -101,12 +101,12 @@ const zoomX = ref(50)
 const zoomY = ref(50)
 
 const images = [
-  'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg',
-  'https://ae01.alicdn.com/kf/S12e824863ec645dea0aef595f904c0eaf.jpg',
-  'https://ae01.alicdn.com/kf/S4d8bac28c4794424a382b37bf383cac4d.jpg',
-  'https://ae01.alicdn.com/kf/Scb8b59e6be9442c292b42251f3afd438u.jpg',
-  'https://ae01.alicdn.com/kf/Sc9f337cce8ce48f199695e18ca515bbcH.jpg',
-  'https://ae01.alicdn.com/kf/S3841ddcdd72d4eac91362fc44339f0a34.jpg',
+  '/images/product/product-1.jpg',
+  '/images/product/product-2.jpg',
+  '/images/product/product-3.jpg',
+  '/images/product/product-4.jpg',
+  '/images/product/product-5.jpg',
+  '/images/product/product-6.jpg',
 ]
 
 const nextImage = () => {

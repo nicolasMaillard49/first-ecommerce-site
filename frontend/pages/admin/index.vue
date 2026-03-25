@@ -9,7 +9,7 @@ interface Order {
   createdAt: string
   customerName: string
   customerEmail: string
-  totalAmount: number
+  total: number
   status: string
 }
 
@@ -53,8 +53,8 @@ const formatDate = (dateStr: string) => {
   })
 }
 
-const formatPrice = (cents: number) => {
-  return (cents / 100).toLocaleString('fr-FR', {
+const formatPrice = (amount: number) => {
+  return amount.toLocaleString('fr-FR', {
     style: 'currency',
     currency: 'EUR',
   })
@@ -135,7 +135,7 @@ onMounted(fetchDashboard)
                 <td class="px-5 py-3 text-gray-300">{{ formatDate(order.createdAt) }}</td>
                 <td class="px-5 py-3 text-white">{{ order.customerName }}</td>
                 <td class="px-5 py-3 text-gray-400">{{ order.customerEmail }}</td>
-                <td class="px-5 py-3 text-white font-medium">{{ formatPrice(order.totalAmount) }}</td>
+                <td class="px-5 py-3 text-white font-medium">{{ formatPrice(order.total) }}</td>
                 <td class="px-5 py-3">
                   <span
                     :class="statusColors[order.status] || 'bg-gray-500/15 text-gray-400'"

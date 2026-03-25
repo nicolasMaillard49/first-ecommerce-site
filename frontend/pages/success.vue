@@ -56,6 +56,15 @@ onMounted(async () => {
         <div v-if="order" class="bg-surface-light border border-surface-lighter rounded-2xl p-6 sm:p-8 text-left mb-10">
           <h2 class="font-display font-bold text-lg text-white mb-5">Récapitulatif</h2>
           <div class="space-y-4">
+            <div v-if="order.orderNumber" class="flex justify-between items-center">
+              <span class="text-gray-400">N° de commande</span>
+              <NuxtLink
+                :to="`/suivi?order=${order.orderNumber}`"
+                class="text-brand hover:text-brand-light font-mono font-bold text-lg transition-colors duration-200 cursor-pointer underline underline-offset-4 decoration-brand/30 hover:decoration-brand"
+              >
+                GS-{{ String(order.orderNumber).padStart(5, '0') }}
+              </NuxtLink>
+            </div>
             <div class="flex justify-between items-center">
               <span class="text-gray-400">Produit</span>
               <span class="text-white font-medium">{{ order.items?.[0]?.product?.name }}</span>
@@ -106,15 +115,36 @@ onMounted(async () => {
           </ul>
         </div>
 
-        <NuxtLink
-          to="/"
-          class="btn-primary inline-flex items-center gap-2 cursor-pointer"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          Retour à l'accueil
-        </NuxtLink>
+        <!-- Track order link -->
+        <div v-if="order?.orderNumber" class="mb-8">
+          <NuxtLink
+            :to="`/suivi?order=${order.orderNumber}`"
+            class="inline-flex items-center gap-2 text-brand hover:text-brand-light font-medium transition-colors duration-200 cursor-pointer"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            Suivre ma commande GS-{{ String(order.orderNumber).padStart(5, '0') }}
+          </NuxtLink>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <NuxtLink
+            to="/#order-section"
+            class="group inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-display font-bold text-lg py-4 px-8 rounded-2xl cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl shadow-brand/25 hover:shadow-brand/40 hover:scale-105"
+          >
+            Commander a nouveau
+            <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </NuxtLink>
+          <NuxtLink
+            to="/"
+            class="text-sm text-gray-400 hover:text-brand transition-colors duration-200 cursor-pointer"
+          >
+            Retour a l'accueil
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>

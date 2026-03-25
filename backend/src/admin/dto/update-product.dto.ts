@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, Min } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsArray, Min } from 'class-validator';
 
 export class UpdateProductDto {
   @IsOptional()
@@ -18,4 +18,9 @@ export class UpdateProductDto {
   @IsNumber()
   @Min(0)
   comparePrice?: number | null;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  images?: string[];
 }

@@ -11,7 +11,16 @@
       "Bash(python:*)",
       "Bash(docker compose:*)",
       "Bash(docker exec:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(find C:Usersn.maillardVueJSfirst-ecommerce-site -type f \\\\\\(-name *.spec.ts -o -name *.spec.js -o -name *.test.ts -o -name *.test.js \\\\\\))",
+      "Bash(find C:Usersn.maillardVueJSfirst-ecommerce-site -name *TEST* -o -name *test* -o -name *TESTING*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \"LISTENING\")",
+      "Bash(findstr -E \":\\(3000|3001|5432|5433|4000|4001|8080|8081\\) \")",
+      "Bash(cd:*)",
+      "Bash(where node:*)",
+      "Bash(export PATH=\"/c/nvm4w/nodejs:$PATH\")",
+      "WebSearch"
     ]
   }
 }

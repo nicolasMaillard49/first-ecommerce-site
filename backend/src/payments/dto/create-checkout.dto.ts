@@ -1,4 +1,4 @@
-import { IsString, IsInt, Min, Max } from 'class-validator';
+import { IsString, IsInt, Min, Max, IsOptional } from 'class-validator';
 
 export class CreateCheckoutDto {
   @IsString()
@@ -8,4 +8,8 @@ export class CreateCheckoutDto {
   @Min(1)
   @Max(10)
   quantity: number;
+
+  @IsOptional()
+  @IsString()
+  sport?: string;
 }

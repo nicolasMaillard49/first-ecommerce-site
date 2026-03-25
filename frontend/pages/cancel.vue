@@ -25,18 +25,24 @@ useSeoMeta({
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <NuxtLink
-          to="/"
-          class="btn-primary inline-flex items-center gap-2 cursor-pointer"
+          to="/#order-section"
+          class="group inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-display font-bold text-lg py-4 px-8 rounded-2xl cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl shadow-brand/25 hover:shadow-brand/40 hover:scale-105"
         >
-          Réessayer la commande
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Retour a la commande
+          <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
         </NuxtLink>
-        <a
-          href="mailto:contact@geestock.fr"
-          class="text-sm text-gray-400 hover:text-brand transition-colors duration-200 cursor-pointer"
-        >
-          Besoin d'aide ?
-        </a>
       </div>
+      <a
+        href="mailto:contact@geestock.fr"
+        class="inline-block mt-6 text-sm text-gray-500 hover:text-brand transition-colors duration-200 cursor-pointer"
+      >
+        Besoin d'aide ? Contactez-nous
+      </a>
     </div>
   </div>
 </template>

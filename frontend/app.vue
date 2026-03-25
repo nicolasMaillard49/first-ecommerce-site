@@ -10,9 +10,9 @@ useHead({
         name: 'Geestock - Sac Magnétique pour Bouteille',
         description: 'Le sac magnétique révolutionnaire pour vos bouteilles. Fixation instantanée, ultra léger (120g), compatible toutes bouteilles.',
         image: [
-          'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg',
-          'https://ae01.alicdn.com/kf/S12e824863ec645dea0aef595f904c0eaf.jpg',
-          'https://ae01.alicdn.com/kf/S4d8bac28c4794424a382b37bf383cac4d.jpg',
+          'https://geestock.fr/images/product/product-1.jpg',
+          'https://geestock.fr/images/product/product-2.jpg',
+          'https://geestock.fr/images/product/product-3.jpg',
         ],
         brand: { '@type': 'Brand', name: 'Geestock' },
         offers: {

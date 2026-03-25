@@ -45,6 +45,48 @@
           </div>
         </div>
 
+        <!-- Pack selection -->
+        <div class="mb-8">
+          <p class="text-xs text-gray-500 mb-3 font-medium uppercase tracking-wider">Choisissez votre pack</p>
+          <div class="flex gap-3">
+            <button
+              v-for="pack in packs"
+              :key="pack.name"
+              :class="[
+                'relative flex-1 flex flex-col items-center gap-1.5 p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer focus:outline-none',
+                selectedPack === pack.name
+                  ? 'border-brand bg-brand/10 shadow-lg shadow-brand/10'
+                  : 'border-surface-lighter bg-surface-light hover:border-gray-600'
+              ]"
+              @click="selectPack(pack.name)"
+            >
+              <!-- Discount badge -->
+              <span
+                v-if="pack.badge"
+                class="absolute -top-2.5 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full"
+              >
+                {{ pack.badge }}
+              </span>
+              <!-- Radio indicator -->
+              <span
+                :class="[
+                  'w-4 h-4 rounded-full border-2 flex items-center justify-center mb-1 transition-colors',
+                  selectedPack === pack.name ? 'border-brand' : 'border-gray-600'
+                ]"
+              >
+                <span
+                  v-if="selectedPack === pack.name"
+                  class="w-2 h-2 rounded-full bg-brand"
+                ></span>
+              </span>
+              <span class="text-white font-display font-bold text-sm">{{ pack.label }}</span>
+              <span class="text-xs text-gray-400">{{ pack.qty }}x</span>
+              <span class="text-brand font-display font-bold text-lg">{{ pack.priceDisplay }}</span>
+              <span v-if="pack.oldPriceDisplay" class="text-gray-500 line-through text-xs">{{ pack.oldPriceDisplay }}</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Price + Quantity row -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
           <!-- Price -->
@@ -69,7 +111,7 @@
                 class="flex items-center justify-center w-11 h-11 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer focus:outline-none rounded-l-2xl disabled:opacity-30 disabled:cursor-not-allowed"
                 :disabled="quantity <= 1"
                 aria-label="Diminuer la quantite"
-                @click="quantity > 1 && quantity--"
+                @click="decrementQuantity"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
@@ -80,13 +122,34 @@
                 class="flex items-center justify-center w-11 h-11 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer focus:outline-none rounded-r-2xl disabled:opacity-30 disabled:cursor-not-allowed"
                 :disabled="quantity >= 10"
                 aria-label="Augmenter la quantite"
-                @click="quantity < 10 && quantity++"
+                @click="incrementQuantity"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- Sport selection -->
+        <div class="mb-8">
+          <p class="text-xs text-gray-500 mb-3 font-medium uppercase tracking-wider">Pour quel sport ? <span class="text-gray-600 normal-case">(optionnel)</span></p>
+          <div class="grid grid-cols-5 gap-2 sm:gap-3">
+            <button
+              v-for="s in sports"
+              :key="s.value"
+              :class="[
+                'flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200 cursor-pointer focus:outline-none',
+                selectedSport === s.value
+                  ? 'border-brand bg-brand/10'
+                  : 'border-surface-lighter bg-surface-light hover:border-gray-600'
+              ]"
+              @click="toggleSport(s.value)"
+            >
+              <span class="text-2xl">{{ s.emoji }}</span>
+              <span class="text-[10px] sm:text-xs text-gray-400 leading-tight text-center font-medium">{{ s.label }}</span>
+            </button>
           </div>
         </div>
 
@@ -157,23 +220,131 @@ const productStore = useProductStore()
 const quantity = ref(1)
 const loading = ref(false)
 const error = ref('')
+const selectedPack = ref('solo')
+const selectedSport = ref('')
 
-const productImage = 'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg'
+const productImage = '/images/product/product-1.jpg'
+
+// --- Packs ---
+const UNIT_PRICE = 29.99
+const ORIGINAL_UNIT_PRICE = 49.99
+
+interface Pack {
+  name: string
+  label: string
+  qty: number
+  packPrice: number
+  badge: string
+  priceDisplay: string
+  oldPriceDisplay: string
+}
+
+const packs: Pack[] = [
+  {
+    name: 'solo',
+    label: 'Solo',
+    qty: 1,
+    packPrice: 29.99,
+    badge: '',
+    priceDisplay: '29,99\u20AC',
+    oldPriceDisplay: '',
+  },
+  {
+    name: 'duo',
+    label: 'Duo',
+    qty: 2,
+    packPrice: 49.99,
+    badge: '-17%',
+    priceDisplay: '49,99\u20AC',
+    oldPriceDisplay: '59,98\u20AC',
+  },
+  {
+    name: 'equipe',
+    label: 'Equipe',
+    qty: 5,
+    packPrice: 99.99,
+    badge: '-33%',
+    priceDisplay: '99,99\u20AC',
+    oldPriceDisplay: '149,95\u20AC',
+  },
+]
+
+const currentPack = computed(() => packs.find((p) => p.name === selectedPack.value))
+
+const selectPack = (name: string) => {
+  selectedPack.value = name
+  const pack = packs.find((p) => p.name === name)
+  if (pack) {
+    quantity.value = pack.qty
+  }
+}
+
+const decrementQuantity = () => {
+  if (quantity.value > 1) {
+    quantity.value--
+    syncPackFromQuantity()
+  }
+}
+
+const incrementQuantity = () => {
+  if (quantity.value < 10) {
+    quantity.value++
+    syncPackFromQuantity()
+  }
+}
+
+const syncPackFromQuantity = () => {
+  const match = packs.find((p) => p.qty === quantity.value)
+  selectedPack.value = match ? match.name : ''
+}
+
+// --- Pricing ---
+const effectiveUnitPrice = computed(() => {
+  if (currentPack.value) {
+    return currentPack.value.packPrice / currentPack.value.qty
+  }
+  return UNIT_PRICE
+})
 
 const formattedTotal = computed(() => {
-  const total = (29.99 * quantity.value).toFixed(2).replace('.', ',')
-  return `${total}\u20AC`
+  let total: number
+  if (currentPack.value) {
+    total = currentPack.value.packPrice
+  } else {
+    total = UNIT_PRICE * quantity.value
+  }
+  return `${total.toFixed(2).replace('.', ',')}\u20AC`
 })
 
 const originalTotal = computed(() => {
-  const total = (49.99 * quantity.value).toFixed(2).replace('.', ',')
-  return `${total}\u20AC`
+  const total = ORIGINAL_UNIT_PRICE * quantity.value
+  return `${total.toFixed(2).replace('.', ',')}\u20AC`
 })
 
 const savedAmount = computed(() => {
-  const saved = (20 * quantity.value).toFixed(2).replace('.', ',')
-  return `${saved}\u20AC`
+  const original = ORIGINAL_UNIT_PRICE * quantity.value
+  let actual: number
+  if (currentPack.value) {
+    actual = currentPack.value.packPrice
+  } else {
+    actual = UNIT_PRICE * quantity.value
+  }
+  const saved = original - actual
+  return `${saved.toFixed(2).replace('.', ',')}\u20AC`
 })
+
+// --- Sports ---
+const sports = [
+  { emoji: '\uD83C\uDFCB\uFE0F', value: 'musculation', label: 'Musculation' },
+  { emoji: '\uD83C\uDFC3', value: 'running', label: 'Running' },
+  { emoji: '\uD83D\uDEB4', value: 'velo', label: 'Velo' },
+  { emoji: '\uD83E\uDD7E', value: 'randonnee', label: 'Randonnee' },
+  { emoji: '\uD83C\uDFBE', value: 'autre', label: 'Autre' },
+]
+
+const toggleSport = (value: string) => {
+  selectedSport.value = selectedSport.value === value ? '' : value
+}
 
 // Countdown timer
 const countdown = ref({ hours: 2, minutes: 47, seconds: 33 })
@@ -222,12 +393,16 @@ const handleCheckout = async () => {
 
   try {
     const { apiFetch } = useApi()
+    const body: Record<string, unknown> = {
+      productId: productStore.product?.id || '',
+      quantity: quantity.value,
+    }
+    if (selectedSport.value) {
+      body.sport = selectedSport.value
+    }
     const response = await apiFetch<{ sessionId: string; url: string }>('/payments/create-checkout', {
       method: 'POST',
-      body: {
-        productId: productStore.product?.id || '',
-        quantity: quantity.value,
-      },
+      body,
     })
 
     if (response.url) {

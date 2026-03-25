@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:3001/api',
+      apiBase: 'http://localhost:3000/api',
       siteUrl: 'https://geestock.fr',
     },
   },
@@ -20,7 +20,7 @@ export default defineNuxtConfig({
         { property: 'og:site_name', content: 'Geestock' },
         { property: 'og:title', content: 'Geestock - Le Sac Magnétique pour Bouteille' },
         { property: 'og:description', content: 'Libérez vos mains pendant le sport. Fixation magnétique instantanée, ultra léger. -40% : 29,99€.' },
-        { property: 'og:image', content: 'https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg' },
+        { property: 'og:image', content: 'https://geestock.fr/images/product/product-1.jpg' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Geestock - Le Sac Magnétique pour Bouteille' },
         { name: 'twitter:description', content: 'Libérez vos mains pendant le sport. -40% : 29,99€. Livraison gratuite.' },
@@ -40,6 +40,9 @@ export default defineNuxtConfig({
     '/cgv': { swr: 86400 },
     '/confidentialite': { swr: 86400 },
     '/admin/**': { ssr: false },
+  },
+  devServer: {
+    port: 4000,
   },
   nitro: {
     compressPublicAssets: true,

@@ -8,6 +8,7 @@ import { PaymentsModule } from './payments/payments.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { HealthModule } from './health/health.module';
+import { TrackingModule } from './tracking/tracking.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { HealthModule } from './health/health.module';
     AuthModule,
     AdminModule,
     HealthModule,
+    TrackingModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

@@ -10,6 +10,7 @@ interface Product {
   description: string
   price: number
   comparePrice: number | null
+  images: string[]
 }
 
 const { apiFetch } = useApi()
@@ -26,6 +27,8 @@ const form = reactive({
   description: '',
   price: 0,
   comparePrice: 0,
+  images: [] as string[],
+  socialVideos: [] as { url: string; title: string; thumbnail: string }[],
 })
 
 const fetchProduct = async () => {
@@ -37,8 +40,14 @@ const fetchProduct = async () => {
     })
     form.name = product.value.name
     form.description = product.value.description
-    form.price = product.value.price / 100
-    form.comparePrice = (product.value.comparePrice || 0) / 100
+    form.price = product.value.price
+    form.comparePrice = product.value.comparePrice || 0
+    form.images = [...product.value.images]
+    // Load social videos from localStorage (not stored in DB)
+    const saved = localStorage.getItem('geestock_social_videos')
+    if (saved) {
+      form.socialVideos = JSON.parse(saved)
+    }
   } catch (e: any) {
     error.value = e?.data?.message || 'Erreur lors du chargement du produit'
     if (e?.status === 401) authStore.logout()
@@ -47,22 +56,46 @@ const fetchProduct = async () => {
   }
 }
 
+// Image management
+const addImage = () => {
+  form.images.push('')
+}
+const removeImage = (idx: number) => {
+  form.images.splice(idx, 1)
+}
+
+// Social video management
+const addVideo = () => {
+  form.socialVideos.push({ url: '', title: '', thumbnail: '' })
+}
+const removeVideo = (idx: number) => {
+  form.socialVideos.splice(idx, 1)
+}
+const saveSocialVideos = () => {
+  localStorage.setItem('geestock_social_videos', JSON.stringify(form.socialVideos))
+}
+
 const saveProduct = async () => {
   if (!product.value) return
   saving.value = true
   error.value = ''
   success.value = ''
   try {
+    // Filter out empty image URLs
+    const cleanImages = form.images.filter((img) => img.trim() !== '')
     await apiFetch(`/admin/product/${product.value.id}`, {
       method: 'PUT',
       headers: { Authorization: `Bearer ${authStore.token}` },
       body: {
         name: form.name,
         description: form.description,
-        price: Math.round(form.price * 100),
-        comparePrice: form.comparePrice ? Math.round(form.comparePrice * 100) : null,
+        price: form.price,
+        comparePrice: form.comparePrice || null,
+        images: cleanImages,
       },
     })
+    // Also save social videos to localStorage
+    saveSocialVideos()
     success.value = 'Produit mis a jour avec succes'
     setTimeout(() => { success.value = '' }, 3000)
   } catch (e: any) {
@@ -95,7 +128,10 @@ onMounted(fetchProduct)
 
     <template v-if="product && !loading">
       <form class="max-w-2xl space-y-6" @submit.prevent="saveProduct">
+        <!-- Basic info -->
         <div class="bg-surface-light rounded-xl p-6 border border-white/10 space-y-5">
+          <h2 class="text-lg font-semibold text-white">Informations</h2>
+
           <!-- Name -->
           <div>
             <label for="product-name" class="block text-sm font-medium text-gray-300 mb-1.5">Nom du produit</label>
@@ -122,7 +158,6 @@ onMounted(fetchProduct)
 
           <!-- Prices row -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Price -->
             <div>
               <label for="product-price" class="block text-sm font-medium text-gray-300 mb-1.5">Prix (EUR)</label>
               <input
@@ -135,8 +170,6 @@ onMounted(fetchProduct)
                 class="w-full px-3 py-2.5 bg-surface border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
               />
             </div>
-
-            <!-- Compare Price -->
             <div>
               <label for="product-compare-price" class="block text-sm font-medium text-gray-300 mb-1.5">Prix barre (EUR)</label>
               <input
@@ -151,11 +184,112 @@ onMounted(fetchProduct)
           </div>
         </div>
 
+        <!-- Images -->
+        <div class="bg-surface-light rounded-xl p-6 border border-white/10 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-white">Images produit</h2>
+            <button
+              type="button"
+              class="text-sm text-brand hover:text-brand-light transition-colors cursor-pointer"
+              @click="addImage"
+            >
+              + Ajouter une image
+            </button>
+          </div>
+          <p class="text-xs text-gray-500">Chemin local (ex: /images/product/product-1.jpg) ou URL externe</p>
+
+          <div v-for="(img, idx) in form.images" :key="idx" class="flex items-center gap-3">
+            <span class="text-xs text-gray-500 w-6 text-right">{{ idx + 1 }}.</span>
+            <input
+              v-model="form.images[idx]"
+              type="text"
+              placeholder="/images/product/product-1.jpg"
+              class="flex-1 px-3 py-2 bg-surface border border-white/10 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
+            />
+            <!-- Preview -->
+            <div v-if="form.images[idx]" class="w-10 h-10 rounded-lg overflow-hidden border border-white/10 flex-shrink-0">
+              <img :src="form.images[idx]" class="w-full h-full object-cover" />
+            </div>
+            <button
+              type="button"
+              class="text-red-400 hover:text-red-300 transition-colors cursor-pointer p-1"
+              @click="removeImage(idx)"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+
+          <div v-if="form.images.length === 0" class="text-sm text-gray-500 text-center py-4">
+            Aucune image. Cliquez sur "+ Ajouter une image" pour commencer.
+          </div>
+        </div>
+
+        <!-- Social Videos -->
+        <div class="bg-surface-light rounded-xl p-6 border border-white/10 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-white">Videos reseaux sociaux</h2>
+            <button
+              type="button"
+              class="text-sm text-brand hover:text-brand-light transition-colors cursor-pointer"
+              @click="addVideo"
+            >
+              + Ajouter une video
+            </button>
+          </div>
+          <p class="text-xs text-gray-500">Collez l'URL TikTok, Instagram ou YouTube. La plateforme est detectee automatiquement.</p>
+
+          <div v-for="(video, idx) in form.socialVideos" :key="idx" class="bg-surface rounded-lg p-4 border border-white/5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-gray-300">Video {{ idx + 1 }}</span>
+              <button
+                type="button"
+                class="text-red-400 hover:text-red-300 text-xs transition-colors cursor-pointer"
+                @click="removeVideo(idx)"
+              >
+                Supprimer
+              </button>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">URL de la video</label>
+              <input
+                v-model="form.socialVideos[idx].url"
+                type="url"
+                placeholder="https://www.tiktok.com/@compte/video/123..."
+                class="w-full px-3 py-2 bg-surface-light border border-white/10 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
+              />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Titre</label>
+              <input
+                v-model="form.socialVideos[idx].title"
+                type="text"
+                placeholder="Test du Geestock en salle de sport"
+                class="w-full px-3 py-2 bg-surface-light border border-white/10 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
+              />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Miniature (chemin image, optionnel pour YouTube)</label>
+              <input
+                v-model="form.socialVideos[idx].thumbnail"
+                type="text"
+                placeholder="/images/videos/tiktok-1.jpg"
+                class="w-full px-3 py-2 bg-surface-light border border-white/10 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
+              />
+            </div>
+          </div>
+
+          <div v-if="form.socialVideos.length === 0" class="text-sm text-gray-500 text-center py-4">
+            Aucune video. Cliquez sur "+ Ajouter une video" pour commencer.
+          </div>
+        </div>
+
         <!-- Submit -->
         <button
           type="submit"
           :disabled="saving"
-          class="px-6 py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-6 py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           <span v-if="saving">Enregistrement...</span>
           <span v-else>Enregistrer les modifications</span>

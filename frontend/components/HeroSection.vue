@@ -1,11 +1,11 @@
 <template>
   <section id="hero-section" class="relative min-h-screen flex items-center overflow-hidden">
     <!-- Background gradient -->
-    <div class="absolute inset-0 bg-gradient-to-br from-surface via-surface to-surface-light"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-surface via-surface to-surface-light pointer-events-none"></div>
     <!-- Subtle grid pattern overlay -->
-    <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%2310b981&quot; fill-opacity=&quot;0.6&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%2310b981&quot; fill-opacity=&quot;0.6&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
     <!-- Green radial glow -->
-    <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[120px]"></div>
+    <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
 
     <!-- Content -->
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-20 sm:pt-32 sm:pb-28">
@@ -13,12 +13,17 @@
         <!-- Left: Text content -->
         <div class="text-center lg:text-left">
           <!-- Social proof badge -->
-          <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 rounded-full px-4 py-2 mb-8">
+          <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 rounded-full px-4 py-2 mb-4">
             <span class="flex h-2 w-2 relative">
               <span class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
             </span>
             <span class="text-sm font-medium text-brand">+2 000 sportifs conquis</span>
+          </div>
+
+          <!-- Live viewers -->
+          <div class="mb-8">
+            <LiveViewers />
           </div>
 
           <h1 class="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight text-white mb-6">
@@ -86,7 +91,7 @@
           <!-- Product image -->
           <div class="relative motion-safe:animate-float">
             <img
-              src="https://ae01.alicdn.com/kf/Sb3f10763c9c948c7a9bdc6e84a6e9a0fe.jpg"
+              src="/images/product/product-1.jpg"
               alt="Geestock Sac Magnetique pour Bouteille"
               class="w-full max-w-md lg:max-w-lg xl:max-w-xl rounded-3xl shadow-2xl shadow-black/40"
               loading="eager"
@@ -115,18 +120,29 @@
     </div>
 
     <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 motion-safe:animate-bounce">
+    <button
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-gray-600 motion-safe:animate-bounce cursor-pointer hover:text-brand transition-colors duration-200 focus:outline-none"
+      aria-label="Decouvrir le produit"
+      @click="scrollToDiscover"
+    >
       <span class="text-xs uppercase tracking-widest font-medium">Decouvrir</span>
       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
       </svg>
-    </div>
+    </button>
   </section>
 </template>
 
 <script setup lang="ts">
 const scrollToOrder = () => {
   const el = document.getElementById('order-section')
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+const scrollToDiscover = () => {
+  const el = document.getElementById('problem-section') || document.getElementById('features-section')
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' })
   }

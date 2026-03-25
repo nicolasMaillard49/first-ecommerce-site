@@ -56,7 +56,7 @@ export class PaymentsService {
           quantity: dto.quantity,
         },
       ],
-      metadata: { orderId: order.id },
+      metadata: { orderId: order.id, sport: dto.sport || '' },
       success_url: `${this.configService.get('FRONTEND_URL')}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${this.configService.get('FRONTEND_URL')}/cancel`,
     });
