@@ -20,7 +20,9 @@
       "Bash(cd:*)",
       "Bash(where node:*)",
       "Bash(export PATH=\"/c/nvm4w/nodejs:$PATH\")",
-      "WebSearch"
+      "WebSearch",
+      "Bash(ipconfig:*)",
+      "Bash(npx kill-port:*)"
     ]
   }
 }
