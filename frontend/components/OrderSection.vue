@@ -223,7 +223,7 @@ const error = ref('')
 const selectedPack = ref('solo')
 const selectedSport = ref('')
 
-const productImage = '/images/product/product-3.jpg'
+const productImage = '/images/product/product-9.png'
 
 // --- Packs ---
 const UNIT_PRICE = 29.99
