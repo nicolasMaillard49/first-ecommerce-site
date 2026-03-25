@@ -106,11 +106,11 @@ const zoomY = ref(50)
 
 const images = [
   '/images/product/product-1.jpg',
-  '/images/product/product-2.jpg',
-  '/images/product/product-3.jpg',
-  '/images/product/product-4.jpg',
-  '/images/product/product-5.jpg',
-  '/images/product/product-6.jpg',
+  '/images/product/product-2.png',
+  '/images/product/product-3.png',
+  '/images/product/product-4.png',
+  '/images/product/product-5.png',
+  '/images/product/product-6.png',
 ]
 
 const nextImage = () => {

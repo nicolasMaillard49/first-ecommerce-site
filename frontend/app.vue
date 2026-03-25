@@ -11,8 +11,8 @@ useHead({
         description: 'Le sac magnétique révolutionnaire pour vos bouteilles. Fixation instantanée, ultra léger (120g), compatible toutes bouteilles.',
         image: [
           'https://geestock.fr/images/product/product-1.jpg',
-          'https://geestock.fr/images/product/product-2.jpg',
-          'https://geestock.fr/images/product/product-3.jpg',
+          'https://geestock.fr/images/product/product-2.png',
+          'https://geestock.fr/images/product/product-3.png',
         ],
         brand: { '@type': 'Brand', name: 'Geestock' },
         offers: {

@@ -172,11 +172,11 @@ function getYouTubeThumbnail(url: string): string | null {
 // Default videos (used if nothing saved in admin panel)
 const defaultVideos = [
   { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE1', title: 'Test du Geestock en salle de sport', thumbnail: '/images/product/product-1.jpg' },
-  { url: 'https://www.instagram.com/reel/EXAMPLE2/', title: 'Unboxing Geestock - Mon avis honnete', thumbnail: '/images/product/product-2.jpg' },
-  { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE3', title: 'Le sac magnetique qui change tout', thumbnail: '/images/product/product-3.jpg' },
-  { url: 'https://www.youtube.com/shorts/EXAMPLE4', title: 'Review complete du Geestock', thumbnail: '/images/product/product-4.jpg' },
-  { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE5', title: 'Geestock vs sac classique - Comparatif', thumbnail: '/images/product/product-5.jpg' },
-  { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE6', title: 'Je teste le Geestock en randonnee', thumbnail: '/images/product/product-6.jpg' },
+  { url: 'https://www.instagram.com/reel/EXAMPLE2/', title: 'Unboxing Geestock - Mon avis honnete', thumbnail: '/images/product/product-2.png' },
+  { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE3', title: 'Le sac magnetique qui change tout', thumbnail: '/images/product/product-3.png' },
+  { url: 'https://www.youtube.com/shorts/EXAMPLE4', title: 'Review complete du Geestock', thumbnail: '/images/product/product-4.png' },
+  { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE5', title: 'Geestock vs sac classique - Comparatif', thumbnail: '/images/product/product-5.png' },
+  { url: 'https://www.tiktok.com/@geestock/video/EXAMPLE6', title: 'Je teste le Geestock en randonnee', thumbnail: '/images/product/product-6.png' },
 ]
 
 // Load videos from localStorage (saved by admin panel) or use defaults

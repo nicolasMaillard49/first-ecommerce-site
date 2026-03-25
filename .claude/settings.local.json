@@ -22,7 +22,8 @@
       "Bash(export PATH=\"/c/nvm4w/nodejs:$PATH\")",
       "WebSearch",
       "Bash(ipconfig:*)",
-      "Bash(npx kill-port:*)"
+      "Bash(npx kill-port:*)",
+      "Bash(mv:*)"
     ]
   }
 }
