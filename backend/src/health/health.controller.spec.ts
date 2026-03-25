@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { HealthController } from './health.controller';
 import { PrismaService } from '../prisma/prisma.service';
 
 describe('HealthController', () => {
   let controller: HealthController;
-  let prisma: { $queryRawUnsafe: jest.Mock };
+  let prisma: { $queryRaw: jest.Mock };
 
   beforeEach(async () => {
-    prisma = { $queryRawUnsafe: jest.fn() };
+    prisma = { $queryRaw: jest.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HealthController],
@@ -18,7 +19,7 @@ describe('HealthController', () => {
   });
 
   it('should return ok status when database is connected', async () => {
-    prisma.$queryRawUnsafe.mockResolvedValue([{ '?column?': 1 }]);
+    prisma.$queryRaw.mockResolvedValue([{ '?column?': 1 }]);
 
     const result = await controller.check();
 
@@ -27,13 +28,19 @@ describe('HealthController', () => {
     expect(result.timestamp).toBeDefined();
   });
 
-  it('should return error status when database is disconnected', async () => {
-    prisma.$queryRawUnsafe.mockRejectedValue(new Error('Connection refused'));
+  it('should throw HttpException with 503 when database is disconnected', async () => {
+    prisma.$queryRaw.mockRejectedValue(new Error('Connection refused'));
 
-    const result = await controller.check();
-
-    expect(result.status).toBe('error');
-    expect(result.database).toBe('disconnected');
-    expect(result.timestamp).toBeDefined();
+    try {
+      await controller.check();
+      fail('Expected HttpException to be thrown');
+    } catch (error) {
+      expect(error).toBeInstanceOf(HttpException);
+      expect((error as HttpException).getStatus()).toBe(HttpStatus.SERVICE_UNAVAILABLE);
+      const response = (error as HttpException).getResponse() as any;
+      expect(response.status).toBe('error');
+      expect(response.database).toBe('disconnected');
+      expect(response.timestamp).toBeDefined();
+    }
   });
 });

@@ -63,6 +63,8 @@
               zoomed ? 'scale-150' : 'scale-100',
             ]"
             :style="zoomed ? { transformOrigin: `${zoomX}% ${zoomY}%` } : {}"
+            width="600"
+            height="600"
             loading="lazy"
           />
         </Transition>
@@ -86,6 +88,8 @@
             :src="image"
             :alt="`Geestock miniature ${idx + 1}`"
             class="w-full h-full object-cover"
+            width="80"
+            height="80"
             loading="lazy"
           />
         </button>

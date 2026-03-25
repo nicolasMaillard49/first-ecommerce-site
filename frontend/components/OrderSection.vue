@@ -37,7 +37,7 @@
           <img
             :src="productImage"
             alt="Geestock Sac Magnetique pour Bouteille"
-            class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />
           <div class="absolute top-4 right-4 bg-red-500/90 text-white text-sm font-bold px-3 py-1.5 rounded-xl">
@@ -223,7 +223,7 @@ const error = ref('')
 const selectedPack = ref('solo')
 const selectedSport = ref('')
 
-const productImage = '/images/product/product-1.jpg'
+const productImage = '/images/product/product-3.jpg'
 
 // --- Packs ---
 const UNIT_PRICE = 29.99
@@ -396,6 +396,7 @@ const handleCheckout = async () => {
     const body: Record<string, unknown> = {
       productId: productStore.product?.id || '',
       quantity: quantity.value,
+      packType: selectedPack.value,
     }
     if (selectedSport.value) {
       body.sport = selectedSport.value

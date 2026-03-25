@@ -94,6 +94,9 @@
               src="/images/product/product-1.jpg"
               alt="Geestock Sac Magnetique pour Bouteille"
               class="w-full max-w-md lg:max-w-lg xl:max-w-xl rounded-3xl shadow-2xl shadow-black/40"
+              width="600"
+              height="600"
+              fetchpriority="high"
               loading="eager"
             />
             <!-- Badge overlay -->

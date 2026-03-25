@@ -62,23 +62,7 @@ const activeTab = ref<'all' | 'to-order' | 'to-ship' | 'done'>('all')
 
 const statuses = ['PENDING', 'PAID', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED']
 
-const statusColors: Record<string, string> = {
-  PENDING: 'bg-yellow-500/15 text-yellow-400',
-  PAID: 'bg-green-500/15 text-green-400',
-  PROCESSING: 'bg-blue-500/15 text-blue-400',
-  SHIPPED: 'bg-purple-500/15 text-purple-400',
-  DELIVERED: 'bg-emerald-500/15 text-emerald-400',
-  CANCELLED: 'bg-red-500/15 text-red-400',
-}
-
-const statusLabels: Record<string, string> = {
-  PENDING: 'En attente',
-  PAID: 'Payee',
-  PROCESSING: 'En traitement',
-  SHIPPED: 'Expediee',
-  DELIVERED: 'Livree',
-  CANCELLED: 'Annulee',
-}
+const { statusLabels, statusColors } = useOrderStatus()
 
 const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString('fr-FR', {

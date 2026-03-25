@@ -5,6 +5,10 @@ useSeoMeta({
   ogTitle: 'Politique de Confidentialité - Geestock',
   ogDescription: 'Protection de vos données personnelles sur Geestock.fr',
 })
+
+useHead({
+  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+})
 </script>
 
 <template>

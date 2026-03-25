@@ -12,6 +12,7 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@nuxtjs/sitemap": "^8.0.3",
     "@pinia/nuxt": "^0.11.3",
     "nuxt": "^3.21.2",
     "pinia": "^3.0.4",

@@ -5,6 +5,10 @@ useSeoMeta({
   ogTitle: 'Mentions Légales - Geestock',
   ogDescription: 'Mentions légales du site Geestock.fr',
 })
+
+useHead({
+  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+})
 </script>
 
 <template>

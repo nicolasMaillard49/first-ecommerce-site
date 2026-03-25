@@ -5,6 +5,10 @@ useSeoMeta({
   ogTitle: 'CGV - Geestock',
   ogDescription: 'Conditions générales de vente Geestock',
 })
+
+useHead({
+  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+})
 </script>
 
 <template>

@@ -1,8 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
+
+const PACK_CONFIG: Record<string, { qty: number; totalCents: number }> = {
+  solo: { qty: 1, totalCents: 2999 },
+  duo: { qty: 2, totalCents: 4999 },
+  equipe: { qty: 5, totalCents: 9999 },
+};
 
 @Injectable()
 export class PaymentsService {
@@ -20,17 +26,44 @@ export class PaymentsService {
       where: { id: dto.productId },
     });
 
+    const pack = dto.packType ? PACK_CONFIG[dto.packType] : undefined;
+
+    let totalCents: number;
+    let stripeUnitAmount: number;
+    let stripeQuantity: number;
+    let displayName: string;
+
+    if (pack) {
+      if (dto.quantity !== pack.qty) {
+        throw new BadRequestException(
+          `Pack "${dto.packType}" requires quantity ${pack.qty}, got ${dto.quantity}`,
+        );
+      }
+      totalCents = pack.totalCents;
+      stripeUnitAmount = pack.totalCents;
+      stripeQuantity = 1;
+      displayName = pack.qty > 1 ? `${product.name} x ${pack.qty}` : product.name;
+    } else {
+      totalCents = Math.round(product.price * dto.quantity * 100);
+      stripeUnitAmount = Math.round(product.price * 100);
+      stripeQuantity = dto.quantity;
+      displayName = product.name;
+    }
+
+    const total = totalCents / 100;
+    const unitPrice = total / dto.quantity;
+
     const order = await this.prisma.order.create({
       data: {
         customerEmail: '',
         customerName: '',
         shippingAddress: {},
-        total: product.price * dto.quantity,
+        total,
         items: {
           create: {
             productId: product.id,
             quantity: dto.quantity,
-            price: product.price,
+            price: unitPrice,
           },
         },
       },
@@ -47,13 +80,13 @@ export class PaymentsService {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: product.name,
+              name: displayName,
               description: product.description,
               images: [product.images[0]],
             },
-            unit_amount: Math.round(product.price * 100),
+            unit_amount: stripeUnitAmount,
           },
-          quantity: dto.quantity,
+          quantity: stripeQuantity,
         },
       ],
       metadata: { orderId: order.id, sport: dto.sport || '' },

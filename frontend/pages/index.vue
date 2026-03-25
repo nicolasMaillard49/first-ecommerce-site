@@ -52,10 +52,13 @@ useHead({
     lang: 'fr',
     class: 'scroll-smooth',
   },
+  link: [{ rel: 'canonical', href: 'https://geestock.fr' }],
 })
 
 const productStore = useProductStore()
-productStore.fetchProduct()
+await callOnce(async () => {
+  await productStore.fetchProduct()
+})
 
 const showFloatingCta = ref(false)
 

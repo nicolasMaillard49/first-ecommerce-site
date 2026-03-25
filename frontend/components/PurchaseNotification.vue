@@ -9,7 +9,7 @@
   >
     <div
       v-if="visible"
-      class="fixed bottom-6 left-4 right-4 sm:right-auto sm:left-6 z-40 bg-surface-light/90 backdrop-blur border border-surface-lighter rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3 max-w-sm"
+      class="fixed bottom-20 sm:bottom-6 left-4 right-4 sm:right-auto sm:left-6 z-40 bg-surface-light/90 backdrop-blur border border-surface-lighter rounded-2xl shadow-xl px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-3 max-w-sm"
     >
       <span class="text-2xl shrink-0">🛒</span>
       <p class="text-sm text-white/90 leading-snug">

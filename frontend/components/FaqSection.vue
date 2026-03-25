@@ -134,4 +134,24 @@ const faqs = [
       'Le Geestock supporte facilement des bouteilles jusqu\'a 1,5L remplies. Les aimants neodyme sont dimensionnes pour supporter largement ce poids avec une marge de securite confortable.',
   },
 ]
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }),
+    },
+  ],
+})
 </script>

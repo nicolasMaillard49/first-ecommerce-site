@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
+import { BadRequestException } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -116,6 +117,196 @@ describe('PaymentsService', () => {
       // Should not throw even though images[0] is undefined
       const result = await service.createCheckoutSession(dto);
       expect(result.sessionId).toBe('cs_test_456');
+    });
+
+    it('should create checkout with solo pack at correct price', async () => {
+      prisma.product.findUniqueOrThrow.mockResolvedValue(product);
+      prisma.order.create.mockResolvedValue({ id: 'order-solo' });
+      prisma.order.update.mockResolvedValue({});
+      mockStripe.checkout.sessions.create.mockResolvedValue({
+        id: 'cs_solo',
+        url: 'https://checkout.stripe.com/solo',
+      });
+
+      const result = await service.createCheckoutSession({
+        productId: 'prod-1',
+        quantity: 1,
+        packType: 'solo',
+      });
+
+      expect(prisma.order.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            total: 29.99,
+            items: expect.objectContaining({
+              create: expect.objectContaining({
+                price: 29.99,
+                quantity: 1,
+              }),
+            }),
+          }),
+        }),
+      );
+      expect(mockStripe.checkout.sessions.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          line_items: [
+            expect.objectContaining({
+              price_data: expect.objectContaining({
+                unit_amount: 2999,
+              }),
+              quantity: 1,
+            }),
+          ],
+        }),
+      );
+      expect(result.sessionId).toBe('cs_solo');
+    });
+
+    it('should create checkout with duo pack at 49.99', async () => {
+      prisma.product.findUniqueOrThrow.mockResolvedValue(product);
+      prisma.order.create.mockResolvedValue({ id: 'order-duo' });
+      prisma.order.update.mockResolvedValue({});
+      mockStripe.checkout.sessions.create.mockResolvedValue({
+        id: 'cs_duo',
+        url: 'https://checkout.stripe.com/duo',
+      });
+
+      const result = await service.createCheckoutSession({
+        productId: 'prod-1',
+        quantity: 2,
+        packType: 'duo',
+      });
+
+      expect(prisma.order.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            total: 49.99,
+            items: expect.objectContaining({
+              create: expect.objectContaining({
+                price: 49.99 / 2,
+                quantity: 2,
+              }),
+            }),
+          }),
+        }),
+      );
+      expect(mockStripe.checkout.sessions.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          line_items: [
+            expect.objectContaining({
+              price_data: expect.objectContaining({
+                unit_amount: 4999,
+                product_data: expect.objectContaining({
+                  name: 'Test Product x 2',
+                }),
+              }),
+              quantity: 1,
+            }),
+          ],
+        }),
+      );
+      expect(result.sessionId).toBe('cs_duo');
+    });
+
+    it('should create checkout with equipe pack at 99.99', async () => {
+      prisma.product.findUniqueOrThrow.mockResolvedValue(product);
+      prisma.order.create.mockResolvedValue({ id: 'order-equipe' });
+      prisma.order.update.mockResolvedValue({});
+      mockStripe.checkout.sessions.create.mockResolvedValue({
+        id: 'cs_equipe',
+        url: 'https://checkout.stripe.com/equipe',
+      });
+
+      const result = await service.createCheckoutSession({
+        productId: 'prod-1',
+        quantity: 5,
+        packType: 'equipe',
+      });
+
+      expect(prisma.order.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            total: 99.99,
+            items: expect.objectContaining({
+              create: expect.objectContaining({
+                price: 99.99 / 5,
+                quantity: 5,
+              }),
+            }),
+          }),
+        }),
+      );
+      expect(mockStripe.checkout.sessions.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          line_items: [
+            expect.objectContaining({
+              price_data: expect.objectContaining({
+                unit_amount: 9999,
+                product_data: expect.objectContaining({
+                  name: 'Test Product x 5',
+                }),
+              }),
+              quantity: 1,
+            }),
+          ],
+        }),
+      );
+      expect(result.sessionId).toBe('cs_equipe');
+    });
+
+    it('should reject pack with wrong quantity', async () => {
+      prisma.product.findUniqueOrThrow.mockResolvedValue(product);
+
+      await expect(
+        service.createCheckoutSession({
+          productId: 'prod-1',
+          quantity: 3,
+          packType: 'duo',
+        }),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('should fallback to unit price * quantity when no packType', async () => {
+      prisma.product.findUniqueOrThrow.mockResolvedValue(product);
+      prisma.order.create.mockResolvedValue({ id: 'order-fallback' });
+      prisma.order.update.mockResolvedValue({});
+      mockStripe.checkout.sessions.create.mockResolvedValue({
+        id: 'cs_fallback',
+        url: 'https://checkout.stripe.com/fallback',
+      });
+
+      const result = await service.createCheckoutSession({
+        productId: 'prod-1',
+        quantity: 3,
+      });
+
+      // 29.99 * 3 = 89.97, totalCents = Math.round(89.97 * 100) = 8997
+      expect(prisma.order.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            total: 89.97,
+            items: expect.objectContaining({
+              create: expect.objectContaining({
+                price: 89.97 / 3,
+                quantity: 3,
+              }),
+            }),
+          }),
+        }),
+      );
+      expect(mockStripe.checkout.sessions.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          line_items: [
+            expect.objectContaining({
+              price_data: expect.objectContaining({
+                unit_amount: 2999,
+              }),
+              quantity: 3,
+            }),
+          ],
+        }),
+      );
+      expect(result.sessionId).toBe('cs_fallback');
     });
   });
 

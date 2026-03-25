@@ -6,6 +6,10 @@ useSeoMeta({
   ogDescription: 'Suivez votre commande Geestock en temps réel.',
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+})
+
 const { apiFetch } = useApi()
 
 const activeTab = ref<'order' | 'name'>('order')
@@ -27,14 +31,7 @@ const steps = [
 
 const statusOrder = ['PENDING', 'PAID', 'PROCESSING', 'SHIPPED', 'DELIVERED']
 
-const statusLabels: Record<string, string> = {
-  PENDING: 'En attente',
-  PAID: 'Payee',
-  PROCESSING: 'En traitement',
-  SHIPPED: 'Expediee',
-  DELIVERED: 'Livree',
-  CANCELLED: 'Annulee',
-}
+const { statusLabels } = useOrderStatus()
 
 const statusDotColors: Record<string, string> = {
   PENDING: 'bg-yellow-400',
