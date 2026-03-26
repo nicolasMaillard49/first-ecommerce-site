@@ -386,7 +386,7 @@ npx nest build && node dist/src/main.js
 - [ ] Migrer les videos sociales de localStorage vers la BDD
 - [x] ~~Ajouter champs fournisseur dans schema Prisma + admin (supplierOrderId, supplierUrl sur Order, supplierUrl sur Product)~~
 - [ ] Integration suivi colis tiers (Ship24 / Track123 / 17track)
-- [ ] Refonte section video sociale : carousel tube 3D mobile/desktop (en cours, exploration UX)
+- [x] ~~Refonte section video sociale : carousel 3D cinematique mobile/desktop~~
 
 ---
 
@@ -400,11 +400,24 @@ npx nest build && node dist/src/main.js
 - Tentative d'unification du carousel tube pour desktop et mobile
 - Suppression de la card conteneur grise (`bg-surface-light`) pour integration au fond du site
 - Sortie des badges plateforme (Instagram/TikTok/YouTube) au-dessus du carousel avec connecteur vert vertical
-- **Decision** : reset de la section vers la version du dernier commit. L'exploration UX n'a pas abouti a un resultat satisfaisant. A reprendre avec une vision plus claire du rendu souhaite.
+- **Decision** : reset de la section puis refonte complete avec une approche cinematique
+
+**Refonte finale — carousel 3D cinematique (valide)** :
+- Carousel 3D unifie mobile/desktop avec `perspective: 1000px` et `transform-style: preserve-3d`
+- Carte active au centre avec glow emerald (`box-shadow` + `ring` brand), cartes adjacentes reculees en profondeur (`translateZ`), pivotees (`rotateY`), reduites (`scale`) et assombries (`brightness filter`)
+- Badges plateforme (Instagram/TikTok/YouTube) integres au header, fond transparent (`bg-white/[0.04]`)
+- Pas de card conteneur, les videos flottent directement sur le fond sombre du site
+- Titre de la video en overlay dans la carte (gradient noir en bas)
+- Tailles responsive via `clamp()` CSS (pas de breakpoint JS)
+- Navigation : swipe tactile, fleches, clavier (gauche/droite), dots cliquables, navigation circulaire
+- Accessibilite : `role="region"`, `aria-roledescription="carousel"`, `tabindex`, `aria-hidden` sur cartes inactives
+- `prefers-reduced-motion` respecte
+- Demarre sur la 4eme video (index 3)
+- Styles isoles via `<style scoped>`
 
 **Fichiers modifies** :
 - `frontend/assets/css/main.css` — ajout classe `.scrollbar-brand` (conserve)
-- `frontend/components/SocialVideoSection.vue` — reset vers version du dernier commit
+- `frontend/components/SocialVideoSection.vue` — refonte complete
 
 ---
 
