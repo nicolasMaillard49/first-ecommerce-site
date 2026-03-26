@@ -40,6 +40,28 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Custom scrollbar for video carousel */
+  .scrollbar-brand {
+    scrollbar-width: thin;
+    scrollbar-color: #10b981 #171717;
+  }
+
+  .scrollbar-brand::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scrollbar-brand::-webkit-scrollbar-track {
+    @apply bg-surface-light rounded-full mx-8;
+  }
+
+  .scrollbar-brand::-webkit-scrollbar-thumb {
+    @apply bg-brand/50 rounded-full;
+  }
+
+  .scrollbar-brand::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand;
+  }
 }
 
 @layer utilities {

@@ -1,7 +1,7 @@
 # Geestock - Reprise du Projet
 
 > Document de reprise pour continuer le developpement sur un autre poste.
-> Derniere mise a jour : 25 mars 202 6
+> Derniere mise a jour : 26 mars 2026
     
 ---
 
@@ -386,10 +386,30 @@ npx nest build && node dist/src/main.js
 - [ ] Migrer les videos sociales de localStorage vers la BDD
 - [x] ~~Ajouter champs fournisseur dans schema Prisma + admin (supplierOrderId, supplierUrl sur Order, supplierUrl sur Product)~~
 - [ ] Integration suivi colis tiers (Ship24 / Track123 / 17track)
+- [ ] Refonte section video sociale : carousel tube 3D mobile/desktop (en cours, exploration UX)
 
 ---
 
-## 13. Lien commandes site / commandes fournisseur (AliExpress)
+## 13. Journal des sessions de travail
+
+### 26 mars 2026
+
+**Section video sociale (`SocialVideoSection.vue`)** — exploration UX/UI :
+- Ajout d'une scrollbar custom stylee brand (emerald) dans `main.css` (classe `.scrollbar-brand`)
+- Tentative carousel tube 3D mobile : carte active au centre, cartes adjacentes en profondeur avec `perspective`, `translateZ`, `rotateY`, fils de suspension simulant un tube
+- Tentative d'unification du carousel tube pour desktop et mobile
+- Suppression de la card conteneur grise (`bg-surface-light`) pour integration au fond du site
+- Sortie des badges plateforme (Instagram/TikTok/YouTube) au-dessus du carousel avec connecteur vert vertical
+- **Decision** : reset de la section vers la version du dernier commit. L'exploration UX n'a pas abouti a un resultat satisfaisant. A reprendre avec une vision plus claire du rendu souhaite.
+
+**Fichiers modifies** :
+- `frontend/assets/css/main.css` — ajout classe `.scrollbar-brand` (conserve)
+- `frontend/components/SocialVideoSection.vue` — reset vers version du dernier commit
+
+---
+
+## 14. Lien commandes site / commandes fournisseur (AliExpress)
+
 
 ### Etat actuel : workflow semi-automatique implemente
 
@@ -432,7 +452,7 @@ Le systeme gere maintenant un workflow complet de commande fournisseur :
 
 ---
 
-## 14. Documents de strategie disponibles
+## 15. Documents de strategie disponibles
 
 Les documents suivants sont dans `docs/recommendations/` :
 - `pricing-strategy.md` — Strategie de prix et promotions
