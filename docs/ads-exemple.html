@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geestock — Créatifs Meta Ads</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --accent: #e8ff3c;
+    --red: #ff3c3c;
+    --gray: #1a1a1a;
+    --gray2: #2a2a2a;
+    --muted: #666;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–black);
+color: var(–white);
+font-family: ‘DM Sans’, sans-serif;
+min-height: 100vh;
+}
+
+/* HEADER */
+header {
+padding: 24px 32px;
+border-bottom: 1px solid #222;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+letter-spacing: 3px;
+color: var(–accent);
+}
+.badge {
+background: var(–gray2);
+border: 1px solid #333;
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 12px;
+color: var(–muted);
+letter-spacing: 1px;
+}
+
+/* TABS */
+.tabs {
+display: flex;
+gap: 0;
+border-bottom: 1px solid #222;
+padding: 0 32px;
+overflow-x: auto;
+}
+.tab {
+padding: 16px 24px;
+cursor: pointer;
+font-size: 13px;
+font-weight: 500;
+color: var(–muted);
+border-bottom: 2px solid transparent;
+transition: all 0.2s;
+white-space: nowrap;
+letter-spacing: 0.5px;
+}
+.tab.active {
+color: var(–accent);
+border-bottom-color: var(–accent);
+}
+.tab:hover:not(.active) { color: var(–white); }
+
+/* PANELS */
+.panel { display: none; padding: 40px 32px; }
+.panel.active { display: block; }
+
+/* SECTION TITLE */
+.section-label {
+font-size: 11px;
+letter-spacing: 3px;
+color: var(–muted);
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 42px;
+letter-spacing: 2px;
+line-height: 1;
+margin-bottom: 32px;
+}
+.section-title span { color: var(–accent); }
+
+/* PHONE MOCKUP */
+.phone-wrap {
+display: flex;
+gap: 24px;
+align-items: flex-start;
+flex-wrap: wrap;
+}
+.phone {
+width: 280px;
+min-width: 280px;
+background: #111;
+border-radius: 36px;
+border: 2px solid #333;
+overflow: hidden;
+box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+position: relative;
+}
+.phone-notch {
+background: #0a0a0a;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.phone-notch::after {
+content: ‘’;
+width: 80px;
+height: 10px;
+background: #111;
+border-radius: 10px;
+border: 1px solid #222;
+}
+.phone-screen {
+width: 100%;
+aspect-ratio: 1;
+position: relative;
+overflow: hidden;
+}
+
+/* CAROUSEL */
+.carousel {
+width: 100%;
+height: 100%;
+position: relative;
+}
+.slide {
+position: absolute;
+inset: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 24px;
+text-align: center;
+opacity: 0;
+transition: opacity 0.4s ease;
+}
+.slide.active { opacity: 1; }
+
+/* SLIDE THEMES */
+.slide-hook {
+background: linear-gradient(135deg, #1a0a0a 0%, #2d1010 100%);
+}
+.slide-hook .slide-emoji { font-size: 48px; margin-bottom: 12px; }
+.slide-hook .slide-text {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 26px;
+letter-spacing: 1px;
+color: var(–white);
+line-height: 1.1;
+}
+.slide-hook .slide-sub { font-size: 12px; color: #ff9999; margin-top: 8px; }
+
+.slide-product {
+background: linear-gradient(135deg, #0a1a0a 0%, #102d10 100%);
+}
+.slide-product .product-circle {
+width: 120px;
+height: 120px;
+border-radius: 50%;
+background: radial-gradient(circle, #1a3a1a, #0d1f0d);
+border: 2px solid #2a5a2a;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 56px;
+margin-bottom: 16px;
+box-shadow: 0 0 40px rgba(100,255,100,0.15);
+}
+.slide-product .slide-text {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 22px;
+color: var(–accent);
+letter-spacing: 2px;
+}
+.slide-product .slide-sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+.slide-detail {
+background: #111;
+}
+.slide-detail .magnet-visual {
+width: 100px;
+height: 60px;
+border: 3px solid var(–accent);
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 32px;
+margin-bottom: 16px;
+position: relative;
+}
+.slide-detail .magnet-visual::after {
+content: ‘AIMANT’;
+position: absolute;
+bottom: -20px;
+font-size: 9px;
+letter-spacing: 3px;
+color: var(–accent);
+}
+.slide-detail .slide-text {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+color: var(–white);
+margin-top: 24px;
+}
+.slide-detail .slide-sub { font-size: 11px; color: #888; margin-top: 4px; }
+
+.slide-cta {
+background: var(–accent);
+}
+.slide-cta .old-price {
+font-size: 14px;
+color: #666;
+text-decoration: line-through;
+margin-bottom: 4px;
+}
+.slide-cta .new-price {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 52px;
+color: var(–black);
+letter-spacing: 2px;
+line-height: 1;
+}
+.slide-cta .cta-tag {
+background: var(–black);
+color: var(–accent);
+padding: 6px 16px;
+border-radius: 20px;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 2px;
+margin-top: 12px;
+}
+.slide-cta .cta-ship {
+font-size: 11px;
+color: #555;
+margin-top: 8px;
+}
+
+/* CAROUSEL DOTS */
+.carousel-dots {
+display: flex;
+justify-content: center;
+gap: 6px;
+padding: 12px;
+background: #0d0d0d;
+}
+.dot {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background: #333;
+cursor: pointer;
+transition: all 0.3s;
+}
+.dot.active { background: var(–accent); width: 18px; border-radius: 3px; }
+
+/* PHONE FOOTER (fake Instagram UI) */
+.phone-ig-bar {
+background: #0d0d0d;
+padding: 10px 16px;
+border-top: 1px solid #1a1a1a;
+}
+.ig-username { font-size: 11px; font-weight: 700; color: var(–white); }
+.ig-caption { font-size: 10px; color: #888; margin-top: 2px; line-height: 1.4; }
+.ig-cta-btn {
+background: var(–accent);
+color: var(–black);
+font-size: 10px;
+font-weight: 700;
+padding: 6px 14px;
+border-radius: 4px;
+margin-top: 8px;
+display: inline-block;
+letter-spacing: 0.5px;
+}
+
+/* CREATIV INFO PANEL */
+.info-panel {
+flex: 1;
+min-width: 280px;
+}
+.info-card {
+background: var(–gray);
+border: 1px solid #2a2a2a;
+border-radius: 16px;
+padding: 24px;
+margin-bottom: 16px;
+}
+.info-card h3 {
+font-size: 11px;
+letter-spacing: 3px;
+color: var(–muted);
+text-transform: uppercase;
+margin-bottom: 12px;
+}
+.info-card p {
+font-size: 14px;
+color: var(–white);
+line-height: 1.6;
+}
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.tag {
+padding: 4px 12px;
+border-radius: 20px;
+font-size: 11px;
+font-weight: 500;
+}
+.tag-green { background: rgba(232,255,60,0.1); color: var(–accent); border: 1px solid rgba(232,255,60,0.2); }
+.tag-red { background: rgba(255,60,60,0.1); color: #ff6b6b; border: 1px solid rgba(255,60,60,0.2); }
+.tag-gray { background: #222; color: #aaa; border: 1px solid #333; }
+
+/* KPI ROW */
+.kpi-row { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.kpi {
+background: var(–gray);
+border: 1px solid #2a2a2a;
+border-radius: 12px;
+padding: 16px 20px;
+flex: 1;
+min-width: 100px;
+}
+.kpi-label { font-size: 10px; color: var(–muted); letter-spacing: 2px; text-transform: uppercase; }
+.kpi-value { font-family: ‘Bebas Neue’, sans-serif; font-size: 28px; color: var(–accent); margin-top: 4px; }
+.kpi-sub { font-size: 11px; color: #555; margin-top: 2px; }
+
+/* AIDA PANEL */
+.aida-block {
+background: var(–gray);
+border: 1px solid #2a2a2a;
+border-radius: 16px;
+padding: 32px;
+max-width: 600px;
+font-family: ‘DM Sans’, sans-serif;
+}
+.aida-letter {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–accent);
+margin-bottom: 4px;
+}
+.aida-text {
+font-size: 15px;
+line-height: 1.7;
+color: var(–white);
+margin-bottom: 24px;
+padding-bottom: 24px;
+border-bottom: 1px solid #2a2a2a;
+}
+.aida-text:last-child { border-bottom: none; margin-bottom: 0; }
+.aida-hook {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 32px;
+letter-spacing: 1px;
+color: var(–white);
+line-height: 1.1;
+}
+.bullet-list { list-style: none; margin-top: 8px; }
+.bullet-list li {
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 14px;
+color: #ccc;
+padding: 4px 0;
+}
+.bullet-list li::before {
+content: ‘✓’;
+color: var(–accent);
+font-weight: 700;
+font-size: 13px;
+}
+.price-final {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 36px;
+color: var(–accent);
+letter-spacing: 2px;
+}
+.price-old {
+font-size: 14px;
+color: var(–muted);
+text-decoration: line-through;
+margin-left: 8px;
+}
+
+/* SIMPLE IMAGE CREATIV */
+.img-creativ {
+width: 280px;
+aspect-ratio: 1;
+background: linear-gradient(135deg, #0f1a0f, #1a2d1a);
+border-radius: 16px;
+border: 1px solid #2a3a2a;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+position: relative;
+overflow: hidden;
+}
+.img-creativ .overlay-badge {
+position: absolute;
+top: 16px;
+right: 16px;
+background: var(–red);
+color: white;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+letter-spacing: 1px;
+padding: 4px 12px;
+border-radius: 6px;
+transform: rotate(3deg);
+}
+.img-creativ .main-icon { font-size: 80px; }
+.img-creativ .fix-text {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+letter-spacing: 3px;
+color: var(–accent);
+margin-top: 16px;
+}
+.img-creativ .fix-sub {
+font-size: 11px;
+color: #888;
+letter-spacing: 1px;
+margin-top: 4px;
+}
+.img-creativ .grid-bg {
+position: absolute;
+inset: 0;
+background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size: 30px 30px;
+pointer-events: none;
+}
+
+/* RETARGETING */
+.retarget-phone .slide-social {
+background: linear-gradient(135deg, #0a0a1a, #10102d);
+}
+.star-row { display: flex; gap: 2px; font-size: 18px; margin-bottom: 8px; }
+.review-text { font-size: 12px; color: #ccc; line-height: 1.4; font-style: italic; }
+.review-author { font-size: 10px; color: var(–muted); margin-top: 6px; }
+
+/* CHECKLIST SLIDE */
+.slide-benefits { background: #111; }
+.benefit-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 8px 0;
+border-bottom: 1px solid #1f1f1f;
+width: 100%;
+text-align: left;
+}
+.benefit-item:last-child { border-bottom: none; }
+.benefit-icon { font-size: 20px; }
+.benefit-label { font-size: 12px; color: var(–white); font-weight: 500; }
+.benefit-sub { font-size: 10px; color: #666; }
+
+/* COPY button */
+.copy-btn {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: var(–gray2);
+border: 1px solid #333;
+color: var(–white);
+padding: 10px 18px;
+border-radius: 8px;
+font-size: 12px;
+cursor: pointer;
+margin-top: 16px;
+transition: all 0.2s;
+font-family: ‘DM Sans’, sans-serif;
+}
+.copy-btn:hover { background: #333; border-color: #444; }
+.copy-btn.copied { background: rgba(232,255,60,0.1); border-color: var(–accent); color: var(–accent); }
+
+/* NAV controls */
+.nav-btn {
+background: #222;
+border: 1px solid #333;
+color: var(–white);
+width: 32px;
+height: 32px;
+border-radius: 50%;
+cursor: pointer;
+font-size: 14px;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+}
+.nav-btn:hover { background: #333; }
+.nav-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #0d0d0d; }
+
+@media (max-width: 640px) {
+header { padding: 16px; }
+.tabs { padding: 0 16px; }
+.panel { padding: 24px 16px; }
+.section-title { font-size: 32px; }
+.phone-wrap { justify-content: center; }
+.info-panel { width: 100%; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">GEESTOCK</div>
+  <div class="badge">META ADS — BRIEF CRÉATIFS</div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('c1')">Créatif 1 — Problème/Solution</div>
+  <div class="tab" onclick="showTab('c2')">Créatif 2 — Image Simple</div>
+  <div class="tab" onclick="showTab('c3')">Créatif 3 — Bénéfices</div>
+  <div class="tab" onclick="showTab('aida')">Texte AIDA</div>
+  <div class="tab" onclick="showTab('retarget')">Retargeting</div>
+</div>
+
+<!-- CRÉATIF 1 -->
+
+<div class="panel active" id="panel-c1">
+  <div class="section-label">Carrousel 1:1 — 4 slides</div>
+  <div class="section-title">Problème / <span>Solution</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Format</div>
+      <div class="kpi-value">1:1</div>
+      <div class="kpi-sub">Carré Instagram</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Slides</div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-sub">Carrousel</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Objectif</div>
+      <div class="kpi-value">CTR</div>
+      <div class="kpi-sub">Hook fort slide 1</div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="carousel" id="carousel1">
+          <div class="slide slide-hook active">
+            <div class="slide-emoji">😤</div>
+            <div class="slide-text">Ta gourde qui tombe en plein set,<br>t'en as marre ?</div>
+            <div class="slide-sub">→ Swipe pour la solution</div>
+          </div>
+          <div class="slide slide-product">
+            <div class="product-circle">🧲</div>
+            <div class="slide-text">Le sac Geestock</div>
+            <div class="slide-sub">Se fixe sur n'importe quelle surface métallique</div>
+          </div>
+          <div class="slide slide-detail">
+            <div class="magnet-visual">🔩</div>
+            <div class="slide-text">Fixation magnétique<br>ultra-puissante</div>
+            <div class="slide-sub">Tient jusqu'à 2kg — même gourde pleine</div>
+          </div>
+          <div class="slide slide-cta">
+            <div class="old-price">49,99€</div>
+            <div class="new-price">29,99€</div>
+            <div class="cta-tag">LIVRAISON OFFERTE</div>
+            <div class="cta-ship">Stock limité — Commande maintenant</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="dots1">
+        <div class="dot active" onclick="goToSlide('carousel1','dots1',0)"></div>
+        <div class="dot" onclick="goToSlide('carousel1','dots1',1)"></div>
+        <div class="dot" onclick="goToSlide('carousel1','dots1',2)"></div>
+        <div class="dot" onclick="goToSlide('carousel1','dots1',3)"></div>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn" onclick="prevSlide('carousel1','dots1',4)">←</button>
+        <button class="nav-btn" onclick="nextSlide('carousel1','dots1',4)">→</button>
+      </div>
+      <div class="phone-ig-bar">
+        <div class="ig-username">geestock.fr · Sponsorisé</div>
+        <div class="ig-caption">Ta gourde qui tombe en plein set, c'est fini. 🧲</div>
+        <div class="ig-cta-btn">ACHETER MAINTENANT</div>
+      </div>
+    </div>
+
+```
+<div class="info-panel">
+  <div class="info-card">
+    <h3>Pourquoi ce créatif</h3>
+    <p>Le slide 1 cible la douleur exacte — la frustration de la gourde qui tombe. C'est un hook émotionnel. Les gens s'identifient immédiatement et swipent pour voir la solution.</p>
+    <div class="tag-row">
+      <span class="tag tag-green">Hook émotionnel</span>
+      <span class="tag tag-green">AIDA structure</span>
+      <span class="tag tag-gray">Broad + Intérêts</span>
+    </div>
+  </div>
+  <div class="info-card">
+    <h3>Instructions photos réelles</h3>
+    <p><strong>Slide 1 :</strong> Photo floue d'une gourde posée au sol en salle, sac de sport renversé. Ambiance "galère".<br><br>
+    <strong>Slide 2 :</strong> Le sac fixé sur une machine de musculation, gourde dedans, plein cadre.<br><br>
+    <strong>Slide 3 :</strong> Gros plan macro sur l'aimant collé à un rack, texte "2KG" en overlay.<br><br>
+    <strong>Slide 4 :</strong> Fond jaune (#e8ff3c), prix en noir, badge livraison offerte.</p>
+  </div>
+  <div class="info-card">
+    <h3>Cible principale</h3>
+    <p>Adset A (Broad) + Adset B (fitness/musculation). Ce créatif parle à quelqu'un qui va en salle régulièrement.</p>
+    <div class="tag-row">
+      <span class="tag tag-red">CTR cible &gt; 1.5%</span>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- CRÉATIF 2 -->
+
+<div class="panel" id="panel-c2">
+  <div class="section-label">Image statique 1:1</div>
+  <div class="section-title">Visuel <span>Produit</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Format</div>
+      <div class="kpi-value">1:1</div>
+      <div class="kpi-sub">Image unique</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Slides</div>
+      <div class="kpi-value">1</div>
+      <div class="kpi-sub">Statique</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Objectif</div>
+      <div class="kpi-value">CPM</div>
+      <div class="kpi-sub">Visuel arrêt scroll</div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="img-creativ" style="width:100%;aspect-ratio:1;border-radius:0;">
+          <div class="grid-bg"></div>
+          <div class="overlay-badge">-40%</div>
+          <div class="main-icon">🧲</div>
+          <div class="fix-text">SE FIXE EN 1 SECONDE</div>
+          <div class="fix-sub">Sur toutes surfaces métalliques · Gourde incluse</div>
+        </div>
+      </div>
+      <div class="phone-ig-bar">
+        <div class="ig-username">geestock.fr · Sponsorisé</div>
+        <div class="ig-caption">Fini de chercher où poser ta gourde entre les sets 🧲 -40% aujourd'hui uniquement.</div>
+        <div class="ig-cta-btn">VOIR LE PRODUIT</div>
+      </div>
+    </div>
+
+```
+<div class="info-panel">
+  <div class="info-card">
+    <h3>Pourquoi ce créatif</h3>
+    <p>L'image statique a souvent le meilleur CPM car elle charge instantanément dans le feed. Le texte "Se fixe en 1 seconde" + le badge -40% sont deux accroches visuelles qui stoppent le scroll.</p>
+    <div class="tag-row">
+      <span class="tag tag-green">Arrêt scroll</span>
+      <span class="tag tag-green">Prix visible</span>
+      <span class="tag tag-gray">Tous adsets</span>
+    </div>
+  </div>
+  <div class="info-card">
+    <h3>Instructions photo réelle</h3>
+    <p><strong>Fond :</strong> Fond sombre type gym (sol béton, ou machine noire en arrière-plan flou).<br><br>
+    <strong>Sujet :</strong> Le sac accroché à un rack, gourde dedans, bien éclairé (lumière studio ou naturelle latérale).<br><br>
+    <strong>Texte overlay :</strong> "Se fixe en 1 seconde" en blanc gras en bas de l'image. Badge rouge "-40%" en haut à droite.<br><br>
+    <strong>Style :</strong> Épuré, pas de fond blanc, ambiance salle de sport.</p>
+  </div>
+  <div class="info-card">
+    <h3>Test A/B recommandé</h3>
+    <p>Tester 2 versions : fond sombre (gym) vs fond blanc (studio produit). En général le fond gym gagne sur audience fitness.</p>
+    <div class="tag-row">
+      <span class="tag tag-red">CTR cible &gt; 1%</span>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- CRÉATIF 3 -->
+
+<div class="panel" id="panel-c3">
+  <div class="section-label">Carrousel 1:1 — 5 slides</div>
+  <div class="section-title">Bénéfices <span>multiples</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Format</div>
+      <div class="kpi-value">1:1</div>
+      <div class="kpi-sub">Carré Instagram</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Slides</div>
+      <div class="kpi-value">5</div>
+      <div class="kpi-sub">Carrousel</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Objectif</div>
+      <div class="kpi-value">CVR</div>
+      <div class="kpi-sub">Convaincre par preuves</div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="carousel" id="carousel3">
+          <div class="slide active" style="background:linear-gradient(135deg,#0d0d0d,#1a1a1a);">
+            <div style="font-size:56px;margin-bottom:12px;">🏋️</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--accent);">AUCUNE EXCUSE</div>
+            <div style="font-size:12px;color:#888;margin-top:6px;">Pour laisser ta gourde au sol</div>
+          </div>
+          <div class="slide slide-benefits">
+            <div class="benefit-item">
+              <div class="benefit-icon">🧲</div>
+              <div>
+                <div class="benefit-label">Magnétique — se fixe partout</div>
+                <div class="benefit-sub">Machine, rack, casier, vestiaire</div>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">💪</div>
+              <div>
+                <div class="benefit-label">Résiste à 2kg</div>
+                <div class="benefit-sub">Même gourde 1,5L pleine</div>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">🎒</div>
+              <div>
+                <div class="benefit-label">Compatible toutes gourdes</div>
+                <div class="benefit-sub">De 350ml à 1,5L</div>
+              </div>
+            </div>
+          </div>
+          <div class="slide" style="background:linear-gradient(135deg,#0a0d1a,#0d1025);">
+            <div style="font-size:48px;margin-bottom:12px;">💧</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--white);letter-spacing:2px;">MATIÈRE IMPERMÉABLE</div>
+            <div style="font-size:11px;color:#888;margin-top:8px;">Protection sueur, pluie, éclaboussures</div>
+          </div>
+          <div class="slide" style="background:linear-gradient(135deg,#0d1a0a,#102510);">
+            <div style="font-size:48px;margin-bottom:12px;">📱</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--accent);letter-spacing:2px;">POCHE TÉLÉPHONE</div>
+            <div style="font-size:11px;color:#aaa;margin-top:8px;">Accès rapide sans poser ta séance</div>
+          </div>
+          <div class="slide slide-cta">
+            <div class="old-price">49,99€</div>
+            <div class="new-price">29,99€</div>
+            <div class="cta-tag">LIVRAISON OFFERTE</div>
+            <div class="cta-ship">geestock.fr</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="dots3">
+        <div class="dot active" onclick="goToSlide('carousel3','dots3',0)"></div>
+        <div class="dot" onclick="goToSlide('carousel3','dots3',1)"></div>
+        <div class="dot" onclick="goToSlide('carousel3','dots3',2)"></div>
+        <div class="dot" onclick="goToSlide('carousel3','dots3',3)"></div>
+        <div class="dot" onclick="goToSlide('carousel3','dots3',4)"></div>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn" onclick="prevSlide('carousel3','dots3',5)">←</button>
+        <button class="nav-btn" onclick="nextSlide('carousel3','dots3',5)">→</button>
+      </div>
+      <div class="phone-ig-bar">
+        <div class="ig-username">geestock.fr · Sponsorisé</div>
+        <div class="ig-caption">Magnetique. Imperméable. Compatible toutes gourdes. 💧</div>
+        <div class="ig-cta-btn">DÉCOUVRIR</div>
+      </div>
+    </div>
+
+```
+<div class="info-panel">
+  <div class="info-card">
+    <h3>Pourquoi ce créatif</h3>
+    <p>Ce carrousel s'adresse aux gens qui ont besoin d'être convaincus. Chaque slide répond à une objection : "Est-ce que ça tient ?" "Et ma gourde ?" "Et l'humidité ?" C'est un créatif de conversion, pas de découverte.</p>
+    <div class="tag-row">
+      <span class="tag tag-green">Objections traitées</span>
+      <span class="tag tag-green">Preuves concrètes</span>
+      <span class="tag tag-gray">Adset intérêts</span>
+    </div>
+  </div>
+  <div class="info-card">
+    <h3>Instructions slides</h3>
+    <p><strong>Slide 1 :</strong> Photo lifestyle en salle — athlète qui s'entraîne, sac visible en arrière-plan.<br><br>
+    <strong>Slides 2-4 :</strong> Fond sombre, icône grande, texte bénéfice en jaune, sous-titre gris. Simple et lisible.<br><br>
+    <strong>Slide 5 :</strong> Fond jaune #e8ff3c, prix barré + prix final, CTA "Acheter".</p>
+  </div>
+  <div class="info-card">
+    <h3>Cible principale</h3>
+    <p>Adset C (gourde, hydratation, accessoires sport). Ces gens cherchent déjà des solutions.</p>
+    <div class="tag-row">
+      <span class="tag tag-red">CVR cible &gt; 2%</span>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- TEXTE AIDA -->
+
+<div class="panel" id="panel-aida">
+  <div class="section-label">Texte d'annonce — Structure AIDA</div>
+  <div class="section-title">Copy <span>principal</span></div>
+
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
+    <div class="aida-block">
+      <div class="aida-letter">A — ATTENTION</div>
+      <div class="aida-text">
+        <div class="aida-hook">Ta gourde qui tombe en plein set,<br>c'est fini.</div>
+      </div>
+
+```
+  <div class="aida-letter">I — INTÉRÊT</div>
+  <div class="aida-text">
+    Le sac Geestock se fixe magnétiquement à n'importe quelle surface métallique. Machine, rack, casier — 1 seconde, zéro effort.
+  </div>
+
+  <div class="aida-letter">D — DÉSIR</div>
+  <div class="aida-text">
+    <ul class="bullet-list">
+      <li>Aimant ultra-puissant (tient 2kg)</li>
+      <li>Compatible toutes gourdes</li>
+      <li>Matière imperméable</li>
+      <li>Poche téléphone accès rapide</li>
+    </ul>
+  </div>
+
+  <div class="aida-letter">A — ACTION</div>
+  <div class="aida-text" style="border:none;margin-bottom:0;padding-bottom:0;">
+    Livraison offerte — Stock limité<br>
+    <span class="price-final">29,99€</span>
+    <span class="price-old">49,99€</span>
+  </div>
+
+  <button class="copy-btn" onclick="copyCopy(this)">
+    <span>📋</span> Copier le texte d'annonce
+  </button>
+</div>
+
+<div class="info-panel">
+  <div class="info-card">
+    <h3>Versions alternatives à tester</h3>
+    <p><strong>Hook version 2 (curiosité) :</strong><br>
+    "Ce sac se fixe magnétiquement aux machines. Les habitués de salle en sont fous."<br><br>
+    <strong>Hook version 3 (social proof) :</strong><br>
+    "⭐⭐⭐⭐⭐ 'Plus jamais ma gourde par terre.' — Client Geestock"</p>
+    <div class="tag-row">
+      <span class="tag tag-green">Tester 2 hooks différents</span>
+    </div>
+  </div>
+  <div class="info-card">
+    <h3>Règles du document à respecter</h3>
+    <p>• Changer le hook en priorité si CTR &lt; 0.8%<br>
+    • Si CTR bon mais CVR faible → problème landing page, pas le copy<br>
+    • Fréquence &gt; 4 = refresh le texte d'annonce aussi</p>
+    <div class="tag-row">
+      <span class="tag tag-red">CTR cible &gt; 1.5%</span>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- RETARGETING -->
+
+<div class="panel" id="panel-retarget">
+  <div class="section-label">Campagne 2 — 1€/jour</div>
+  <div class="section-title">Retargeting <span>visiteurs</span></div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Audience</div>
+      <div class="kpi-value">0-14j</div>
+      <div class="kpi-sub">Visiteurs site</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Budget</div>
+      <div class="kpi-value">1€</div>
+      <div class="kpi-sub">Par jour</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Angle</div>
+      <div class="kpi-value">URGENCE</div>
+      <div class="kpi-sub">+ Preuve sociale</div>
+    </div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone retarget-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="carousel" id="carousel4">
+          <div class="slide active" style="background:linear-gradient(135deg,#0a0a1a,#10102d);padding:20px;">
+            <div class="star-row">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"J'aurais dû acheter plus tôt. Depuis que j'ai le sac Geestock, je perds plus de temps entre mes séries. L'aimant tient vraiment."</div>
+            <div class="review-author">— Thomas R., client vérifié ✓</div>
+          </div>
+          <div class="slide" style="background:#0d1a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+            <div style="font-size:40px;">⏰</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--red);letter-spacing:2px;">STOCK LIMITÉ</div>
+            <div style="font-size:12px;color:#aaa;text-align:center;">Tu avais regardé le sac Geestock.<br>Il reste quelques unités à ce prix.</div>
+            <div style="background:var(--accent);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:18px;padding:8px 20px;border-radius:6px;letter-spacing:2px;margin-top:8px;">29,99€ → COMMANDER</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="dots4">
+        <div class="dot active" onclick="goToSlide('carousel4','dots4',0)"></div>
+        <div class="dot" onclick="goToSlide('carousel4','dots4',1)"></div>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn" onclick="prevSlide('carousel4','dots4',2)">←</button>
+        <button class="nav-btn" onclick="nextSlide('carousel4','dots4',2)">→</button>
+      </div>
+      <div class="phone-ig-bar">
+        <div class="ig-username">geestock.fr · Sponsorisé</div>
+        <div class="ig-caption">Tu l'avais vu. Il en reste. ⏰</div>
+        <div class="ig-cta-btn">FINALISER MA COMMANDE</div>
+      </div>
+    </div>
+
+```
+<div class="info-panel">
+  <div class="info-card">
+    <h3>Logique de ce créatif</h3>
+    <p>Ces personnes connaissent déjà le produit — elles ont visité ton site. L'objectif n'est pas d'expliquer le produit mais de créer l'urgence et lever le doute avec une preuve sociale.</p>
+    <div class="tag-row">
+      <span class="tag tag-green">Urgence</span>
+      <span class="tag tag-green">Social proof</span>
+      <span class="tag tag-red">Exclure acheteurs</span>
+    </div>
+  </div>
+  <div class="info-card">
+    <h3>Règle importante</h3>
+    <p>Ce créatif ne fonctionne que si le <strong>Pixel Meta est bien installé</strong> et que tu as l'événement <code>ViewContent</code> qui se déclenche correctement sur ta page produit.<br><br>Sans ça, l'audience retargeting sera vide ou inexacte.</p>
+  </div>
+  <div class="info-card">
+    <h3>Texte d'annonce retargeting</h3>
+    <p style="font-style:italic;color:#ccc;">"Tu avais regardé le sac Geestock. Il reste quelques unités à 29,99€.<br><br>⭐⭐⭐⭐⭐ Déjà adopté par des centaines de pratiquants en salle.<br><br>Livraison offerte — expédié sous 24h."</p>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<script>
+  const currentSlides = { carousel1: 0, carousel3: 0, carousel4: 0 };
+
+  function showTab(id) {
+    document.querySelectorAll('.tab').forEach((t,i) => {
+      const ids = ['c1','c2','c3','aida','retarget'];
+      t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+
+  function goToSlide(carouselId, dotsId, index) {
+    const carousel = document.getElementById(carouselId);
+    const dots = document.getElementById(dotsId);
+    const slides = carousel.querySelectorAll('.slide');
+    const dotEls = dots.querySelectorAll('.dot');
+    slides.forEach((s,i) => s.classList.toggle('active', i === index));
+    dotEls.forEach((d,i) => d.classList.toggle('active', i === index));
+    currentSlides[carouselId] = index;
+  }
+
+  function nextSlide(carouselId, dotsId, total) {
+    const next = (currentSlides[carouselId] + 1) % total;
+    goToSlide(carouselId, dotsId, next);
+  }
+
+  function prevSlide(carouselId, dotsId, total) {
+    const prev = (currentSlides[carouselId] - 1 + total) % total;
+    goToSlide(carouselId, dotsId, prev);
+  }
+
+  function copyCopy(btn) {
+    const text = `Ta gourde qui tombe en plein set, c'est fini.
+
+Le sac Geestock se fixe magnétiquement à n'importe quelle surface métallique. Machine, rack, casier — 1 seconde, zéro effort.
+
+✓ Aimant ultra-puissant (tient 2kg)
+✓ Compatible toutes gourdes
+✓ Matière imperméable
+✓ Poche téléphone accès rapide
+
+Livraison offerte — Stock limité
+29,99€ au lieu de 49,99€`;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<span>✓</span> Copié !';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span>📋</span> Copier le texte d\'annonce';
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
