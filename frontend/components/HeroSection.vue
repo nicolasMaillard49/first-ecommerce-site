@@ -91,9 +91,9 @@
           <!-- Product image -->
           <div class="relative motion-safe:animate-float">
             <img
-              src="/images/product/product-1.jpg"
+              src="/images/product/product-7.png"
               alt="Geestock Sac Magnetique pour Bouteille"
-              class="w-full max-w-md lg:max-w-lg xl:max-w-xl rounded-3xl shadow-2xl shadow-black/40"
+              class="w-full max-w-md lg:max-w-lg xl:max-w-xl rounded-3xl shadow-2xl shadow-black/40 aspect-square object-cover"
               width="600"
               height="600"
               fetchpriority="high"

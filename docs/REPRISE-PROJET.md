@@ -1,7 +1,7 @@
 # Geestock - Reprise du Projet
 
 > Document de reprise pour continuer le developpement sur un autre poste.
-> Derniere mise a jour : 26 mars 2026
+> Derniere mise a jour : 27 mars 2026
     
 ---
 
@@ -9,7 +9,7 @@
 
 **Geestock** est un site e-commerce mono-produit (dropshipping) pour un sac magnetique pour bouteille.
 
-- **Produit** : Sac Magnetique pour Bouteille - 29,99 EUR (prix barre 49,99 EUR, -40%)
+- **Produit** : Sac Magnetique pour Bouteille - 29,99 EUR (prix barre 49,99 EUR, -40%) — cout produit : 12 EUR
 - **Packs** : Solo (29,99 EUR), Duo (49,99 EUR, -17%), Equipe (99,99 EUR, -33%)
 - **Langue** : Francais uniquement
 - **Domaine cible** : geestock.fr
@@ -94,7 +94,7 @@ first-ecommerce-site/
     │   └── admin.ts            # Protection routes admin (redirect si non auth)
     ├── components/
     │   ├── SiteNavbar.vue      # Navbar flottante + mobile slide-in + lien "Suivre ma commande"
-    │   ├── HeroSection.vue     # Hero 2 colonnes, badge social proof, LiveViewers, bouton Decouvrir
+    │   ├── HeroSection.vue     # Hero 2 colonnes, badge social proof, LiveViewers, bouton Decouvrir (image product-7.png)
     │   ├── ProblemSection.vue  # Avant/Apres avec cartes gradient
     │   ├── FeaturesSection.vue # 3 colonnes, 6 features, hover glow
     │   ├── GallerySection.vue  # Galerie zoom, fleches, keyboard nav (images locales)
@@ -104,7 +104,7 @@ first-ecommerce-site/
     │   ├── LiveViewers.vue     # Widget "X personnes regardent ce produit"
     │   ├── PurchaseNotification.vue  # Toast fake "Thomas de Lyon vient de commander" (20s)
     │   ├── FaqSection.vue      # Accordion FAQ, 6 questions
-    │   └── SiteFooter.vue      # 4 colonnes, paiement (Visa/MC/Stripe/ApplePay/GooglePay/SamsungPay), social, legal
+    │   └── SiteFooter.vue      # 4 colonnes, paiement (Visa/MC/Stripe/ApplePay/GooglePay/SamsungPay), social, legal, JSON-LD Organization
     ├── pages/
     │   ├── index.vue           # Page principale (toutes les sections + notifications)
     │   ├── success.vue         # Page post-paiement (n° commande cliquable, lien suivi, bouton recommander)
@@ -120,7 +120,7 @@ first-ecommerce-site/
     │       └── product.vue     # Edition produit (nom, description, prix, images, videos sociales, URL fournisseur)
     ├── tests/mocks/            # Mocks Nuxt pour Vitest (imports.ts, app.ts)
     └── public/
-        └── images/product/     # Images produit locales (product-1.jpg a product-6.jpg)
+        └── images/product/     # Images produit locales (product-1.jpg, product-2 a product-7.png)
 ```
 
 ---
@@ -287,7 +287,7 @@ cd frontend && npm run test:run  # 10 tests Vitest
 - [x] **Workflow fournisseur AliExpress** : onglets (A commander / A expedier / Terminees), copie adresse client, lien AliExpress avec quantite auto, saisie n° commande, auto-avancement statut (PAID→PROCESSING→SHIPPED)
 - [x] **Accessibilite modal** : role="dialog", aria-modal, aria-labelledby, fermeture Escape, labels lies aux inputs, cibles tactiles 44px+, feedback succes sur sauvegardes
 - [x] Footer : icones paiement Visa, Mastercard, Stripe, Apple Pay, Google Pay, Samsung Pay
-- [x] SEO : meta OG/Twitter, JSON-LD Product schema, canonical, robots.txt
+- [x] SEO : meta OG/Twitter, JSON-LD Product schema + FAQPage schema + Organization schema, canonical, robots.txt
 - [x] Route rules : SWR caching, admin en CSR only
 - [x] Gestion erreurs reseau (ERR_CONNECTION_REFUSED)
 - [x] Images produit locales (plus de hotlinking AliExpress)
@@ -381,7 +381,7 @@ npx nest build && node dist/src/main.js
 - [ ] Systeme de parrainage (code referral, reduction pour parrain + filleul)
 - [ ] Deploiement (VPS, Vercel, Railway, etc.)
 - [ ] Nom de domaine + SSL
-- [ ] Analytics (GA4, Meta Pixel)
+- [ ] Analytics (GA4, Meta Pixel) — voir `docs/strategie-pub-meta-ads.md`
 - [ ] Tests E2E (Playwright)
 - [ ] Migrer les videos sociales de localStorage vers la BDD
 - [x] ~~Ajouter champs fournisseur dans schema Prisma + admin (supplierOrderId, supplierUrl sur Order, supplierUrl sur Product)~~
@@ -418,6 +418,29 @@ npx nest build && node dist/src/main.js
 **Fichiers modifies** :
 - `frontend/assets/css/main.css` — ajout classe `.scrollbar-brand` (conserve)
 - `frontend/components/SocialVideoSection.vue` — refonte complete
+
+### 27 mars 2026
+
+**Strategie publicitaire Meta Ads** :
+- Redaction de `docs/strategie-pub-meta-ads.md` : strategie complete Meta Ads (budget 250EUR/mois, structure campagnes, creatifs photo, protocole de test, metriques/seuils, plan de scaling)
+- Mise a jour cout produit a 12EUR (marge avant pub ~14EUR, CPA max ~7EUR, ~36 ventes/mois pour rentabilite)
+
+**SEO — schema Organization** :
+- Ajout JSON-LD Organization dans `SiteFooter.vue` (nom, url, logo, contactPoint email, langue francaise, sameAs pret pour liens sociaux)
+- Audit SEO : score 9-10/10 — FAQPage schema et h1 sur suivi.vue deja presents
+
+**Image produit hero** :
+- Nouvelle image renommee `product-7.png` (anciennement fichier ChatGPT)
+- `HeroSection.vue` utilise product-7.png comme visuel principal (aspect-square + object-cover)
+- `OrderSection.vue` : suppression du scale-90 sur l'image produit, ajout `object-[center_30%]` pour cadrage optimal
+
+**Fichiers modifies** :
+- `docs/strategie-pub-meta-ads.md` — nouveau fichier strategie pub
+- `docs/REPRISE-PROJET.md` — mise a jour
+- `frontend/components/SiteFooter.vue` — ajout JSON-LD Organization
+- `frontend/components/HeroSection.vue` — nouvelle image hero product-7.png
+- `frontend/components/OrderSection.vue` — cadrage image produit
+- `frontend/public/images/product/product-7.png` — nouvelle image produit
 
 ---
 
@@ -474,3 +497,5 @@ Les documents suivants sont dans `docs/recommendations/` :
 - `product-innovation.md` — Idees d'innovation produit
 - `testing-strategy.md` — Strategie de tests
 - `devops-checklist.md` — Checklist DevOps et deploiement
+
+Le document `docs/strategie-pub-meta-ads.md` contient la strategie Meta Ads (budget 250EUR/mois, structure campagnes, creatifs, protocole de test, metriques, scaling).

@@ -168,4 +168,26 @@ const scrollToSection = (id: string) => {
     el.scrollIntoView({ behavior: 'smooth' })
   }
 }
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Geestock',
+        url: 'https://geestock.fr',
+        logo: 'https://geestock.fr/logo.png',
+        contactPoint: {
+          '@type': 'ContactPoint',
+          email: 'contact@geestock.fr',
+          contactType: 'customer service',
+          availableLanguage: 'French',
+        },
+        sameAs: [],
+      }),
+    },
+  ],
+})
 </script>

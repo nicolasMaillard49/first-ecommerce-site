@@ -37,7 +37,7 @@
           <img
             :src="productImage"
             alt="Geestock Sac Magnetique pour Bouteille"
-            class="w-full h-full object-cover scale-90 transition-transform duration-500 group-hover:scale-95"
+            class="w-full h-full object-cover object-[center_30%] transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />
           <div class="absolute top-4 right-4 bg-red-500/90 text-white text-sm font-bold px-3 py-1.5 rounded-xl">
