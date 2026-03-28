@@ -26,7 +26,14 @@
       "Bash(mv:*)",
       "Bash(netstat:*)",
       "Bash(taskkill:*)",
-      "Bash(tasklist:*)"
+      "Bash(tasklist:*)",
+      "Bash(grep:*)",
+      "Bash(DATABASE_URL=\"postgresql://postgres:YaVBAYgVgZaqSfIvbNkJKQwZXkDEWQGx@gondola.proxy.rlwy.net:48363/railway\" npx tsx:*)",
+      "Bash(DATABASE_URL=\"postgresql://postgres:YaVBAYgVgZaqSfIvbNkJKQwZXkDEWQGx@gondola.proxy.rlwy.net:48363/railway\" ADMIN_EMAIL=\"admin@clipbag.shop\" ADMIN_PASSWORD=\"admin123\" npx tsx:*)",
+      "WebFetch(domain:first-ecommerce-site-production.up.railway.app)",
+      "WebFetch(domain:first-ecommerce-site.vercel.app)",
+      "WebFetch(domain:first-ecommerce-site-git-main-nicolasmaillard49s-projects.vercel.app)",
+      "WebFetch(domain:clipbag.shop)"
     ]
   }
 }

@@ -140,7 +140,7 @@
             role="tab"
             :aria-selected="idx === current"
             :aria-label="`Video ${idx + 1}`"
-            @click="current = idx"
+            @click="current = idx; startAutoplay()"
           />
         </div>
       </div>
@@ -154,11 +154,27 @@ import { h } from 'vue'
 const stageRef = ref<HTMLElement | null>(null)
 const current = ref(3)
 
+// ---- Auto-play ----
+let autoplayTimer: ReturnType<typeof setInterval> | null = null
+
+const startAutoplay = () => {
+  stopAutoplay()
+  autoplayTimer = setInterval(() => navigate(1), 3500)
+}
+
+const stopAutoplay = () => {
+  if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null }
+}
+
+onMounted(() => startAutoplay())
+onUnmounted(() => stopAutoplay())
+
 // ---- Navigation ----
 const navigate = (dir: number) => {
   const len = parsedVideos.value.length
   if (!len) return
   current.value = (current.value + dir + len) % len
+  startAutoplay() // reset timer on manual nav
 }
 
 // ---- Touch / Swipe ----
@@ -168,13 +184,13 @@ let dx = 0
 const onTouchStart = (e: TouchEvent) => { tx0 = e.touches[0].clientX; dx = 0 }
 const onTouchMove = (e: TouchEvent) => { dx = e.touches[0].clientX - tx0 }
 const onTouchEnd = () => {
-  if (Math.abs(dx) > 40) navigate(dx < 0 ? 1 : -1)
+  if (Math.abs(dx) > 40) navigate(dx < 0 ? 1 : -1) // navigate already resets autoplay
   dx = 0
 }
 
 // ---- Card click ----
 const onCardClick = (idx: number, url: string) => {
-  if (idx !== current.value) { current.value = idx; return }
+  if (idx !== current.value) { current.value = idx; startAutoplay(); return }
   window.open(url, '_blank', 'noopener,noreferrer')
 }
 

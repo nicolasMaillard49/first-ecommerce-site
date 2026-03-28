@@ -106,7 +106,15 @@ const zoomed = ref(false)
 const zoomX = ref(50)
 const zoomY = ref(50)
 
-const images = computed(() => productStore.product?.images || [])
+const images = computed(() => productStore.product?.images?.length ? productStore.product.images : [
+  '/images/product/product-7.png',
+  '/images/product/product-1.jpg',
+  '/images/product/product-2.png',
+  '/images/product/product-3.png',
+  '/images/product/product-4.png',
+  '/images/product/product-5.png',
+  '/images/product/product-6.png',
+])
 
 const nextImage = () => {
   activeIndex.value = (activeIndex.value + 1) % images.value.length

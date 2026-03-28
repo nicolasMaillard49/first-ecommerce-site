@@ -59,10 +59,22 @@ const productStore = useProductStore()
 const { track: fbTrack } = useMetaPixel()
 
 await callOnce(async () => {
-  await productStore.fetchProduct()
+  try {
+    await productStore.fetchProduct()
+  } catch (e) {
+    console.error('[SSR] Failed to fetch product:', e)
+  }
 })
 
-onMounted(() => {
+// Retry on client if SSR fetch failed
+onMounted(async () => {
+  if (!productStore.product) {
+    try {
+      await productStore.fetchProduct()
+    } catch (e) {
+      console.error('[Client] Failed to fetch product:', e)
+    }
+  }
   const p = productStore.product
   if (p) {
     fbTrack('ViewContent', {
