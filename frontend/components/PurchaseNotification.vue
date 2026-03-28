@@ -1,37 +1,41 @@
 <template>
   <Transition
     enter-active-class="transition-all duration-500 ease-out"
-    :enter-from-class="isMobile ? '-translate-y-full opacity-0' : 'translate-y-full opacity-0'"
-    :enter-to-class="isMobile ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'"
+    enter-from-class="translate-y-full opacity-0"
+    enter-to-class="translate-y-0 opacity-100"
     leave-active-class="transition-all duration-300 ease-in"
-    :leave-from-class="isMobile ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'"
-    :leave-to-class="isMobile ? '-translate-y-full opacity-0' : 'translate-y-full opacity-0'"
+    leave-from-class="translate-y-0 opacity-100"
+    leave-to-class="translate-y-full opacity-0"
   >
-    <!-- Mobile: slim top banner / Desktop: bottom-left card -->
     <div
       v-if="visible"
-      :class="[
-        'fixed z-50 backdrop-blur border shadow-lg transition-colors',
-        isMobile
-          ? 'top-0 inset-x-0 bg-surface/90 border-b border-surface-lighter px-4 py-2.5 flex items-center gap-2.5'
-          : 'bottom-6 left-6 bg-surface-light/90 border-surface-lighter rounded-2xl px-5 py-4 flex items-center gap-3 max-w-sm'
-      ]"
+      class="fixed bottom-24 sm:bottom-6 left-4 right-4 sm:left-6 sm:right-auto z-50 bg-surface-light/95 backdrop-blur-lg border border-surface-lighter rounded-2xl shadow-2xl shadow-black/30 px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
     >
-      <span :class="isMobile ? 'text-base shrink-0' : 'text-2xl shrink-0'">🛒</span>
-      <p :class="[
-        'text-white/90 leading-snug flex-1 min-w-0',
-        isMobile ? 'text-xs truncate' : 'text-sm'
-      ]">
-        <span class="font-semibold text-white">{{ currentName }}</span>
-        de {{ currentCity }} —
-        <span class="text-brand font-semibold">il y a {{ currentMinutes }} min</span>
-      </p>
+      <!-- Accent bar left -->
+      <div class="absolute left-0 top-3 bottom-3 w-1 rounded-full bg-brand"></div>
+
+      <!-- Avatar icon -->
+      <div class="shrink-0 w-10 h-10 rounded-full bg-brand/15 border border-brand/25 flex items-center justify-center">
+        <span class="text-lg">🛒</span>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm text-white font-semibold leading-tight truncate">
+          {{ currentName }} de {{ currentCity }}
+        </p>
+        <p class="text-xs text-gray-400 mt-0.5">
+          A commandé un ClipBag · <span class="text-brand font-medium">il y a {{ currentMinutes }} min</span>
+        </p>
+      </div>
+
+      <!-- Close -->
       <button
-        class="shrink-0 text-white/40 hover:text-white/80 transition-colors cursor-pointer"
+        class="shrink-0 text-white/30 hover:text-white/70 transition-colors cursor-pointer p-1"
         aria-label="Fermer"
         @click="dismiss"
       >
-        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -53,15 +57,16 @@ const cities = [
   'Toulon', 'Dijon', 'Angers', 'Reims', 'Brest', 'Metz', 'Clermont-Ferrand',
 ]
 
-const ROTATION_INTERVAL = 20_000
+const SHOW_DURATION = 6000
+const ROTATION_INTERVAL = 25_000
 
 const visible = ref(false)
-const isMobile = ref(false)
 const currentName = ref('')
 const currentCity = ref('')
 const currentMinutes = ref(1)
 
 let rotationTimer: ReturnType<typeof setInterval> | null = null
+let dismissTimer: ReturnType<typeof setTimeout> | null = null
 
 const pickRandom = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
 
@@ -71,47 +76,38 @@ const generateNotification = () => {
   currentMinutes.value = Math.floor(Math.random() * 15) + 1
 }
 
+const autoDismiss = () => {
+  if (dismissTimer) clearTimeout(dismissTimer)
+  dismissTimer = setTimeout(() => { visible.value = false }, SHOW_DURATION)
+}
+
 const showNext = () => {
   visible.value = false
   setTimeout(() => {
     generateNotification()
     visible.value = true
-    // Auto-dismiss after 5s on mobile to stay non-intrusive
-    if (isMobile.value) {
-      setTimeout(() => { visible.value = false }, 5000)
-    }
-  }, 400)
+    autoDismiss()
+  }, 500)
 }
 
 const dismiss = () => {
   visible.value = false
-}
-
-const checkMobile = () => {
-  isMobile.value = window.innerWidth < 640
+  if (dismissTimer) { clearTimeout(dismissTimer); dismissTimer = null }
 }
 
 onMounted(() => {
-  checkMobile()
-  window.addEventListener('resize', checkMobile, { passive: true })
-
-  // Delay first show so it doesn't appear instantly on page load
+  // First notification after 4s delay
   setTimeout(() => {
     generateNotification()
     visible.value = true
-    if (isMobile.value) {
-      setTimeout(() => { visible.value = false }, 5000)
-    }
-  }, 3000)
+    autoDismiss()
+  }, 4000)
 
   rotationTimer = setInterval(showNext, ROTATION_INTERVAL)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile)
-  if (rotationTimer) {
-    clearInterval(rotationTimer)
-    rotationTimer = null
-  }
+  if (rotationTimer) clearInterval(rotationTimer)
+  if (dismissTimer) clearTimeout(dismissTimer)
 })
 </script>

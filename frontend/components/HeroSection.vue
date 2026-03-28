@@ -44,6 +44,10 @@
             </span>
           </h1>
 
+          <p class="text-sm sm:text-lg text-gray-400 mb-5 sm:mb-6 max-w-md mx-auto lg:mx-0">
+            Avec ClipBag, clipse ton sac partout en salle, en rando, au quotidien.
+          </p>
+
           <!-- Description — hidden on mobile to save space, image speaks louder -->
           <p class="hidden sm:block text-xl text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
             Le sac magnetique qui se fixe en un clic sur toute surface metallique. Ultra leger, indestructible, indispensable.
