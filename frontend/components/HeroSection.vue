@@ -9,10 +9,16 @@
 
     <!-- Content -->
     <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full pt-20 pb-16 sm:pt-32 sm:pb-28">
-      <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
 
-        <!-- Left: Text content -->
+      <!--
+        DESKTOP: classic 2-col (text | image)
+        MOBILE:  badges → title → IMAGE → price → CTA → trust
+      -->
+      <div class="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
+
+        <!-- ===== Text top (mobile) / Left col (desktop) ===== -->
         <div class="text-center lg:text-left">
+
           <!-- Social proof badge -->
           <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
             <span class="flex h-2 w-2 relative">
@@ -23,11 +29,12 @@
           </div>
 
           <!-- Live viewers -->
-          <div class="mb-5 sm:mb-8">
+          <div class="mb-4 sm:mb-8">
             <LiveViewers />
           </div>
 
-          <h1 class="font-display font-black text-[1.75rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-4 sm:mb-6">
+          <!-- H1 -->
+          <h1 class="font-display font-black text-[1.75rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-5 sm:mb-6">
             Plus Jamais Les Mains
             <span class="text-brand relative">
               Encombrees
@@ -37,9 +44,44 @@
             </span>
           </h1>
 
-          <p class="text-base sm:text-xl text-gray-400 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+          <!-- Description — hidden on mobile to save space, image speaks louder -->
+          <p class="hidden sm:block text-xl text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
             Le sac magnetique qui se fixe en un clic sur toute surface metallique. Ultra leger, indestructible, indispensable.
           </p>
+
+          <!-- ===== PRODUCT IMAGE — MOBILE ONLY (between title and price) ===== -->
+          <div class="lg:hidden relative flex items-center justify-center mb-6">
+            <div class="absolute inset-0 bg-brand/10 rounded-full blur-[60px] scale-75"></div>
+            <div class="relative w-full max-w-[300px] mx-auto motion-safe:animate-float">
+              <img
+                :src="heroImage"
+                alt="ClipBag Sac Magnetique pour Bouteille"
+                class="w-full rounded-3xl shadow-2xl shadow-black/40 aspect-square object-cover"
+                width="600"
+                height="600"
+                fetchpriority="high"
+                loading="eager"
+              />
+              <!-- Badge overlay -->
+              <div class="absolute bottom-3 left-3 bg-surface-light/90 backdrop-blur-sm border border-surface-lighter rounded-xl p-2.5 shadow-xl">
+                <div class="flex items-center gap-2">
+                  <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-[10px] font-bold text-brand">T</div>
+                    <div class="w-6 h-6 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-[10px] font-bold text-brand">C</div>
+                    <div class="w-6 h-6 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-[10px] font-bold text-brand">M</div>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-0.5">
+                      <svg v-for="s in 5" :key="s" class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-0.5">4.9/5 (2 000+ avis)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Price display -->
           <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8 justify-center lg:justify-start">
@@ -85,12 +127,10 @@
           </div>
         </div>
 
-        <!-- Right: Product image -->
-        <div class="relative flex items-center justify-center">
-          <!-- Glow behind product -->
+        <!-- ===== Right col: Product image — DESKTOP ONLY ===== -->
+        <div class="hidden lg:flex relative items-center justify-center">
           <div class="absolute inset-0 bg-brand/10 rounded-full blur-[80px] scale-75"></div>
-          <!-- Product image -->
-          <div class="relative w-full max-w-[280px] sm:max-w-md lg:max-w-lg xl:max-w-xl mx-auto motion-safe:animate-float">
+          <div class="relative w-full max-w-lg xl:max-w-xl mx-auto motion-safe:animate-float">
             <img
               :src="heroImage"
               alt="ClipBag Sac Magnetique pour Bouteille"
@@ -100,30 +140,31 @@
               fetchpriority="high"
               loading="eager"
             />
-            <!-- Badge overlay — inside image bounds -->
-            <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-surface-light/90 backdrop-blur-sm border border-surface-lighter rounded-xl sm:rounded-2xl p-2.5 sm:p-4 shadow-xl">
-              <div class="flex items-center gap-2 sm:gap-3">
+            <!-- Badge overlay -->
+            <div class="absolute bottom-4 left-4 bg-surface-light/90 backdrop-blur-sm border border-surface-lighter rounded-2xl p-4 shadow-xl">
+              <div class="flex items-center gap-3">
                 <div class="flex -space-x-2">
-                  <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-[10px] sm:text-xs font-bold text-brand">T</div>
-                  <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-[10px] sm:text-xs font-bold text-brand">C</div>
-                  <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-[10px] sm:text-xs font-bold text-brand">M</div>
+                  <div class="w-8 h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-xs font-bold text-brand">T</div>
+                  <div class="w-8 h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-xs font-bold text-brand">C</div>
+                  <div class="w-8 h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-xs font-bold text-brand">M</div>
                 </div>
                 <div>
                   <div class="flex items-center gap-0.5">
-                    <svg v-for="s in 5" :key="s" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg v-for="s in 5" :key="s" class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   </div>
-                  <p class="text-[10px] sm:text-xs text-gray-400 mt-0.5">4.9/5 (2 000+ avis)</p>
+                  <p class="text-xs text-gray-400 mt-0.5">4.9/5 (2 000+ avis)</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- Scroll indicator — full-width centered -->
+    <!-- Scroll indicator -->
     <button
       class="absolute bottom-3 sm:bottom-8 inset-x-0 z-30 flex flex-col items-center gap-1 text-gray-600 motion-safe:animate-bounce cursor-pointer hover:text-brand transition-colors duration-200 focus:outline-none"
       aria-label="Decouvrir le produit"
