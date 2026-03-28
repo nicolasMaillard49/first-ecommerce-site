@@ -1,15 +1,15 @@
 <template>
   <Transition
     enter-active-class="transition-all duration-500 ease-out"
-    enter-from-class="translate-y-full opacity-0"
+    enter-from-class="-translate-y-full opacity-0"
     enter-to-class="translate-y-0 opacity-100"
     leave-active-class="transition-all duration-300 ease-in"
     leave-from-class="translate-y-0 opacity-100"
-    leave-to-class="translate-y-full opacity-0"
+    leave-to-class="-translate-y-full opacity-0"
   >
     <div
       v-if="visible"
-      class="fixed bottom-24 sm:bottom-6 left-4 right-4 sm:left-6 sm:right-auto z-50 bg-surface-light/95 backdrop-blur-lg border border-surface-lighter rounded-2xl shadow-2xl shadow-black/30 px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
+      class="fixed top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-auto z-50 bg-surface-light/95 backdrop-blur-lg border border-surface-lighter rounded-2xl shadow-2xl shadow-black/30 px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
     >
       <!-- Accent bar left -->
       <div class="absolute left-0 top-3 bottom-3 w-1 rounded-full bg-brand"></div>
