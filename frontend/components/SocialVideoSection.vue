@@ -194,9 +194,16 @@ const onCardClick = (idx: number, url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer')
 }
 
-// ---- 3D positioning ----
+// ---- 3D positioning (infinite wrap-around) ----
 const cardStyle = (idx: number) => {
-  const diff = idx - current.value
+  const len = parsedVideos.value.length
+  if (!len) return { opacity: 0, pointerEvents: 'none' as const, transform: 'scale(0)' }
+
+  // Circular shortest-path distance for infinite feel
+  let diff = idx - current.value
+  if (diff > len / 2) diff -= len
+  if (diff < -len / 2) diff += len
+
   const abs = Math.abs(diff)
 
   // Off-screen cards

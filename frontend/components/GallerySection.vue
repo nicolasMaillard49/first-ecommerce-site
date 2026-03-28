@@ -12,11 +12,11 @@
         </p>
       </div>
 
-      <!-- Main image -->
+      <!-- Main image — no card background -->
       <div
-        class="animate-on-scroll-scale relative aspect-[4/3] sm:aspect-[16/10] bg-surface rounded-3xl overflow-hidden mb-4 sm:mb-6 border border-surface-lighter group cursor-pointer"
-        @mouseenter="zoomed = true"
-        @mouseleave="zoomed = false"
+        class="animate-on-scroll-scale relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden mb-4 sm:mb-6 group cursor-pointer"
+        @mouseenter="zoomed = true; stopAutoplay()"
+        @mouseleave="zoomed = false; startAutoplay()"
         @mousemove="handleZoomMove"
       >
         <!-- Navigation arrows -->
@@ -82,7 +82,7 @@
               : 'border-2 border-surface-lighter hover:border-brand/40 opacity-60 hover:opacity-100',
           ]"
           :aria-label="`Voir image ${idx + 1}`"
-          @click="activeIndex = idx"
+          @click="goToImage(idx)"
         >
           <img
             :src="image"
@@ -116,12 +116,30 @@ const images = computed(() => productStore.product?.images?.length ? productStor
   '/images/product/product-6.png',
 ])
 
+// ---- Auto-play ----
+let autoplayTimer: ReturnType<typeof setInterval> | null = null
+
+const startAutoplay = () => {
+  stopAutoplay()
+  autoplayTimer = setInterval(() => nextImage(), 4000)
+}
+
+const stopAutoplay = () => {
+  if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null }
+}
+
 const nextImage = () => {
   activeIndex.value = (activeIndex.value + 1) % images.value.length
 }
 
 const prevImage = () => {
   activeIndex.value = (activeIndex.value - 1 + images.value.length) % images.value.length
+  startAutoplay()
+}
+
+const goToImage = (idx: number) => {
+  activeIndex.value = idx
+  startAutoplay()
 }
 
 const handleZoomMove = (e: MouseEvent) => {
@@ -134,15 +152,17 @@ const handleZoomMove = (e: MouseEvent) => {
 
 // Keyboard navigation
 const handleKeyDown = (e: KeyboardEvent) => {
-  if (e.key === 'ArrowLeft') prevImage()
-  if (e.key === 'ArrowRight') nextImage()
+  if (e.key === 'ArrowLeft') { prevImage(); startAutoplay() }
+  if (e.key === 'ArrowRight') { nextImage(); startAutoplay() }
 }
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeyDown)
+  startAutoplay()
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown)
+  stopAutoplay()
 })
 </script>
