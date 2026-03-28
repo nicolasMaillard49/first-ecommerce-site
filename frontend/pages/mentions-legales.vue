@@ -7,7 +7,7 @@ useSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `https://clipbag.fr${useRoute().path}` }],
+  link: [{ rel: 'canonical', href: `https://clipbag.shop${useRoute().path}` }],
 })
 </script>
 
@@ -33,7 +33,7 @@ useHead({
         <section>
           <h2 class="font-display font-bold text-xl text-white mb-4">1. Éditeur du site</h2>
           <p>
-            Le site <strong class="text-white">clipbag.fr</strong> est édité par :<br />
+            Le site <strong class="text-white">clipbag.shop</strong> est édité par :<br />
             [Nom de la société ou de l'entrepreneur individuel]<br />
             [Forme juridique] au capital de [montant] euros<br />
             Siège social : [Adresse complète]<br />
@@ -41,7 +41,7 @@ useHead({
             RCS : [Ville] [Numéro RCS]<br />
             Numéro de TVA intracommunautaire : [Numéro TVA]<br />
             Directeur de la publication : [Nom du responsable]<br />
-            Contact : <a href="mailto:contact@clipbag.fr" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.fr</a>
+            Contact : <a href="mailto:contact@clipbag.shop" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.shop</a>
           </p>
         </section>
 
@@ -73,7 +73,7 @@ useHead({
           </p>
           <p class="mt-3">
             Pour exercer ces droits ou pour toute question relative à la protection de vos données, contactez-nous à :
-            <a href="mailto:contact@clipbag.fr" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.fr</a>
+            <a href="mailto:contact@clipbag.shop" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.shop</a>
           </p>
           <p class="mt-3">
             Pour en savoir plus, consultez notre

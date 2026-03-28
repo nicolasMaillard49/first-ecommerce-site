@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:3000/api',
-      siteUrl: 'https://clipbag.fr',
+      siteUrl: 'https://clipbag.shop',
       metaPixelId: '2478874479214730',
     },
   },
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
         { property: 'og:site_name', content: 'ClipBag' },
         { property: 'og:title', content: 'ClipBag - Le Sac Magnétique pour Bouteille' },
         { property: 'og:description', content: 'Libérez vos mains pendant le sport. Fixation magnétique instantanée, ultra léger. -40% : 29,99€.' },
-        { property: 'og:image', content: 'https://clipbag.fr/images/product/product-1.jpg' },
+        { property: 'og:image', content: 'https://clipbag.shop/images/product/product-1.jpg' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'ClipBag - Le Sac Magnétique pour Bouteille' },
         { name: 'twitter:description', content: 'Libérez vos mains pendant le sport. -40% : 29,99€. Livraison gratuite.' },
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     '/success': { ssr: false },
   },
   sitemap: {
-    siteUrl: 'https://clipbag.fr',
+    siteUrl: 'https://clipbag.shop',
     exclude: ['/admin/**', '/success', '/cancel'],
   },
   devServer: {

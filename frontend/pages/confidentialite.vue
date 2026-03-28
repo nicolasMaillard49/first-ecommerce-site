@@ -7,7 +7,7 @@ useSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `https://clipbag.fr${useRoute().path}` }],
+  link: [{ rel: 'canonical', href: `https://clipbag.shop${useRoute().path}` }],
 })
 </script>
 
@@ -113,7 +113,7 @@ useHead({
           </ul>
           <p class="mt-3">
             Pour exercer vos droits, contactez-nous à :
-            <a href="mailto:contact@clipbag.fr" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.fr</a>
+            <a href="mailto:contact@clipbag.shop" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.shop</a>
           </p>
           <p class="mt-3">
             Vous pouvez également introduire une réclamation auprès de la CNIL :

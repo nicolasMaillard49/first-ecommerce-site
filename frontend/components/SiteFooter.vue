@@ -67,7 +67,7 @@
             <a href="/mentions-legales" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Mentions legales</a>
             <a href="/cgv" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Conditions generales de vente</a>
             <a href="/confidentialite" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Politique de confidentialite</a>
-            <a href="mailto:contact@clipbag.fr" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Contact</a>
+            <a href="mailto:contact@clipbag.shop" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Contact</a>
           </nav>
         </div>
 
@@ -177,11 +177,11 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'ClipBag',
-        url: 'https://clipbag.fr',
-        logo: 'https://clipbag.fr/logo.png',
+        url: 'https://clipbag.shop',
+        logo: 'https://clipbag.shop/logo.png',
         contactPoint: {
           '@type': 'ContactPoint',
-          email: 'contact@clipbag.fr',
+          email: 'contact@clipbag.shop',
           contactType: 'customer service',
           availableLanguage: 'French',
         },

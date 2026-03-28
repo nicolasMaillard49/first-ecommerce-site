@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://clipbag.fr/sitemap.xml
+Sitemap: https://clipbag.shop/sitemap.xml

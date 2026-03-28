@@ -7,7 +7,7 @@ useSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `https://clipbag.fr${useRoute().path}` }],
+  link: [{ rel: 'canonical', href: `https://clipbag.shop${useRoute().path}` }],
 })
 
 const { apiFetch } = useApi()

@@ -78,13 +78,13 @@
             Notre equipe est la pour vous aider. N'hesitez pas a nous contacter.
           </p>
           <a
-            href="mailto:contact@clipbag.fr"
+            href="mailto:contact@clipbag.shop"
             class="inline-flex items-center gap-2 bg-surface border border-surface-lighter hover:border-brand/30 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 cursor-pointer hover:bg-surface-lighter/50 group"
           >
             <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            contact@clipbag.fr
+            contact@clipbag.shop
             <svg class="w-4 h-4 text-gray-500 group-hover:text-brand transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>

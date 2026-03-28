@@ -61,7 +61,7 @@ const handleLogin = async () => {
               required
               autocomplete="email"
               class="w-full px-3 py-2.5 bg-surface border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
-              placeholder="admin@clipbag.fr"
+              placeholder="admin@clipbag.shop"
             />
           </div>
 

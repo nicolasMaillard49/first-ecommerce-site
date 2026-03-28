@@ -38,7 +38,7 @@ useSeoMeta({
         </NuxtLink>
       </div>
       <a
-        href="mailto:contact@clipbag.fr"
+        href="mailto:contact@clipbag.shop"
         class="inline-block mt-6 text-sm text-gray-500 hover:text-brand transition-colors duration-200 cursor-pointer"
       >
         Besoin d'aide ? Contactez-nous

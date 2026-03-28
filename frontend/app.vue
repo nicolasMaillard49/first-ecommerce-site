@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
 const productStore = useProductStore()
-const siteUrl = config.public.siteUrl || 'https://clipbag.fr'
+const siteUrl = config.public.siteUrl || 'https://clipbag.shop'
 
 // Build absolute image URLs from product store (fallback to defaults)
 const productImages = computed(() => {
