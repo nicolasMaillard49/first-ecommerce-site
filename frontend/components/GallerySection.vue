@@ -14,7 +14,7 @@
 
       <!-- Main image — no card background -->
       <div
-        class="animate-on-scroll-scale relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden mb-4 sm:mb-6 group cursor-pointer"
+        class="animate-on-scroll-scale relative aspect-[4/3] sm:aspect-[16/10] bg-surface rounded-3xl overflow-hidden mb-4 sm:mb-6 border border-surface-lighter group cursor-pointer"
         @mouseenter="zoomed = true; stopAutoplay()"
         @mouseleave="zoomed = false; startAutoplay()"
         @mousemove="handleZoomMove"
