@@ -100,7 +100,7 @@
               loading="eager"
             />
             <!-- Badge overlay -->
-            <div class="absolute -bottom-4 -left-4 sm:bottom-4 sm:left-4 bg-surface-light/90 backdrop-blur-sm border border-surface-lighter rounded-2xl p-4 shadow-xl">
+            <div class="absolute -bottom-4 left-0 sm:bottom-4 sm:left-4 bg-surface-light/90 backdrop-blur-sm border border-surface-lighter rounded-2xl p-3 sm:p-4 shadow-xl max-w-[calc(100%-1rem)]">
               <div class="flex items-center gap-3">
                 <div class="flex -space-x-2">
                   <div class="w-8 h-8 rounded-full bg-brand/20 border-2 border-surface-light flex items-center justify-center text-xs font-bold text-brand">T</div>
@@ -124,7 +124,7 @@
 
     <!-- Scroll indicator -->
     <button
-      class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-gray-600 motion-safe:animate-bounce cursor-pointer hover:text-brand transition-colors duration-200 focus:outline-none"
+      class="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-gray-600 motion-safe:animate-bounce cursor-pointer hover:text-brand transition-colors duration-200 focus:outline-none"
       aria-label="Decouvrir le produit"
       @click="scrollToDiscover"
     >
