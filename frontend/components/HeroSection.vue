@@ -8,7 +8,7 @@
     <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
 
     <!-- Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full pt-20 pb-16 sm:pt-32 sm:pb-28">
+    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full pt-24 pb-16 sm:pt-32 sm:pb-28">
 
       <!--
         DESKTOP: classic 2-col (text | image)
@@ -101,7 +101,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </button>
-            <span class="text-xs sm:text-sm text-gray-500">Livraison gratuite en France</span>
           </div>
 
           <!-- Trust indicators -->
