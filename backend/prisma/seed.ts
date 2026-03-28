@@ -12,11 +12,11 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   // Seed product
   await prisma.product.upsert({
-    where: { slug: 'geestock-magnetic-bottle-bag' },
+    where: { slug: 'clipbag-magnetic-bottle-bag' },
     update: {},
     create: {
-      name: 'Geestock Sac Magnétique pour Bouteille',
-      slug: 'geestock-magnetic-bottle-bag',
+      name: 'ClipBag - Sac Magnétique pour Bouteille',
+      slug: 'clipbag-magnetic-bottle-bag',
       description:
         "Le sac magnétique révolutionnaire pour vos bouteilles d'eau. Conçu pour les sportifs et aventuriers, il se fixe instantanément grâce à sa technologie magnétique puissante. Libérez vos mains pendant vos séances de sport, randonnées ou déplacements quotidiens.",
       price: 29.99,
@@ -43,18 +43,20 @@ async function main() {
     },
   });
 
-  // Seed admin
-  const passwordHash = await bcrypt.hash('admin123', 10);
+  // Seed admin (uses env vars in production)
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@clipbag.shop';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
   await prisma.admin.upsert({
-    where: { email: 'admin@geestock.fr' },
-    update: {},
+    where: { email: adminEmail },
+    update: { passwordHash },
     create: {
-      email: 'admin@geestock.fr',
+      email: adminEmail,
       passwordHash,
     },
   });
 
-  console.log('Seed completed');
+  console.log(`Seed completed — admin: ${adminEmail}`);
 }
 
 main()
