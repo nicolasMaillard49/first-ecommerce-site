@@ -1,13 +1,13 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Suivi de commande - Geestock',
-  description: 'Suivez votre commande Geestock en temps réel. Entrez votre numéro de commande ou vos coordonnées.',
-  ogTitle: 'Suivi de commande - Geestock',
-  ogDescription: 'Suivez votre commande Geestock en temps réel.',
+  title: 'Suivi de commande - ClipBag',
+  description: 'Suivez votre commande ClipBag en temps réel. Entrez votre numéro de commande ou vos coordonnées.',
+  ogTitle: 'Suivi de commande - ClipBag',
+  ogDescription: 'Suivez votre commande ClipBag en temps réel.',
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+  link: [{ rel: 'canonical', href: `https://clipbag.fr${useRoute().path}` }],
 })
 
 const { apiFetch } = useApi()

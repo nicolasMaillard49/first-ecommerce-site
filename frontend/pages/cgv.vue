@@ -1,13 +1,13 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Conditions Générales de Vente - Geestock',
-  description: 'Conditions générales de vente du site Geestock.fr - Commande, livraison, retours et garanties.',
-  ogTitle: 'CGV - Geestock',
-  ogDescription: 'Conditions générales de vente Geestock',
+  title: 'Conditions Générales de Vente - ClipBag',
+  description: 'Conditions générales de vente du site ClipBag.fr - Commande, livraison, retours et garanties.',
+  ogTitle: 'CGV - ClipBag',
+  ogDescription: 'Conditions générales de vente ClipBag',
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+  link: [{ rel: 'canonical', href: `https://clipbag.fr${useRoute().path}` }],
 })
 </script>
 
@@ -34,7 +34,7 @@ useHead({
           <h2 class="font-display font-bold text-xl text-white mb-4">1. Objet</h2>
           <p>
             Les présentes conditions générales de vente (CGV) régissent les ventes de produits effectuées sur le site
-            <strong class="text-white">geestock.fr</strong>. Toute commande implique l'acceptation sans réserve des présentes CGV.
+            <strong class="text-white">clipbag.fr</strong>. Toute commande implique l'acceptation sans réserve des présentes CGV.
           </p>
         </section>
 
@@ -104,7 +104,7 @@ useHead({
           </p>
           <p class="mt-3">
             Pour exercer ce droit, contactez-nous à
-            <a href="mailto:contact@geestock.fr" class="text-brand hover:text-brand-light transition-colors">contact@geestock.fr</a>
+            <a href="mailto:contact@clipbag.fr" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.fr</a>
             en indiquant votre numéro de commande. Le produit doit être retourné dans son état d'origine, dans un délai de 14 jours suivant la notification de rétractation.
           </p>
           <p class="mt-3">
@@ -132,7 +132,7 @@ useHead({
             Pour toute question ou réclamation, contactez notre service client :
           </p>
           <p class="mt-3">
-            Email : <a href="mailto:contact@geestock.fr" class="text-brand hover:text-brand-light transition-colors">contact@geestock.fr</a><br />
+            Email : <a href="mailto:contact@clipbag.fr" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.fr</a><br />
             Délai de réponse : 48 heures ouvrées maximum
           </p>
         </section>

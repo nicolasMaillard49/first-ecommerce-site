@@ -36,12 +36,15 @@ describe('AdminService', () => {
   });
 
   describe('getDashboard', () => {
-    it('should return dashboard metrics', async () => {
+    it('should return dashboard metrics with monthly profitability data', async () => {
       prisma.order.count
         .mockResolvedValueOnce(50) // totalOrders
         .mockResolvedValueOnce(30); // paidOrders
       prisma.order.aggregate.mockResolvedValue({ _sum: { total: 1500.5 } });
-      prisma.order.findMany.mockResolvedValue([{ id: 'order-1' }]);
+      prisma.order.findMany
+        .mockResolvedValueOnce([{ id: 'order-1' }]) // recentOrders
+        .mockResolvedValueOnce([{ id: 'monthly-1', total: 29.99, items: [{ quantity: 1 }] }]); // monthlyOrders
+      prisma.product.findFirst.mockResolvedValue({ id: 'prod-1', costPrice: 12, price: 29.99 });
 
       const result = await service.getDashboard();
 
@@ -50,6 +53,13 @@ describe('AdminService', () => {
         paidOrders: 30,
         totalRevenue: 1500.5,
         recentOrders: [{ id: 'order-1' }],
+        monthly: {
+          revenue: 29.99,
+          orderCount: 1,
+          unitsSold: 1,
+        },
+        productCostPrice: 12,
+        productPrice: 29.99,
       });
     });
 
@@ -57,10 +67,13 @@ describe('AdminService', () => {
       prisma.order.count.mockResolvedValue(0);
       prisma.order.aggregate.mockResolvedValue({ _sum: { total: null } });
       prisma.order.findMany.mockResolvedValue([]);
+      prisma.product.findFirst.mockResolvedValue(null);
 
       const result = await service.getDashboard();
 
       expect(result.totalRevenue).toBe(0);
+      expect(result.monthly).toEqual({ revenue: 0, orderCount: 0, unitsSold: 0 });
+      expect(result.productCostPrice).toBe(0);
     });
   });
 

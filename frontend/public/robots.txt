@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://geestock.fr/sitemap.xml
+Sitemap: https://clipbag.fr/sitemap.xml

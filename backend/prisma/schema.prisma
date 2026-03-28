@@ -14,7 +14,10 @@ model Product {
   description  String
   price        Float
   comparePrice Float?
+  costPrice    Float       @default(0)
   images       String[]
+  stripeImage  String?
+  orderImage   String?
   variants     Json?
   supplierUrl  String?
   active       Boolean     @default(true)

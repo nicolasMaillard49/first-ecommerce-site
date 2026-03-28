@@ -82,7 +82,12 @@ export class PaymentsService {
             product_data: {
               name: displayName,
               description: product.description,
-              images: [product.images[0]],
+              images: (() => {
+                const img = product.stripeImage || product.images[0];
+                if (!img) return [];
+                const url = img.startsWith('http') ? img : `${this.configService.get('FRONTEND_URL')}${img}`;
+                return [url];
+              })(),
             },
             unit_amount: stripeUnitAmount,
           },

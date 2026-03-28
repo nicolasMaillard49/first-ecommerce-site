@@ -9,7 +9,7 @@
       <div class="text-center mb-12 animate-on-scroll">
         <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Commander</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Commandez Votre <span class="text-brand">Geestock</span>
+          Commandez Votre <span class="text-brand">ClipBag</span>
         </h2>
         <p class="text-gray-400 text-lg max-w-xl mx-auto">
           Profitez de l'offre de lancement. Paiement securise, livraison gratuite.
@@ -36,7 +36,7 @@
         <div class="aspect-[4/3] bg-surface-light rounded-2xl overflow-hidden mb-8 relative group">
           <img
             :src="productImage"
-            alt="Geestock Sac Magnetique pour Bouteille"
+            alt="ClipBag Sac Magnetique pour Bouteille"
             class="w-full h-full object-cover object-[center_30%] transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />
@@ -84,6 +84,39 @@
               <span class="text-brand font-display font-bold text-lg">{{ pack.priceDisplay }}</span>
               <span v-if="pack.oldPriceDisplay" class="text-gray-500 line-through text-xs">{{ pack.oldPriceDisplay }}</span>
             </button>
+          </div>
+
+          <!-- Upsell message -->
+          <div class="min-h-[52px] mt-3">
+            <Transition mode="out-in"
+              enter-active-class="transition-opacity duration-200 ease-out"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition-opacity duration-150 ease-in"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+            >
+              <div
+                v-if="upsellMessage"
+                :key="upsellMessage.text"
+                :class="[
+                  'flex items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-medium',
+                  upsellMessage.type === 'upgrade'
+                    ? 'bg-brand/10 border border-brand/20 text-brand'
+                    : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
+                ]"
+              >
+                <span class="text-base flex-shrink-0">{{ upsellMessage.icon }}</span>
+                <span v-html="upsellMessage.text"></span>
+                <button
+                  v-if="upsellMessage.action"
+                  class="ml-auto flex-shrink-0 bg-white/10 hover:bg-white/20 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors duration-150 cursor-pointer"
+                  @click="upsellMessage.action()"
+                >
+                  {{ upsellMessage.actionLabel }}
+                </button>
+              </div>
+            </Transition>
           </div>
         </div>
 
@@ -216,6 +249,7 @@
 import { h, computed } from 'vue'
 
 const productStore = useProductStore()
+const { track: fbTrack } = useMetaPixel()
 
 const quantity = ref(1)
 const loading = ref(false)
@@ -223,7 +257,7 @@ const error = ref('')
 const selectedPack = ref('solo')
 const selectedSport = ref('')
 
-const productImage = '/images/product/product-3.png'
+const productImage = computed(() => productStore.product?.orderImage || productStore.product?.images[0] || '/images/product/product-7.png')
 
 // --- Packs ---
 const UNIT_PRICE = 29.99
@@ -276,13 +310,33 @@ const selectPack = (name: string) => {
   const pack = packs.find((p) => p.name === name)
   if (pack) {
     quantity.value = pack.qty
+    fbTrack('AddToCart', {
+      content_name: productStore.product?.name || 'ClipBag',
+      content_ids: [productStore.product?.id || ''],
+      content_type: 'product',
+      value: pack.packPrice,
+      currency: 'EUR',
+    })
   }
+}
+
+const trackAddToCart = () => {
+  const totalValue = currentPack.value ? currentPack.value.packPrice : UNIT_PRICE * quantity.value
+  fbTrack('AddToCart', {
+    content_name: productStore.product?.name || 'ClipBag',
+    content_ids: [productStore.product?.id || ''],
+    content_type: 'product',
+    num_items: quantity.value,
+    value: totalValue,
+    currency: 'EUR',
+  })
 }
 
 const decrementQuantity = () => {
   if (quantity.value > 1) {
     quantity.value--
     syncPackFromQuantity()
+    trackAddToCart()
   }
 }
 
@@ -290,6 +344,7 @@ const incrementQuantity = () => {
   if (quantity.value < 10) {
     quantity.value++
     syncPackFromQuantity()
+    trackAddToCart()
   }
 }
 
@@ -297,6 +352,71 @@ const syncPackFromQuantity = () => {
   const match = packs.find((p) => p.qty === quantity.value)
   selectedPack.value = match ? match.name : ''
 }
+
+// --- Upsell messages ---
+interface UpsellMessage {
+  text: string
+  icon: string
+  type: 'upgrade' | 'saving'
+  action?: () => void
+  actionLabel?: string
+}
+
+const upsellMessage = computed<UpsellMessage | null>(() => {
+  const qty = quantity.value
+  const pack = selectedPack.value
+
+  if (pack === 'solo' || (qty === 1 && !pack)) {
+    return {
+      text: 'Le <strong>pack Duo</strong> (2 articles) revient a 25,00\u20AC/piece au lieu de 29,99\u20AC',
+      icon: '\uD83D\uDCA1',
+      type: 'upgrade',
+      action: () => selectPack('duo'),
+      actionLabel: 'Duo \u2192',
+    }
+  }
+
+  if (pack === 'duo' || qty === 2) {
+    return {
+      text: 'Le <strong>pack Equipe</strong> (5 articles) revient a 20,00\u20AC/piece \u2014 <strong>33% d\u2019economie</strong>',
+      icon: '\uD83D\uDCA1',
+      type: 'upgrade',
+      action: () => selectPack('equipe'),
+      actionLabel: 'Equipe \u2192',
+    }
+  }
+
+  if (qty === 3) {
+    const currentTotal = (UNIT_PRICE * 3).toFixed(2).replace('.', ',')
+    return {
+      text: `Seulement <strong>10,02\u20AC de plus</strong> pour 2 articles supplementaires ! Pack Equipe (5) a 99,99\u20AC au lieu de ${currentTotal}\u20AC`,
+      icon: '\uD83C\uDF81',
+      type: 'upgrade',
+      action: () => selectPack('equipe'),
+      actionLabel: 'J\u2019en profite',
+    }
+  }
+
+  if (qty === 4) {
+    return {
+      text: '<strong>1 de plus et le 5eme est offert !</strong> Pack Equipe : 99,99\u20AC au lieu de 119,96\u20AC',
+      icon: '\uD83C\uDF89',
+      type: 'upgrade',
+      action: () => selectPack('equipe'),
+      actionLabel: 'Offert !',
+    }
+  }
+
+  if (pack === 'equipe') {
+    return {
+      text: 'Vous economisez <strong>49,96\u20AC</strong> avec le pack Equipe \u2014 soit 20,00\u20AC/piece',
+      icon: '\u2705',
+      type: 'saving',
+    }
+  }
+
+  return null
+})
 
 // --- Pricing ---
 const effectiveUnitPrice = computed(() => {
@@ -392,6 +512,18 @@ const handleCheckout = async () => {
   error.value = ''
 
   try {
+    const totalValue = currentPack.value ? currentPack.value.packPrice : UNIT_PRICE * quantity.value
+    const pixelParams = {
+      content_name: productStore.product?.name || 'ClipBag',
+      content_ids: [productStore.product?.id || ''],
+      content_type: 'product',
+      num_items: quantity.value,
+      value: totalValue,
+      currency: 'EUR',
+    }
+    fbTrack('AddToCart', pixelParams)
+    fbTrack('InitiateCheckout', pixelParams)
+
     const { apiFetch } = useApi()
     const body: Record<string, unknown> = {
       productId: productStore.product?.id || '',

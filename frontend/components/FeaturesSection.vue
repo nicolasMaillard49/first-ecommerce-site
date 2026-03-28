@@ -8,7 +8,7 @@
       <div class="text-center mb-16 animate-on-scroll">
         <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Avantages</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Pourquoi <span class="text-brand">Geestock</span> ?
+          Pourquoi <span class="text-brand">ClipBag</span> ?
         </h2>
         <p class="text-gray-400 text-lg max-w-2xl mx-auto">
           Concu pour les sportifs exigeants qui refusent les compromis.

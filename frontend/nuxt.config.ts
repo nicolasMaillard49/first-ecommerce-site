@@ -4,27 +4,38 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/sitemap'],
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:3000/api',
-      siteUrl: 'https://geestock.fr',
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:3000/api',
+      siteUrl: 'https://clipbag.fr',
+      metaPixelId: '2478874479214730',
     },
   },
   app: {
     head: {
       htmlAttrs: { lang: 'fr' },
-      title: 'Geestock - Sac Magnétique pour Bouteille | Livraison Gratuite',
+      title: 'ClipBag - Sac Magnétique pour Bouteille | Livraison Gratuite',
       meta: [
         { name: 'description', content: 'Le sac magnétique révolutionnaire pour vos bouteilles. Fixation instantanée, ultra léger (120g), compatible toutes bouteilles. -40% : 29,99€ au lieu de 49,99€. Livraison gratuite en France.' },
-        { name: 'keywords', content: 'geestock, sac magnétique bouteille, porte bouteille sport, accessoire sport, porte gourde magnétique' },
+        { name: 'keywords', content: 'clipbag, sac magnétique bouteille, porte bouteille sport, accessoire sport, porte gourde magnétique' },
         { property: 'og:type', content: 'website' },
         { property: 'og:locale', content: 'fr_FR' },
-        { property: 'og:site_name', content: 'Geestock' },
-        { property: 'og:title', content: 'Geestock - Le Sac Magnétique pour Bouteille' },
+        { property: 'og:site_name', content: 'ClipBag' },
+        { property: 'og:title', content: 'ClipBag - Le Sac Magnétique pour Bouteille' },
         { property: 'og:description', content: 'Libérez vos mains pendant le sport. Fixation magnétique instantanée, ultra léger. -40% : 29,99€.' },
-        { property: 'og:image', content: 'https://geestock.fr/images/product/product-1.jpg' },
+        { property: 'og:image', content: 'https://clipbag.fr/images/product/product-1.jpg' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Geestock - Le Sac Magnétique pour Bouteille' },
+        { name: 'twitter:title', content: 'ClipBag - Le Sac Magnétique pour Bouteille' },
         { name: 'twitter:description', content: 'Libérez vos mains pendant le sport. -40% : 29,99€. Livraison gratuite.' },
         { name: 'theme-color', content: '#10b981' },
+      ],
+      script: [
+        {
+          innerHTML: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','2478874479214730');fbq('track','PageView');`,
+        },
+      ],
+      noscript: [
+        {
+          innerHTML: '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2478874479214730&ev=PageView&noscript=1" />',
+        },
       ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -43,7 +54,7 @@ export default defineNuxtConfig({
     '/success': { ssr: false },
   },
   sitemap: {
-    siteUrl: 'https://geestock.fr',
+    siteUrl: 'https://clipbag.fr',
     exclude: ['/admin/**', '/success', '/cancel'],
   },
   devServer: {

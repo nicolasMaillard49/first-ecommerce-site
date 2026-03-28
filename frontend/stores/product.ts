@@ -12,6 +12,8 @@ interface Product {
   price: number
   comparePrice: number | null
   images: string[]
+  stripeImage: string | null
+  orderImage: string | null
   variants: ProductVariants | null
   active: boolean
 }

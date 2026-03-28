@@ -174,7 +174,7 @@ const testimonials = [
     name: 'Thomas Lefevre',
     initials: 'TL',
     sport: 'Trail Running',
-    quote: "J'utilise le Geestock depuis 3 mois pour mes sorties trail. La fixation magnetique est bluffante de solidite. Je ne cours plus jamais sans !",
+    quote: "J'utilise le ClipBag depuis 3 mois pour mes sorties trail. La fixation magnetique est bluffante de solidite. Je ne cours plus jamais sans !",
   },
   {
     name: 'Camille Dubois',

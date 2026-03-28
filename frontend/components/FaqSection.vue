@@ -78,13 +78,13 @@
             Notre equipe est la pour vous aider. N'hesitez pas a nous contacter.
           </p>
           <a
-            href="mailto:contact@geestock.fr"
+            href="mailto:contact@clipbag.fr"
             class="inline-flex items-center gap-2 bg-surface border border-surface-lighter hover:border-brand/30 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 cursor-pointer hover:bg-surface-lighter/50 group"
           >
             <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            contact@geestock.fr
+            contact@clipbag.fr
             <svg class="w-4 h-4 text-gray-500 group-hover:text-brand transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
@@ -111,7 +111,7 @@ const faqs = [
   {
     question: 'Est-ce compatible avec ma bouteille ?',
     answer:
-      'Le Geestock est compatible avec toutes les bouteilles standard (de 500ml a 1L). Son design universel s\'adapte a la grande majorite des bouteilles du marche, y compris les gourdes isothermes.',
+      'Le ClipBag est compatible avec toutes les bouteilles standard (de 500ml a 1L). Son design universel s\'adapte a la grande majorite des bouteilles du marche, y compris les gourdes isothermes.',
   },
   {
     question: 'La fixation magnetique est-elle solide ?',
@@ -131,7 +131,7 @@ const faqs = [
   {
     question: 'Quelle est la capacite de poids maximale ?',
     answer:
-      'Le Geestock supporte facilement des bouteilles jusqu\'a 1,5L remplies. Les aimants neodyme sont dimensionnes pour supporter largement ce poids avec une marge de securite confortable.',
+      'Le ClipBag supporte facilement des bouteilles jusqu\'a 1,5L remplies. Les aimants neodyme sont dimensionnes pour supporter largement ce poids avec une marge de securite confortable.',
   },
 ]
 

@@ -5,7 +5,7 @@
       <div class="text-center mb-16 animate-on-scroll">
         <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Galerie</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Decouvrez le <span class="text-brand">Geestock</span>
+          Decouvrez le <span class="text-brand">ClipBag</span>
         </h2>
         <p class="text-gray-400 text-lg max-w-2xl mx-auto">
           Chaque detail a ete pense pour la performance et l'elegance.
@@ -57,7 +57,7 @@
           <img
             :key="activeIndex"
             :src="images[activeIndex]"
-            :alt="`Geestock Sac Magnetique pour Bouteille - Vue ${activeIndex + 1}`"
+            :alt="`ClipBag Sac Magnetique pour Bouteille - Vue ${activeIndex + 1}`"
             :class="[
               'w-full h-full object-contain transition-transform duration-300',
               zoomed ? 'scale-150' : 'scale-100',
@@ -86,7 +86,7 @@
         >
           <img
             :src="image"
-            :alt="`Geestock miniature ${idx + 1}`"
+            :alt="`ClipBag miniature ${idx + 1}`"
             class="w-full h-full object-cover"
             width="80"
             height="80"
@@ -99,26 +99,21 @@
 </template>
 
 <script setup lang="ts">
+const productStore = useProductStore()
+
 const activeIndex = ref(0)
 const zoomed = ref(false)
 const zoomX = ref(50)
 const zoomY = ref(50)
 
-const images = [
-  '/images/product/product-1.jpg',
-  '/images/product/product-2.png',
-  '/images/product/product-3.png',
-  '/images/product/product-4.png',
-  '/images/product/product-5.png',
-  '/images/product/product-6.png',
-]
+const images = computed(() => productStore.product?.images || [])
 
 const nextImage = () => {
-  activeIndex.value = (activeIndex.value + 1) % images.length
+  activeIndex.value = (activeIndex.value + 1) % images.value.length
 }
 
 const prevImage = () => {
-  activeIndex.value = (activeIndex.value - 1 + images.length) % images.length
+  activeIndex.value = (activeIndex.value - 1 + images.value.length) % images.value.length
 }
 
 const handleZoomMove = (e: MouseEvent) => {

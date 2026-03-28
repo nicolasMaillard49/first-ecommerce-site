@@ -1,10 +1,11 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Commande Confirmée - Geestock',
+  title: 'Commande Confirmée - ClipBag',
   robots: 'noindex',
 })
 
 const route = useRoute()
+const { track: fbTrack } = useMetaPixel()
 const loading = ref(true)
 const order = ref<any>(null)
 
@@ -15,6 +16,16 @@ onMounted(async () => {
       const { apiFetch } = useApi()
       const data = await apiFetch<any>(`/payments/session-status?session_id=${sessionId}`)
       order.value = data.order
+
+      if (data.order) {
+        fbTrack('Purchase', {
+          content_ids: data.order.items?.map((i: any) => i.productId) || [],
+          content_type: 'product',
+          num_items: data.order.items?.reduce((s: number, i: any) => s + i.quantity, 0) || 1,
+          value: data.order.total,
+          currency: 'EUR',
+        })
+      }
     } catch (e) {
       console.error('Failed to fetch session status:', e)
     }

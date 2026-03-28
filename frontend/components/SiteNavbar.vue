@@ -14,7 +14,7 @@
           to="/"
           class="font-display font-black text-xl sm:text-2xl text-brand tracking-tight cursor-pointer select-none transition-colors duration-200 hover:text-brand-light"
         >
-          GEESTOCK
+          CLIPBAG
         </NuxtLink>
 
         <!-- Desktop nav links -->

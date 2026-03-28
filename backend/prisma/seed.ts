@@ -21,13 +21,15 @@ async function main() {
         "Le sac magnétique révolutionnaire pour vos bouteilles d'eau. Conçu pour les sportifs et aventuriers, il se fixe instantanément grâce à sa technologie magnétique puissante. Libérez vos mains pendant vos séances de sport, randonnées ou déplacements quotidiens.",
       price: 29.99,
       comparePrice: 49.99,
+      costPrice: 0,
       images: [
+        '/images/product/product-7.png',
         '/images/product/product-1.jpg',
-        '/images/product/product-2.jpg',
-        '/images/product/product-3.jpg',
-        '/images/product/product-4.jpg',
-        '/images/product/product-5.jpg',
-        '/images/product/product-6.jpg',
+        '/images/product/product-2.png',
+        '/images/product/product-3.png',
+        '/images/product/product-4.png',
+        '/images/product/product-5.png',
+        '/images/product/product-6.png',
       ],
       variants: {
         colors: [

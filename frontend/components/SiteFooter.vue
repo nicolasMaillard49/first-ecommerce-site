@@ -23,7 +23,7 @@
             class="font-display font-black text-2xl text-brand tracking-tight cursor-pointer transition-colors duration-200 hover:text-brand-light inline-block mb-4"
             @click.prevent="scrollToTop"
           >
-            GEESTOCK
+            CLIPBAG
           </a>
           <p class="text-gray-500 text-sm leading-relaxed mb-6 max-w-xs">
             Le sac magnetique revolutionnaire pour vos bouteilles. Concu pour les sportifs exigeants.
@@ -67,7 +67,7 @@
             <a href="/mentions-legales" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Mentions legales</a>
             <a href="/cgv" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Conditions generales de vente</a>
             <a href="/confidentialite" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Politique de confidentialite</a>
-            <a href="mailto:contact@geestock.fr" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Contact</a>
+            <a href="mailto:contact@clipbag.fr" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Contact</a>
           </nav>
         </div>
 
@@ -147,7 +147,7 @@
       <!-- Bottom bar -->
       <div class="border-t border-surface-lighter/50 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-xs text-gray-600">
-          &copy; 2026 Geestock. Tous droits reserves.
+          &copy; 2026 ClipBag. Tous droits reserves.
         </p>
         <p class="text-xs text-gray-600">
           Fait avec soin en France
@@ -176,12 +176,12 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: 'Geestock',
-        url: 'https://geestock.fr',
-        logo: 'https://geestock.fr/logo.png',
+        name: 'ClipBag',
+        url: 'https://clipbag.fr',
+        logo: 'https://clipbag.fr/logo.png',
         contactPoint: {
           '@type': 'ContactPoint',
-          email: 'contact@geestock.fr',
+          email: 'contact@clipbag.fr',
           contactType: 'customer service',
           availableLanguage: 'French',
         },

@@ -25,11 +25,39 @@ export class AdminService {
       include: { items: { include: { product: true } } },
     });
 
+    // Monthly stats for profitability
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const monthlyOrders = await this.prisma.order.findMany({
+      where: {
+        status: { in: ['PAID', 'PROCESSING', 'SHIPPED', 'DELIVERED'] },
+        createdAt: { gte: startOfMonth },
+      },
+      include: { items: true },
+    });
+
+    const monthlyRevenue = monthlyOrders.reduce((sum, o) => sum + o.total, 0);
+    const monthlyOrderCount = monthlyOrders.length;
+    const monthlyUnitsSold = monthlyOrders.reduce(
+      (sum, o) => sum + o.items.reduce((s, item) => s + item.quantity, 0),
+      0,
+    );
+
+    const product = await this.prisma.product.findFirst();
+
     return {
       totalOrders,
       paidOrders,
       totalRevenue: totalRevenue._sum.total || 0,
       recentOrders,
+      monthly: {
+        revenue: monthlyRevenue,
+        orderCount: monthlyOrderCount,
+        unitsSold: monthlyUnitsSold,
+      },
+      productCostPrice: product?.costPrice || 0,
+      productPrice: product?.price || 0,
     };
   }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Paiement Annulé - Geestock',
+  title: 'Paiement Annulé - ClipBag',
   robots: 'noindex',
 })
 </script>
@@ -38,7 +38,7 @@ useSeoMeta({
         </NuxtLink>
       </div>
       <a
-        href="mailto:contact@geestock.fr"
+        href="mailto:contact@clipbag.fr"
         class="inline-block mt-6 text-sm text-gray-500 hover:text-brand transition-colors duration-200 cursor-pointer"
       >
         Besoin d'aide ? Contactez-nous

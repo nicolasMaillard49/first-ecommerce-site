@@ -91,8 +91,8 @@
           <!-- Product image -->
           <div class="relative motion-safe:animate-float">
             <img
-              src="/images/product/product-7.png"
-              alt="Geestock Sac Magnetique pour Bouteille"
+              :src="heroImage"
+              alt="ClipBag Sac Magnetique pour Bouteille"
               class="w-full max-w-md lg:max-w-lg xl:max-w-xl rounded-3xl shadow-2xl shadow-black/40 aspect-square object-cover"
               width="600"
               height="600"
@@ -137,6 +137,9 @@
 </template>
 
 <script setup lang="ts">
+const productStore = useProductStore()
+const heroImage = computed(() => productStore.product?.images[0] || '/images/product/product-7.png')
+
 const scrollToOrder = () => {
   const el = document.getElementById('order-section')
   if (el) {

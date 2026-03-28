@@ -1,13 +1,13 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Politique de Confidentialité - Geestock',
-  description: 'Politique de confidentialité et de protection des données personnelles du site Geestock.fr - RGPD.',
-  ogTitle: 'Politique de Confidentialité - Geestock',
-  ogDescription: 'Protection de vos données personnelles sur Geestock.fr',
+  title: 'Politique de Confidentialité - ClipBag',
+  description: 'Politique de confidentialité et de protection des données personnelles du site ClipBag.fr - RGPD.',
+  ogTitle: 'Politique de Confidentialité - ClipBag',
+  ogDescription: 'Protection de vos données personnelles sur ClipBag.fr',
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `https://geestock.fr${useRoute().path}` }],
+  link: [{ rel: 'canonical', href: `https://clipbag.fr${useRoute().path}` }],
 })
 </script>
 
@@ -33,7 +33,7 @@ useHead({
         <section>
           <h2 class="font-display font-bold text-xl text-white mb-4">1. Introduction</h2>
           <p>
-            La présente politique de confidentialité décrit comment <strong class="text-white">Geestock</strong> collecte, utilise et protège vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés.
+            La présente politique de confidentialité décrit comment <strong class="text-white">ClipBag</strong> collecte, utilise et protège vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés.
           </p>
         </section>
 
@@ -113,7 +113,7 @@ useHead({
           </ul>
           <p class="mt-3">
             Pour exercer vos droits, contactez-nous à :
-            <a href="mailto:contact@geestock.fr" class="text-brand hover:text-brand-light transition-colors">contact@geestock.fr</a>
+            <a href="mailto:contact@clipbag.fr" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.fr</a>
           </p>
           <p class="mt-3">
             Vous pouvez également introduire une réclamation auprès de la CNIL :

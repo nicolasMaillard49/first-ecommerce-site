@@ -1,29 +1,39 @@
 <script setup lang="ts">
+const config = useRuntimeConfig()
+const productStore = useProductStore()
+const siteUrl = config.public.siteUrl || 'https://clipbag.fr'
+
+// Build absolute image URLs from product store (fallback to defaults)
+const productImages = computed(() => {
+  const images = productStore.product?.images || [
+    '/images/product/product-1.jpg',
+    '/images/product/product-2.png',
+    '/images/product/product-3.png',
+  ]
+  return images.map((img: string) => img.startsWith('http') ? img : `${siteUrl}${img}`)
+})
+
 // JSON-LD structured data for SEO (Product schema)
 useHead({
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
+      innerHTML: computed(() => JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Product',
-        name: 'Geestock - Sac Magnétique pour Bouteille',
-        description: 'Le sac magnétique révolutionnaire pour vos bouteilles. Fixation instantanée, ultra léger (120g), compatible toutes bouteilles.',
-        image: [
-          'https://geestock.fr/images/product/product-1.jpg',
-          'https://geestock.fr/images/product/product-2.png',
-          'https://geestock.fr/images/product/product-3.png',
-        ],
-        brand: { '@type': 'Brand', name: 'Geestock' },
+        name: productStore.product?.name || 'ClipBag - Sac Magnétique pour Bouteille',
+        description: productStore.product?.description || 'Le sac magnétique révolutionnaire pour vos bouteilles. Fixation instantanée, ultra léger (120g), compatible toutes bouteilles.',
+        image: productImages.value.slice(0, 3),
+        brand: { '@type': 'Brand', name: 'ClipBag' },
         offers: {
           '@type': 'Offer',
-          url: 'https://geestock.fr',
+          url: siteUrl,
           priceCurrency: 'EUR',
-          price: '29.99',
+          price: String(productStore.product?.price || '29.99'),
           priceValidUntil: '2026-12-31',
           availability: 'https://schema.org/InStock',
           itemCondition: 'https://schema.org/NewCondition',
-          seller: { '@type': 'Organization', name: 'Geestock' },
+          seller: { '@type': 'Organization', name: 'ClipBag' },
           shippingDetails: {
             '@type': 'OfferShippingDetails',
             shippingRate: {
@@ -49,7 +59,7 @@ useHead({
           bestRating: '5',
           worstRating: '1',
         },
-      }),
+      })),
     },
   ],
 })

@@ -20,9 +20,22 @@ export class UpdateProductDto {
   comparePrice?: number | null;
 
   @IsOptional()
+  @IsNumber()
+  @Min(0)
+  costPrice?: number;
+
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
   images?: string[];
+
+  @IsOptional()
+  @IsString()
+  stripeImage?: string | null;
+
+  @IsOptional()
+  @IsString()
+  orderImage?: string | null;
 
   @IsOptional()
   @IsString()
