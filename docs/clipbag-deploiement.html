@@ -298,7 +298,7 @@
 
   <div class="sidebar-section">
     <div class="section-label">Front & Domaine</div>
-    <div class="nav-item" id="nav-4" onclick="go(4)"><div class="nav-dot"></div>Vercel — Vue.js front</div>
+    <div class="nav-item" id="nav-4" onclick="go(4)"><div class="nav-dot"></div>Vercel — Nuxt 3 front</div>
     <div class="nav-item" id="nav-5" onclick="go(5)"><div class="nav-dot"></div>Associer clipbag.fr à Vercel</div>
     <div class="nav-item" id="nav-6" onclick="go(6)"><div class="nav-dot"></div>Domaine custom sur Railway</div>
   </div>
@@ -312,7 +312,7 @@
 
   <div class="sidebar-footer">
     <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Stack</div>
-    <div><span class="stack-badge"><span class="stack-dot" style="background:#00e5ff"></span>Vue.js</span><span class="stack-badge"><span class="stack-dot" style="background:#e0234e"></span>NestJS</span><span class="stack-badge"><span class="stack-dot" style="background:#336791"></span>Postgres</span><span class="stack-badge"><span class="stack-dot" style="background:#6772e5"></span>Stripe</span></div>
+    <div><span class="stack-badge"><span class="stack-dot" style="background:#00dc82"></span>Nuxt 3</span><span class="stack-badge"><span class="stack-dot" style="background:#e0234e"></span>NestJS</span><span class="stack-badge"><span class="stack-dot" style="background:#336791"></span>Postgres</span><span class="stack-badge"><span class="stack-dot" style="background:#6772e5"></span>Stripe</span></div>
   </div>
 </nav>
 
@@ -342,7 +342,7 @@
           <div class="arch-box highlight">
             <div class="ab-icon">🌐</div>
             <div class="ab-name">clipbag.fr</div>
-            <div class="ab-sub">Vue.js sur Vercel</div>
+            <div class="ab-sub">Nuxt 3 sur Vercel</div>
           </div>
           <div class="arch-arrow">→</div>
           <div class="arch-box highlight">
@@ -389,9 +389,9 @@
         <div class="card">
           <div class="card-header">
             <div class="card-icon" style="background:rgba(255,255,255,0.05);">▲</div>
-            <div><div class="card-label">Vercel</div><div class="card-title">Front Vue.js</div></div>
+            <div><div class="card-label">Vercel</div><div class="card-title">Front Nuxt 3</div></div>
           </div>
-          <div class="step-body">Héberge ton <strong>frontend Vue.js</strong>. Déploiement automatique à chaque push sur <code>main</code>. Gratuit sur le plan Hobby. Domaine custom en 3 clics.</div>
+          <div class="step-body">Héberge ton <strong>frontend Nuxt 3</strong> (SSR). Vercel détecte Nuxt automatiquement. Déploiement auto à chaque push sur <code>main</code>. Gratuit sur le plan Hobby.</div>
         </div>
       </div>
 
@@ -421,22 +421,22 @@
       </div>
 
       <div class="card">
-        <div class="card-label" style="margin-bottom:12px;">Connecter depuis ton NestJS — app.module.ts</div>
+        <div class="card-label" style="margin-bottom:12px;">Prisma — connexion via DATABASE_URL</div>
         <div class="code-block">
-<span class="comment">// app.module.ts — TypeOrmModule</span>
-<span class="key">TypeOrmModule</span>.forRoot({
-  <span class="flag">type</span>: <span class="val">'postgres'</span>,
-  <span class="flag">url</span>: process.env.<span class="key">DATABASE_URL</span>,
-  <span class="flag">ssl</span>: { <span class="flag">rejectUnauthorized</span>: <span class="val">false</span> }, <span class="comment">// obligatoire Railway</span>
-  <span class="flag">autoLoadEntities</span>: <span class="val">true</span>,
-  <span class="flag">synchronize</span>: process.env.<span class="key">NODE_ENV</span> !== <span class="val">'production'</span>,
-})
+<span class="comment">// prisma/schema.prisma — déjà configuré</span>
+<span class="key">datasource</span> db {
+  <span class="flag">provider</span> = <span class="val">"postgresql"</span>
+}
+
+<span class="comment">// La variable DATABASE_URL est lue automatiquement par Prisma.</span>
+<span class="comment">// L'URL interne Railway fonctionne car backend + BDD</span>
+<span class="comment">// sont dans le même projet Railway.</span>
         </div>
       </div>
 
-      <div class="alert alert-warn">
-        <span class="alert-icon">⚠️</span>
-        <div><strong>Ne mets jamais</strong> <code>synchronize: true</code> en production. Ça peut effacer des colonnes. Utilise les migrations TypeORM à la place une fois en prod.</div>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <div>Le script <code>npm run build</code> du backend exécute automatiquement <code>prisma generate</code> + <code>prisma migrate deploy</code> avant de compiler NestJS. Les migrations sont appliquées à chaque déploiement.</div>
       </div>
     </div>
 
@@ -454,33 +454,31 @@
         <ul class="step-list">
           <li class="step-item"><div class="step-num">1</div><div class="step-body">Dans ton projet Railway → <strong>New Service</strong> → <strong>GitHub Repo</strong>. Connecte ton compte GitHub et sélectionne <strong>first-ecommerce-site</strong>.</div></li>
           <li class="step-item"><div class="step-num">2</div><div class="step-body">Railway va demander le <strong>Root Directory</strong>. Mets <code>backend</code> (c'est le dossier NestJS dans ton repo).</div></li>
-          <li class="step-item"><div class="step-num">3</div><div class="step-body">Dans <strong>Settings → Build Command</strong> : <code>npm run build</code></div></li>
-          <li class="step-item"><div class="step-num">4</div><div class="step-body">Dans <strong>Settings → Start Command</strong> : <code>node dist/main.js</code></div></li>
-          <li class="step-item"><div class="step-num">5</div><div class="step-body">Dans <strong>Settings → Port</strong> : <code>3000</code> (ou le port de ton NestJS — vérifie dans <code>main.ts</code>).</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-body">Dans <strong>Settings → Build Command</strong> : <code>npm run build</code> (inclut prisma generate + migrate deploy + nest build).</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-body">Dans <strong>Settings → Start Command</strong> : <code>node dist/main</code></div></li>
+          <li class="step-item"><div class="step-num">5</div><div class="step-body">Railway injecte automatiquement la variable <code>PORT</code>. Le <code>main.ts</code> l'utilise déjà via <code>process.env.PORT || 3000</code>.</div></li>
         </ul>
       </div>
 
       <div class="card">
         <div class="card-label" style="margin-bottom:12px;">Vérifier ton main.ts NestJS</div>
         <div class="code-block">
-<span class="comment">// backend/src/main.ts</span>
+<span class="comment">// backend/src/main.ts — déjà configuré correctement</span>
 <span class="key">async function</span> bootstrap() {
-  <span class="key">const</span> app = <span class="key">await</span> NestFactory.create(AppModule);
-  
+  <span class="key">const</span> app = <span class="key">await</span> NestFactory.create(AppModule, { rawBody: <span class="val">true</span>, bodyParser: <span class="val">false</span> });
+
+  <span class="comment">// Raw body pour webhook Stripe, JSON pour le reste</span>
+  app.use(<span class="val">'/api/payments/webhook'</span>, express.raw({ type: <span class="val">'application/json'</span> }));
+  <span class="comment">// ... parsers JSON/urlencoded pour les autres routes</span>
+
   app.enableCors({
-    <span class="flag">origin</span>: [
-      <span class="val">'https://clipbag.fr'</span>,
-      <span class="val">'https://www.clipbag.fr'</span>,
-      <span class="val">'http://localhost:5173'</span>, <span class="comment">// dev local</span>
-    ],
+    <span class="flag">origin</span>: process.env.<span class="key">FRONTEND_URL</span> || <span class="val">'http://localhost:4000'</span>,
   });
 
-  <span class="key">const</span> port = process.env.<span class="key">PORT</span> || <span class="val">3000</span>; <span class="comment">// Railway injecte PORT</span>
-  <span class="key">await</span> app.listen(port);
+  app.setGlobalPrefix(<span class="val">'api'</span>);
+  <span class="key">await</span> app.listen(process.env.<span class="key">PORT</span> || <span class="val">3000</span>);
 }
-bootstrap();
         </div>
-        <button class="copy-code-btn" onclick="copyCode(this, `async function bootstrap() {\n  const app = await NestFactory.create(AppModule);\n  app.enableCors({\n    origin: ['https://clipbag.fr', 'https://www.clipbag.fr', 'http://localhost:5173'],\n  });\n  const port = process.env.PORT || 3000;\n  await app.listen(port);\n}\nbootstrap();`)">Copier</button>
       </div>
 
       <div class="alert alert-info">
@@ -509,19 +507,20 @@ bootstrap();
             <tr><td>STRIPE_SECRET_KEY</td><td>Clé secrète Stripe (commence par <code>sk_live_</code>)</td><td><span class="badge b-red">Oui</span></td></tr>
             <tr><td>STRIPE_WEBHOOK_SECRET</td><td>Généré dans Stripe Dashboard → Webhooks</td><td><span class="badge b-red">Oui</span></td></tr>
             <tr><td>FRONTEND_URL</td><td><code>https://clipbag.fr</code></td><td><span class="badge b-orange">Recommandé</span></td></tr>
-            <tr><td>JWT_SECRET</td><td>Chaîne aléatoire longue (si tu as une auth)</td><td><span class="badge b-orange">Si auth</span></td></tr>
+            <tr><td>JWT_SECRET</td><td>Chaîne aléatoire de 64 caractères</td><td><span class="badge b-red">Oui</span></td></tr>
+            <tr><td>ADMIN_EMAIL</td><td>Email admin (ex: <code>admin@clipbag.fr</code>)</td><td><span class="badge b-red">Oui</span></td></tr>
+            <tr><td>ADMIN_PASSWORD</td><td>Mot de passe admin — pas <code>admin123</code> !</td><td><span class="badge b-red">Oui</span></td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="card">
-        <div class="card-label" style="margin-bottom:12px;">Variables frontend — Vercel (à ajouter plus tard)</div>
+        <div class="card-label" style="margin-bottom:12px;">Variables frontend — Vercel (Nuxt 3)</div>
         <table class="env-table">
           <thead><tr><th>Variable</th><th>Valeur</th><th>Obligatoire</th></tr></thead>
           <tbody>
-            <tr><td>VITE_API_URL</td><td><code>https://api.clipbag.fr</code></td><td><span class="badge b-red">Oui</span></td></tr>
-            <tr><td>VITE_STRIPE_PUBLIC_KEY</td><td>Clé publique Stripe (<code>pk_live_</code>)</td><td><span class="badge b-red">Oui</span></td></tr>
-            <tr><td>VITE_META_PIXEL_ID</td><td>Ton Pixel ID (16 chiffres)</td><td><span class="badge b-orange">Pour les pubs</span></td></tr>
+            <tr><td>NUXT_PUBLIC_API_BASE</td><td><code>https://api.clipbag.fr/api</code></td><td><span class="badge b-red">Oui</span></td></tr>
+            <tr><td>NUXT_PUBLIC_SITE_URL</td><td><code>https://clipbag.fr</code></td><td><span class="badge b-orange">Recommandé</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -535,8 +534,8 @@ bootstrap();
     <!-- 4 — VERCEL FRONT -->
     <div class="panel" id="panel-4">
       <div class="step-eyebrow">Vercel — Étape 1</div>
-      <div class="step-title">Déployer le <span class="hl">frontend Vue.js</span></div>
-      <div class="step-desc">Tu connais déjà Vercel — la seule différence ici c'est de pointer sur le dossier <code>frontend</code> de ton monorepo.</div>
+      <div class="step-title">Déployer le <span class="hl">frontend Nuxt 3</span></div>
+      <div class="step-desc">Vercel détecte Nuxt 3 automatiquement. La seule chose à faire : pointer sur le dossier <code>frontend</code> de ton monorepo.</div>
 
       <div class="card">
         <div class="card-header">
@@ -545,29 +544,16 @@ bootstrap();
         </div>
         <ul class="step-list">
           <li class="step-item"><div class="step-num">1</div><div class="step-body">Va sur <strong>vercel.com</strong> → <strong>Add New Project</strong> → Sélectionne ton repo <strong>first-ecommerce-site</strong>.</div></li>
-          <li class="step-item"><div class="step-num">2</div><div class="step-body">Vercel va détecter Vue.js. Mais ton repo est un monorepo — il faut lui dire où est le front. Dans <strong>Root Directory</strong> → mets <code>frontend</code>.</div></li>
-          <li class="step-item"><div class="step-num">3</div><div class="step-body">Framework Preset : <strong>Vite</strong>. Build Command : <code>npm run build</code>. Output Directory : <code>dist</code>.</div></li>
-          <li class="step-item"><div class="step-num">4</div><div class="step-body">Ajoute les variables d'environnement (<code>VITE_API_URL</code>, <code>VITE_STRIPE_PUBLIC_KEY</code>, <code>VITE_META_PIXEL_ID</code>) avant de cliquer Deploy.</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-body">Ton repo est un monorepo — dans <strong>Root Directory</strong> → mets <code>frontend</code>.</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-body">Framework Preset : <strong>Nuxt.js</strong> (détecté auto). Build Command : <code>nuxt build</code>. Output Directory : <code>.output</code>.</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-body">Ajoute la variable d'environnement <code>NUXT_PUBLIC_API_BASE</code> = <code>https://api.clipbag.fr/api</code> avant de cliquer Deploy.</div></li>
           <li class="step-item"><div class="step-num">5</div><div class="step-body">Clique <strong>Deploy</strong>. Vercel va builder et te donner une URL <code>xxx.vercel.app</code> — ça marche comme d'habitude.</div></li>
         </ul>
       </div>
 
-      <div class="card">
-        <div class="card-label" style="margin-bottom:12px;">vercel.json à la racine de /frontend</div>
-        <div class="code-block">
-<span class="comment">// frontend/vercel.json — gère le routing Vue Router</span>
-{
-  <span class="key">"rewrites"</span>: [
-    { <span class="flag">"source"</span>: <span class="val">"/(.*)"</span>, <span class="flag">"destination"</span>: <span class="val">"/index.html"</span> }
-  ]
-}
-        </div>
-        <button class="copy-code-btn" onclick="copyCode(this, '{\n  \"rewrites\": [\n    { \"source\": \"/(.*)\", \"destination\": \"/index.html\" }\n  ]\n}')">Copier</button>
-      </div>
-
-      <div class="alert alert-warn">
-        <span class="alert-icon">⚠️</span>
-        <div>Sans le <code>vercel.json</code>, toutes les routes Vue Router (ex: <code>/produit</code>) renvoient une 404 en prod car Vercel cherche un fichier statique. Ce fichier dit à Vercel de tout rediriger vers <code>index.html</code>.</div>
+      <div class="alert alert-ok">
+        <span class="alert-icon">✓</span>
+        <div>Nuxt 3 gère le routing SSR automatiquement sur Vercel — <strong>pas besoin de <code>vercel.json</code></strong>. Vercel détecte le preset Nuxt et configure tout seul le routing, les API routes et le rendu serveur.</div>
       </div>
     </div>
 
@@ -679,7 +665,7 @@ bootstrap();
         <ul class="step-list">
           <li class="step-item"><div class="step-num">1</div><div class="step-body">Dans Stripe Dashboard → <strong>Activate your account</strong>. Remplis les informations business (SIRET, RIB pour les virements, adresse).</div></li>
           <li class="step-item"><div class="step-num">2</div><div class="step-body">Une fois activé → <strong>Developers → API Keys</strong>. Récupère la <strong>Publishable key</strong> (<code>pk_live_...</code>) et la <strong>Secret key</strong> (<code>sk_live_...</code>).</div></li>
-          <li class="step-item"><div class="step-num">3</div><div class="step-body">Mets <code>sk_live_...</code> dans la variable <code>STRIPE_SECRET_KEY</code> de Railway. Mets <code>pk_live_...</code> dans <code>VITE_STRIPE_PUBLIC_KEY</code> de Vercel.</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-body">Mets <code>sk_live_...</code> dans la variable <code>STRIPE_SECRET_KEY</code> de Railway. Mets <code>pk_live_...</code> dans <code>NUXT_PUBLIC_STRIPE_KEY</code> de Vercel (si utilisé côté front).</div></li>
         </ul>
       </div>
 
@@ -690,23 +676,15 @@ bootstrap();
         </div>
         <ul class="step-list">
           <li class="step-item"><div class="step-num">1</div><div class="step-body">Stripe Dashboard → <strong>Developers → Webhooks</strong> → <strong>Add Endpoint</strong>.</div></li>
-          <li class="step-item"><div class="step-num">2</div><div class="step-body">URL : <code>https://api.clipbag.fr/stripe/webhook</code> (adapte selon ta route NestJS).</div></li>
-          <li class="step-item"><div class="step-num">3</div><div class="step-body">Événements à écouter : <code>payment_intent.succeeded</code>, <code>checkout.session.completed</code>, <code>payment_intent.payment_failed</code>.</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-body">URL : <code>https://api.clipbag.fr/api/payments/webhook</code></div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-body">Événements à écouter : <code>checkout.session.completed</code>.</div></li>
           <li class="step-item"><div class="step-num">4</div><div class="step-body">Récupère le <strong>Signing Secret</strong> (<code>whsec_...</code>) et mets-le dans <code>STRIPE_WEBHOOK_SECRET</code> sur Railway.</div></li>
         </ul>
         <div class="code-block" style="margin-top:12px;">
-<span class="comment">// backend — vérification webhook NestJS</span>
-<span class="key">@Post</span>(<span class="val">'webhook'</span>)
-<span class="key">async</span> handleWebhook(
-  <span class="key">@Headers</span>(<span class="val">'stripe-signature'</span>) sig: string,
-  <span class="key">@Req</span>() req: RawBodyRequest
-) {
-  <span class="key">const</span> event = stripe.webhooks.constructEvent(
-    req.rawBody, sig,
-    process.env.<span class="key">STRIPE_WEBHOOK_SECRET</span>
-  );
-  <span class="comment">// traiter l'événement...</span>
-}
+<span class="comment">// Déjà implémenté dans payments.service.ts</span>
+<span class="comment">// Le webhook vérifie la signature Stripe automatiquement</span>
+<span class="comment">// et met à jour la commande (status PAID, adresse, email)</span>
+<span class="comment">// Route: POST /api/payments/webhook</span>
         </div>
       </div>
     </div>
@@ -720,53 +698,17 @@ bootstrap();
       <div class="card">
         <div class="card-header">
           <div class="card-icon" style="background:rgba(24,119,242,0.1);">📊</div>
-          <div><div class="card-label">Vue.js — main.ts ou App.vue</div><div class="card-title">Intégrer le Pixel Meta</div></div>
+          <div><div class="card-label">Déjà intégré</div><div class="card-title">Pixel Meta — rien à faire</div></div>
         </div>
-        <div class="code-block">
-<span class="comment">// frontend/index.html — dans &lt;head&gt;</span>
-<span class="key">&lt;script&gt;</span>
-  !function(f,b,e,v,n,t,s){
-    if(f.fbq)return; n=f.fbq=function(){
-      n.callMethod ? n.callMethod.apply(n,arguments)
-      : n.queue.push(arguments)
-    };
-    if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0;
-    n.version=<span class="val">'2.0'</span>; n.queue=[];
-    t=b.createElement(e); t.async=!0;
-    t.src=v; s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)
-  }(window,document,<span class="val">'script'</span>,
-  <span class="val">'https://connect.facebook.net/en_US/fbevents.js'</span>);
-  fbq(<span class="val">'init'</span>, <span class="val">'TON_PIXEL_ID'</span>);
-  fbq(<span class="val">'track'</span>, <span class="val">'PageView'</span>);
-<span class="key">&lt;/script&gt;</span>
-        </div>
-        <button class="copy-code-btn" onclick="copyCode(this, `fbq('init', 'TON_PIXEL_ID');\nfbq('track', 'PageView');`)">Copier</button>
-      </div>
-
-      <div class="card">
-        <div class="card-label" style="margin-bottom:12px;">Events à déclencher dans Vue.js</div>
-        <div class="code-block">
-<span class="comment">// Page produit — ViewContent</span>
-<span class="key">onMounted</span>(() => {
-  window.fbq(<span class="val">'track'</span>, <span class="val">'ViewContent'</span>, {
-    <span class="flag">content_name</span>: <span class="val">'ClipBag'</span>,
-    <span class="flag">value</span>: <span class="val">29.99</span>,
-    <span class="flag">currency</span>: <span class="val">'EUR'</span>
-  });
-});
-
-<span class="comment">// Bouton panier — AddToCart</span>
-<span class="key">function</span> addToCart() {
-  window.fbq(<span class="val">'track'</span>, <span class="val">'AddToCart'</span>, { <span class="flag">value</span>: <span class="val">29.99</span>, <span class="flag">currency</span>: <span class="val">'EUR'</span> });
-}
-
-<span class="comment">// Page confirmation — Purchase</span>
-<span class="key">onMounted</span>(() => {
-  window.fbq(<span class="val">'track'</span>, <span class="val">'Purchase'</span>, { <span class="flag">value</span>: <span class="val">29.99</span>, <span class="flag">currency</span>: <span class="val">'EUR'</span> });
-});
-        </div>
-        <button class="copy-code-btn" onclick="copyCode(this, `window.fbq('track', 'Purchase', { value: 29.99, currency: 'EUR' });`)">Copier</button>
+        <div class="step-body" style="margin-bottom:12px;">Le Pixel Meta (<code>2478874479214730</code>) est déjà intégré dans le projet :</div>
+        <ul class="step-list">
+          <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>Script Pixel</strong> — injecté dans le <code>&lt;head&gt;</code> via <code>nuxt.config.ts</code></div></li>
+          <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>PageView</strong> — auto sur chaque page + navigations SPA (plugin <code>meta-pixel.client.ts</code>)</div></li>
+          <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>ViewContent</strong> — au chargement de la page produit (<code>pages/index.vue</code>)</div></li>
+          <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>AddToCart</strong> — au choix de pack, changement de quantité, ou clic Commander</div></li>
+          <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>InitiateCheckout</strong> — au clic sur Commander</div></li>
+          <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>Purchase</strong> — sur la page de confirmation avec le montant réel</div></li>
+        </ul>
       </div>
 
       <div class="card">
@@ -805,10 +747,10 @@ bootstrap();
             <div><div class="card-label">Vercel</div><div class="card-title">Frontend</div></div>
           </div>
           <ul class="step-list">
-            <li class="step-item"><div class="step-num">✓</div><div class="step-body">Vue.js déployé, build réussi</div></li>
+            <li class="step-item"><div class="step-num">✓</div><div class="step-body">Nuxt 3 déployé, build réussi</div></li>
             <li class="step-item"><div class="step-num">✓</div><div class="step-body"><code>clipbag.fr</code> accessible en HTTPS</div></li>
-            <li class="step-item"><div class="step-num">✓</div><div class="step-body"><code>vercel.json</code> présent (routing SPA)</div></li>
-            <li class="step-item"><div class="step-num">✓</div><div class="step-body">Variables Vite configurées</div></li>
+            <li class="step-item"><div class="step-num">✓</div><div class="step-body">SSR fonctionnel (routes dynamiques OK)</div></li>
+            <li class="step-item"><div class="step-num">✓</div><div class="step-body">Variables <code>NUXT_PUBLIC_*</code> configurées</div></li>
             <li class="step-item"><div class="step-num">✓</div><div class="step-body">Redirection www → apex active</div></li>
           </ul>
         </div>
@@ -860,7 +802,7 @@ bootstrap();
   const total = 10;
   const titles = [
     'Architecture globale', 'Railway — PostgreSQL', 'Railway — NestJS backend',
-    'Variables d\'environnement', 'Vercel — Vue.js front', 'Associer clipbag.fr à Vercel',
+    'Variables d\'environnement', 'Vercel — Nuxt 3 front', 'Associer clipbag.fr à Vercel',
     'Domaine custom Railway', 'Stripe en production', 'Pixel Meta + trackers', 'Checklist finale'
   ];
   const visited = new Set([0]);
