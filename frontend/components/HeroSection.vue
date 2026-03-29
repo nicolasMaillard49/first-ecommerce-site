@@ -36,10 +36,17 @@
           <!-- H1 -->
           <h1 class="font-display font-black text-[1.75rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-5 sm:mb-6">
             Plus Jamais Les Mains
-            <span class="text-brand relative">
-              Encombrees
-              <svg class="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-2 sm:h-3 text-brand/40" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 8C30 3 70 2 100 5C130 8 170 9 198 4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <span class="relative">
+              <span class="hero-gradient-text">Encombrees</span>
+              <svg class="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-2 sm:h-3" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="hero-wave" d="M2 8C30 3 70 2 100 5C130 8 170 9 198 4" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+                <defs>
+                  <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.6" />
+                    <stop offset="50%" stop-color="#34d399" stop-opacity="0.9" />
+                    <stop offset="100%" stop-color="#10b981" stop-opacity="0.6" />
+                  </linearGradient>
+                </defs>
               </svg>
             </span>
           </h1>
@@ -199,3 +206,48 @@ const scrollToDiscover = () => {
   }
 }
 </script>
+
+<style scoped>
+/* ---- Animated gradient text on "Encombrees" ---- */
+.hero-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #10b981 0%,
+    #6ee7b7 25%,
+    #34d399 50%,
+    #6ee7b7 75%,
+    #10b981 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ---- Live wave underline ---- */
+.hero-wave {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: wave-draw 1.2s ease-out 0.5s forwards, wave-float 3s ease-in-out 1.7s infinite;
+}
+
+@keyframes wave-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes wave-float {
+  0%, 100% { d: path("M2 8C30 3 70 2 100 5C130 8 170 9 198 4"); }
+  50% { d: path("M2 5C30 9 70 8 100 4C130 2 170 3 198 7"); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-text { animation: none; }
+  .hero-wave { animation: none; stroke-dashoffset: 0; }
+}
+</style>
