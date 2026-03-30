@@ -315,7 +315,7 @@ describe('PaymentsService', () => {
       const session = {
         id: 'cs_test_123',
         payment_intent: 'pi_123',
-        customer_details: { email: 'test@test.com', name: 'John' },
+        customer_details: { email: 'test@test.com', name: 'John', phone: '+33612345678' },
         collected_information: {
           shipping_details: {
             name: 'John Doe',
@@ -347,6 +347,7 @@ describe('PaymentsService', () => {
           stripePaymentId: 'pi_123',
           customerEmail: 'test@test.com',
           customerName: 'John Doe',
+          customerPhone: '+33612345678',
         }),
       });
       expect(result).toEqual({ received: true });

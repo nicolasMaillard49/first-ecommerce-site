@@ -32,6 +32,7 @@ model Order {
   status          OrderStatus @default(PENDING)
   customerEmail   String
   customerName    String
+  customerPhone   String    @default("")
   shippingAddress Json
   items           OrderItem[]
   total           Float

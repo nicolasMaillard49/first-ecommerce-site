@@ -75,6 +75,9 @@ export class PaymentsService {
       shipping_address_collection: {
         allowed_countries: ['FR'],
       },
+      phone_number_collection: { enabled: true },
+      customer_creation: 'always',
+      allow_promotion_codes: true,
       line_items: [
         {
           price_data: {
@@ -125,6 +128,7 @@ export class PaymentsService {
           stripePaymentId: session.payment_intent as string,
           customerEmail: session.customer_details?.email || '',
           customerName: shipping?.name || session.customer_details?.name || '',
+          customerPhone: session.customer_details?.phone || '',
           shippingAddress: shipping?.address ? {
             line1: shipping.address.line1 || '',
             line2: shipping.address.line2 || '',
