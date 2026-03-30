@@ -119,8 +119,15 @@ export class PaymentsService {
     );
 
     if (event.type === 'checkout.session.completed') {
-      const session = event.data.object as Stripe.Checkout.Session;
-      const shipping = session.collected_information?.shipping_details;
+      const eventSession = event.data.object as Stripe.Checkout.Session;
+
+      // Re-fetch full session to get all fields (shipping_details, collected_information)
+      const session = await this.stripe.checkout.sessions.retrieve(eventSession.id);
+
+      // Try multiple sources for shipping address
+      const shipping = session.collected_information?.shipping_details
+        || session.shipping_details
+        || (session as any).shipping;
 
       await this.prisma.order.update({
         where: { stripeSessionId: session.id },

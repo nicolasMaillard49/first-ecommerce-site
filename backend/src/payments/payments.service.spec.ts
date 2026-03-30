@@ -333,6 +333,7 @@ describe('PaymentsService', () => {
         type: 'checkout.session.completed',
         data: { object: session },
       });
+      mockStripe.checkout.sessions.retrieve.mockResolvedValue(session);
       prisma.order.update.mockResolvedValue({});
 
       const result = await service.handleWebhook(
