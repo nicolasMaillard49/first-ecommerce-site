@@ -3,6 +3,21 @@ useSeoMeta({
   title: 'Paiement Annulé - ClipBag',
   robots: 'noindex',
 })
+
+const { apiFetch } = useApi()
+const route = useRoute()
+
+onMounted(async () => {
+  const sessionId = route.query.session_id as string
+  if (sessionId) {
+    try {
+      await apiFetch('/payments/cancel-order', {
+        method: 'POST',
+        body: { session_id: sessionId },
+      })
+    } catch {}
+  }
+})
 </script>
 
 <template>

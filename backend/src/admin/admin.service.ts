@@ -99,6 +99,11 @@ export class AdminService {
     });
   }
 
+  async deleteOrder(id: string) {
+    await this.prisma.orderItem.deleteMany({ where: { orderId: id } });
+    return this.prisma.order.delete({ where: { id } });
+  }
+
   async updateProduct(id: string, data: UpdateProductDto) {
     return this.prisma.product.update({ where: { id }, data });
   }

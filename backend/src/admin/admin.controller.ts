@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Param, Body, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Param, Body, Query, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
@@ -34,6 +34,11 @@ export class AdminController {
   @Put('orders/:id/supplier')
   updateOrderSupplier(@Param('id') id: string, @Body() dto: UpdateOrderSupplierDto) {
     return this.adminService.updateOrderSupplier(id, dto);
+  }
+
+  @Delete('orders/:id')
+  deleteOrder(@Param('id') id: string) {
+    return this.adminService.deleteOrder(id);
   }
 
   @Get('product')

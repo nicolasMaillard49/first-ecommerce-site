@@ -24,6 +24,7 @@ interface Order {
   updatedAt: string
   customerName: string
   customerEmail: string
+  customerPhone: string
   total: number
   status: string
   stripeSessionId: string | null
@@ -256,6 +257,29 @@ const saveTracking = async () => {
   }
 }
 
+const deletingOrder = ref(false)
+
+const deleteOrder = async (orderId: string) => {
+  if (!confirm('Supprimer cette commande ? Cette action est irreversible.')) return
+  deletingOrder.value = true
+  try {
+    await apiFetch(`/admin/orders/${orderId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${authStore.token}` },
+    })
+    if (data.value) {
+      data.value.orders = data.value.orders.filter((o) => o.id !== orderId)
+      data.value.total--
+    }
+    closeOrder()
+  } catch (e: any) {
+    error.value = e?.data?.message || 'Erreur lors de la suppression'
+    if (e?.status === 401) authStore.logout()
+  } finally {
+    deletingOrder.value = false
+  }
+}
+
 const goToPage = (page: number) => {
   currentPage.value = page
   fetchOrders()
@@ -422,6 +446,12 @@ onBeforeUnmount(() => {
                   <div>
                     <p class="text-xs text-gray-500">Email</p>
                     <p class="text-white">{{ selectedOrder.customerEmail || '—' }}</p>
+                  </div>
+                  <div v-if="selectedOrder.customerPhone">
+                    <p class="text-xs text-gray-500">Telephone</p>
+                    <p class="text-white">
+                      <a :href="`tel:${selectedOrder.customerPhone}`" class="hover:text-brand transition-colors">{{ selectedOrder.customerPhone }}</a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -633,6 +663,17 @@ onBeforeUnmount(() => {
               <div v-if="selectedOrder.stripePaymentId" class="text-xs text-gray-600 space-y-1 pt-2 border-t border-white/5">
                 <p v-if="selectedOrder.stripeSessionId">Session: <span class="font-mono">{{ selectedOrder.stripeSessionId }}</span></p>
                 <p>Payment: <span class="font-mono">{{ selectedOrder.stripePaymentId }}</span></p>
+              </div>
+
+              <!-- Delete order -->
+              <div class="pt-2 border-t border-white/5">
+                <button
+                  :disabled="deletingOrder"
+                  class="w-full py-2 bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium rounded-lg hover:bg-red-500/20 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                  @click="deleteOrder(selectedOrder.id)"
+                >
+                  {{ deletingOrder ? 'Suppression...' : 'Supprimer cette commande' }}
+                </button>
               </div>
             </div>
           </div>

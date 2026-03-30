@@ -22,6 +22,11 @@ export class PaymentsController {
     return this.paymentsService.handleWebhook(payload, signature);
   }
 
+  @Post('cancel-order')
+  cancelOrder(@Body('session_id') sessionId: string) {
+    return this.paymentsService.cancelOrder(sessionId);
+  }
+
   @Get('session-status')
   getSessionStatus(@Query('session_id') sessionId: string) {
     return this.paymentsService.getSessionStatus(sessionId);

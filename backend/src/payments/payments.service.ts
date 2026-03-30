@@ -75,6 +75,7 @@ export class PaymentsService {
       shipping_address_collection: {
         allowed_countries: ['FR'],
       },
+      billing_address_collection: 'required',
       phone_number_collection: { enabled: true },
       customer_creation: 'always',
       allow_promotion_codes: true,
@@ -99,7 +100,7 @@ export class PaymentsService {
       ],
       metadata: { orderId: order.id, sport: dto.sport || '' },
       success_url: `${this.configService.get('FRONTEND_URL')}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${this.configService.get('FRONTEND_URL')}/cancel`,
+      cancel_url: `${this.configService.get('FRONTEND_URL')}/cancel?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     await this.prisma.order.update({
@@ -141,6 +142,19 @@ export class PaymentsService {
     }
 
     return { received: true };
+  }
+
+  async cancelOrder(sessionId: string) {
+    const order = await this.prisma.order.findUnique({
+      where: { stripeSessionId: sessionId },
+    });
+    if (order && order.status === 'PENDING') {
+      await this.prisma.order.update({
+        where: { id: order.id },
+        data: { status: 'CANCELLED' },
+      });
+    }
+    return { cancelled: true };
   }
 
   async getSessionStatus(sessionId: string) {
