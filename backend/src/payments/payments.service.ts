@@ -125,9 +125,10 @@ export class PaymentsService {
       const session = await this.stripe.checkout.sessions.retrieve(eventSession.id);
 
       // Try multiple sources for shipping address
-      const shipping = session.collected_information?.shipping_details
-        || session.shipping_details
-        || (session as any).shipping;
+      const s = session as any;
+      const shipping = s.collected_information?.shipping_details
+        || s.shipping_details
+        || s.shipping;
 
       await this.prisma.order.update({
         where: { stripeSessionId: session.id },
