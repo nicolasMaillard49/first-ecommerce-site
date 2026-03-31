@@ -1,4 +1,27 @@
-import { IsString, IsInt, Min, Max, IsOptional, IsIn } from 'class-validator';
+import { IsString, IsInt, Min, Max, IsOptional, IsIn, IsEmail, ValidateNested, IsNotEmpty, IsDefined } from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class ShippingAddressDto {
+  @IsString()
+  @IsNotEmpty()
+  line1: string;
+
+  @IsOptional()
+  @IsString()
+  line2?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @IsString()
+  @IsNotEmpty()
+  postalCode: string;
+
+  @IsOptional()
+  @IsString()
+  country?: string;
+}
 
 export class CreateCheckoutDto {
   @IsString()
@@ -17,4 +40,20 @@ export class CreateCheckoutDto {
   @IsOptional()
   @IsString()
   sport?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  customerName: string;
+
+  @IsEmail()
+  customerEmail: string;
+
+  @IsOptional()
+  @IsString()
+  customerPhone?: string;
+
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => ShippingAddressDto)
+  shippingAddress: ShippingAddressDto;
 }

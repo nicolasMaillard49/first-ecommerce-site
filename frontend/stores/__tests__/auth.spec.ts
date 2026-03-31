@@ -60,4 +60,43 @@ describe('useAuthStore', () => {
 
     expect(store.token).toBe('stored-token')
   })
+
+  it('login() should propagate API error', async () => {
+    mockApiFetch.mockRejectedValue(new Error('Network error'))
+
+    const store = useAuthStore()
+
+    await expect(store.login('admin@test.com', 'pass')).rejects.toThrow('Network error')
+    expect(store.token).toBeNull()
+  })
+
+  it('login() should handle empty token response', async () => {
+    mockApiFetch.mockResolvedValue({ access_token: '' })
+
+    const store = useAuthStore()
+    await store.login('admin@test.com', 'pass')
+
+    expect(store.token).toBe('')
+    expect(store.isAuthenticated).toBe(false)
+  })
+
+  it('init() should handle null localStorage value', () => {
+    // localStorage.getItem returns null when key doesn't exist
+    const store = useAuthStore()
+    store.init()
+
+    expect(store.token).toBeNull()
+    expect(store.isAuthenticated).toBe(false)
+  })
+
+  it('logout() should work even if already logged out', () => {
+    const store = useAuthStore()
+    expect(store.token).toBeNull()
+
+    // Should not throw
+    store.logout()
+
+    expect(store.token).toBeNull()
+    expect(mockNavigateTo).toHaveBeenCalledWith('/admin/login')
+  })
 })

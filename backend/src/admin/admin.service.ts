@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { EmailService } from '../email/email.service';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateOrderTrackingDto } from './dto/update-order-tracking.dto';
 import { UpdateOrderSupplierDto } from './dto/update-order-supplier.dto';
 
 @Injectable()
 export class AdminService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private emailService: EmailService,
+  ) {}
 
   async getDashboard() {
     const totalOrders = await this.prisma.order.count();
@@ -80,13 +84,26 @@ export class AdminService {
   }
 
   async updateOrderTracking(id: string, data: UpdateOrderTrackingDto) {
-    return this.prisma.order.update({
+    const order = await this.prisma.order.update({
       where: { id },
       data: {
         trackingNumber: data.trackingNumber,
         trackingUrl: data.trackingUrl,
       },
     });
+
+    // Send shipping notification email (non-blocking)
+    if (data.trackingNumber && order.customerEmail) {
+      this.emailService.sendShippingNotification({
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        trackingNumber: data.trackingNumber,
+        trackingUrl: data.trackingUrl,
+      });
+    }
+
+    return order;
   }
 
   async updateOrderSupplier(id: string, data: UpdateOrderSupplierDto) {

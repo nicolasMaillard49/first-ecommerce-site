@@ -100,4 +100,60 @@ describe('TrackingService', () => {
   it('should throw NotFoundException when no criteria provided', async () => {
     await expect(service.lookup({})).rejects.toThrow(NotFoundException);
   });
+
+  it('should handle non-numeric orderNumber (e.g. "GS-00001") by falling back to id lookup', async () => {
+    // parseInt("GS-00001") returns NaN, so the where clause uses id instead of orderNumber
+    prisma.order.findUnique.mockResolvedValue(null);
+
+    await expect(service.lookup({ orderNumber: 'GS-00001' })).rejects.toThrow(NotFoundException);
+
+    // When parseInt returns NaN (falsy), it should use { id: orderNumber } as fallback
+    expect(prisma.order.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 'GS-00001' },
+      }),
+    );
+  });
+
+  it('should handle orderNumber "0" (valid parseInt but no order)', async () => {
+    prisma.order.findUnique.mockResolvedValue(null);
+
+    await expect(service.lookup({ orderNumber: '0' })).rejects.toThrow(NotFoundException);
+
+    // parseInt("0") returns 0 which is falsy, so it uses id lookup
+    expect(prisma.order.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: '0' },
+      }),
+    );
+  });
+
+  it('should handle empty string orderNumber', async () => {
+    // parseInt("") returns NaN (falsy), falls through to id lookup
+    prisma.order.findUnique.mockResolvedValue(null);
+
+    await expect(service.lookup({ orderNumber: '' })).rejects.toThrow(NotFoundException);
+  });
+
+  it('should throw NotFoundException when name matches but email does not', async () => {
+    prisma.order.findMany.mockResolvedValue([]);
+
+    await expect(
+      service.lookup({ name: 'John Doe', email: 'wrong@email.com' }),
+    ).rejects.toThrow(NotFoundException);
+  });
+
+  it('should return multiple orders sorted by createdAt desc', async () => {
+    const orders = [
+      { ...mockOrder, id: 'order-2', orderNumber: 12346, createdAt: new Date('2026-01-02') },
+      { ...mockOrder, id: 'order-1', orderNumber: 12345, createdAt: new Date('2026-01-01') },
+    ];
+    prisma.order.findMany.mockResolvedValue(orders);
+
+    const result = await service.lookup({ name: 'John Doe', email: 'john@example.com' });
+
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe('order-2');
+    expect(result[1].id).toBe('order-1');
+  });
 });

@@ -186,45 +186,181 @@
           </div>
         </div>
 
-        <!-- Error message -->
-        <div
-          v-if="error"
-          class="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3 flex items-center gap-2"
-        >
-          <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          {{ error }}
-        </div>
-
-        <!-- 1-click CTA -->
-        <button
-          :disabled="loading"
-          :class="[
-            'group w-full text-white font-display font-bold text-xl py-5 px-8 rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl flex items-center justify-center gap-3',
-            loading
-              ? 'bg-brand/50 cursor-not-allowed'
-              : 'bg-brand hover:bg-brand-dark cursor-pointer shadow-brand/25 hover:shadow-brand/40 hover:scale-[1.02] animate-pulse-glow',
-          ]"
-          @click="handleCheckout"
-        >
-          <span v-if="loading" class="inline-flex items-center gap-2">
-            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Redirection vers le paiement...
-          </span>
-          <template v-else>
+        <!-- Step: Shipping address form -->
+        <div v-if="!showAddressForm" class="mb-6">
+          <button
+            :class="[
+              'group w-full text-white font-display font-bold text-xl py-5 px-8 rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl flex items-center justify-center gap-3',
+              'bg-brand hover:bg-brand-dark cursor-pointer shadow-brand/25 hover:shadow-brand/40 hover:scale-[1.02] animate-pulse-glow',
+            ]"
+            @click="showAddressForm = true"
+          >
             Commander &mdash; {{ formattedTotal }}
             <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </template>
-        </button>
+          </button>
+        </div>
+
+        <Transition
+          enter-active-class="transition-all duration-300 ease-out"
+          enter-from-class="opacity-0 -translate-y-3 max-h-0"
+          enter-to-class="opacity-100 translate-y-0 max-h-[800px]"
+          leave-active-class="transition-all duration-200 ease-in"
+          leave-from-class="opacity-100 translate-y-0 max-h-[800px]"
+          leave-to-class="opacity-0 -translate-y-3 max-h-0"
+        >
+          <div v-if="showAddressForm" class="overflow-hidden">
+            <div class="mb-8 bg-surface-light/50 rounded-2xl border border-surface-lighter p-5 sm:p-6">
+              <div class="flex items-center gap-2 mb-5">
+                <div class="flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white text-xs font-bold">2</div>
+                <p class="text-sm text-white font-semibold">Adresse de livraison</p>
+              </div>
+
+              <div class="grid gap-4">
+                <!-- Nom + Email -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="customer-name" class="block text-xs text-gray-400 mb-1.5 font-medium">Nom complet *</label>
+                    <input
+                      id="customer-name"
+                      v-model="customerName"
+                      type="text"
+                      required
+                      autocomplete="name"
+                      placeholder="Jean Dupont"
+                      class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label for="customer-email" class="block text-xs text-gray-400 mb-1.5 font-medium">Email *</label>
+                    <input
+                      id="customer-email"
+                      v-model="customerEmail"
+                      type="email"
+                      required
+                      autocomplete="email"
+                      placeholder="jean@email.com"
+                      class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <!-- Telephone -->
+                <div>
+                  <label for="customer-phone" class="block text-xs text-gray-400 mb-1.5 font-medium">Telephone <span class="text-gray-600">(optionnel)</span></label>
+                  <input
+                    id="customer-phone"
+                    v-model="customerPhone"
+                    type="tel"
+                    autocomplete="tel"
+                    placeholder="06 12 34 56 78"
+                    class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                  />
+                </div>
+
+                <!-- Adresse -->
+                <div>
+                  <label for="address-line1" class="block text-xs text-gray-400 mb-1.5 font-medium">Adresse *</label>
+                  <input
+                    id="address-line1"
+                    v-model="addressLine1"
+                    type="text"
+                    required
+                    autocomplete="address-line1"
+                    placeholder="12 rue de la Paix"
+                    class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label for="address-line2" class="block text-xs text-gray-400 mb-1.5 font-medium">Complement <span class="text-gray-600">(optionnel)</span></label>
+                  <input
+                    id="address-line2"
+                    v-model="addressLine2"
+                    type="text"
+                    autocomplete="address-line2"
+                    placeholder="Appartement, batiment, etage..."
+                    class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                  />
+                </div>
+
+                <!-- CP + Ville -->
+                <div class="grid grid-cols-[120px_1fr] sm:grid-cols-[140px_1fr] gap-4">
+                  <div>
+                    <label for="postal-code" class="block text-xs text-gray-400 mb-1.5 font-medium">Code postal *</label>
+                    <input
+                      id="postal-code"
+                      v-model="postalCode"
+                      type="text"
+                      required
+                      autocomplete="postal-code"
+                      placeholder="75001"
+                      maxlength="5"
+                      inputmode="numeric"
+                      class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label for="city" class="block text-xs text-gray-400 mb-1.5 font-medium">Ville *</label>
+                    <input
+                      id="city"
+                      v-model="city"
+                      type="text"
+                      required
+                      autocomplete="address-level2"
+                      placeholder="Paris"
+                      class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error message -->
+            <div
+              v-if="error"
+              class="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3 flex items-center gap-2"
+            >
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              {{ error }}
+            </div>
+
+            <!-- Pay CTA -->
+            <button
+              :disabled="loading || !isAddressValid"
+              :class="[
+                'group w-full text-white font-display font-bold text-xl py-5 px-8 rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl flex items-center justify-center gap-3',
+                loading || !isAddressValid
+                  ? 'bg-brand/50 cursor-not-allowed'
+                  : 'bg-brand hover:bg-brand-dark cursor-pointer shadow-brand/25 hover:shadow-brand/40 hover:scale-[1.02] animate-pulse-glow',
+              ]"
+              @click="handleCheckout"
+            >
+              <span v-if="loading" class="inline-flex items-center gap-2">
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Redirection vers le paiement...
+              </span>
+              <template v-else>
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Payer {{ formattedTotal }}
+                <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </template>
+            </button>
+          </div>
+        </Transition>
 
         <p class="text-center text-xs text-gray-500 mt-3">
-          Adresse et paiement geres par Stripe. 100% securise.
+          Paiement 100% securise par Stripe.
         </p>
 
         <!-- Trust badges -->
@@ -256,6 +392,26 @@ const loading = ref(false)
 const error = ref('')
 const selectedPack = ref('solo')
 const selectedSport = ref('')
+const showAddressForm = ref(false)
+
+// Address form fields
+const customerName = ref('')
+const customerEmail = ref('')
+const customerPhone = ref('')
+const addressLine1 = ref('')
+const addressLine2 = ref('')
+const postalCode = ref('')
+const city = ref('')
+
+const isAddressValid = computed(() => {
+  return (
+    customerName.value.trim().length >= 2 &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.value) &&
+    addressLine1.value.trim().length >= 3 &&
+    /^\d{5}$/.test(postalCode.value.trim()) &&
+    city.value.trim().length >= 1
+  )
+})
 
 const productImage = computed(() => productStore.product?.orderImage || productStore.product?.images[0] || '/images/product/product-7.png')
 
@@ -508,6 +664,11 @@ onUnmounted(() => {
 })
 
 const handleCheckout = async () => {
+  if (!isAddressValid.value) {
+    error.value = 'Veuillez remplir tous les champs obligatoires.'
+    return
+  }
+
   loading.value = true
   error.value = ''
 
@@ -529,6 +690,16 @@ const handleCheckout = async () => {
       productId: productStore.product?.id || '',
       quantity: quantity.value,
       packType: selectedPack.value,
+      customerName: customerName.value.trim(),
+      customerEmail: customerEmail.value.trim(),
+      customerPhone: customerPhone.value.trim() || undefined,
+      shippingAddress: {
+        line1: addressLine1.value.trim(),
+        line2: addressLine2.value.trim() || undefined,
+        city: city.value.trim(),
+        postalCode: postalCode.value.trim(),
+        country: 'FR',
+      },
     }
     if (selectedSport.value) {
       body.sport = selectedSport.value

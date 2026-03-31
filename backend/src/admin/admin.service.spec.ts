@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminService } from './admin.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { EmailService } from '../email/email.service';
 
 describe('AdminService', () => {
   let service: AdminService;
@@ -10,7 +11,9 @@ describe('AdminService', () => {
       aggregate: jest.Mock;
       findMany: jest.Mock;
       update: jest.Mock;
+      delete: jest.Mock;
     };
+    orderItem: { deleteMany: jest.Mock };
     product: { findFirst: jest.Mock; update: jest.Mock };
   };
 
@@ -21,7 +24,9 @@ describe('AdminService', () => {
         aggregate: jest.fn(),
         findMany: jest.fn(),
         update: jest.fn(),
+        delete: jest.fn(),
       },
+      orderItem: { deleteMany: jest.fn() },
       product: { findFirst: jest.fn(), update: jest.fn() },
     };
 
@@ -29,6 +34,13 @@ describe('AdminService', () => {
       providers: [
         AdminService,
         { provide: PrismaService, useValue: prisma },
+        {
+          provide: EmailService,
+          useValue: {
+            sendOrderConfirmation: jest.fn(),
+            sendShippingNotification: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -114,7 +126,10 @@ describe('AdminService', () => {
 
   describe('updateOrderTracking', () => {
     it('should update tracking number and URL', async () => {
-      const updated = { id: 'order-1', trackingNumber: 'LP123CN', trackingUrl: 'https://track.example.com/LP123CN' };
+      const updated = {
+        id: 'order-1', orderNumber: 1, customerName: 'Test', customerEmail: 'test@test.com',
+        trackingNumber: 'LP123CN', trackingUrl: 'https://track.example.com/LP123CN',
+      };
       prisma.order.update.mockResolvedValue(updated);
 
       const result = await service.updateOrderTracking('order-1', {
@@ -133,7 +148,10 @@ describe('AdminService', () => {
     });
 
     it('should update only tracking number when URL is omitted', async () => {
-      prisma.order.update.mockResolvedValue({ id: 'order-1', trackingNumber: 'LP456CN' });
+      prisma.order.update.mockResolvedValue({
+        id: 'order-1', orderNumber: 1, customerName: 'Test', customerEmail: 'test@test.com',
+        trackingNumber: 'LP456CN',
+      });
 
       await service.updateOrderTracking('order-1', { trackingNumber: 'LP456CN' });
 
@@ -190,6 +208,95 @@ describe('AdminService', () => {
       const callData = prisma.order.update.mock.calls[0][0].data;
       expect(callData.supplierOrderId).toBe('12345');
       expect(callData).not.toHaveProperty('supplierUrl');
+    });
+  });
+
+  describe('getDashboard — monthly edge cases', () => {
+    it('should calculate monthly revenue from multiple orders', async () => {
+      prisma.order.count
+        .mockResolvedValueOnce(10)
+        .mockResolvedValueOnce(5);
+      prisma.order.aggregate.mockResolvedValue({ _sum: { total: 500 } });
+      prisma.order.findMany
+        .mockResolvedValueOnce([]) // recentOrders
+        .mockResolvedValueOnce([
+          { id: 'm1', total: 29.99, items: [{ quantity: 1 }] },
+          { id: 'm2', total: 49.99, items: [{ quantity: 2 }] },
+          { id: 'm3', total: 99.99, items: [{ quantity: 5 }, { quantity: 1 }] },
+        ]); // monthlyOrders
+      prisma.product.findFirst.mockResolvedValue({ costPrice: 12, price: 29.99 });
+
+      const result = await service.getDashboard();
+
+      expect(result.monthly.revenue).toBeCloseTo(179.97, 2);
+      expect(result.monthly.orderCount).toBe(3);
+      expect(result.monthly.unitsSold).toBe(9); // 1 + 2 + 5 + 1
+    });
+
+    it('should exclude PENDING/CANCELLED from monthly revenue', async () => {
+      prisma.order.count.mockResolvedValue(0);
+      prisma.order.aggregate.mockResolvedValue({ _sum: { total: null } });
+      // The findMany with status filter is handled by Prisma, so monthlyOrders returns only matching
+      prisma.order.findMany
+        .mockResolvedValueOnce([]) // recentOrders
+        .mockResolvedValueOnce([]); // monthlyOrders (only PAID/PROCESSING/SHIPPED/DELIVERED)
+      prisma.product.findFirst.mockResolvedValue(null);
+
+      const result = await service.getDashboard();
+
+      expect(result.monthly.revenue).toBe(0);
+      expect(result.monthly.orderCount).toBe(0);
+      expect(result.monthly.unitsSold).toBe(0);
+    });
+  });
+
+  describe('deleteOrder', () => {
+    it('should delete OrderItems then Order', async () => {
+      prisma.orderItem.deleteMany.mockResolvedValue({ count: 2 });
+      prisma.order.delete.mockResolvedValue({ id: 'order-del' });
+
+      const result = await service.deleteOrder('order-del');
+
+      expect(prisma.orderItem.deleteMany).toHaveBeenCalledWith({
+        where: { orderId: 'order-del' },
+      });
+      expect(prisma.order.delete).toHaveBeenCalledWith({
+        where: { id: 'order-del' },
+      });
+      expect(result).toEqual({ id: 'order-del' });
+    });
+
+    it('should throw if order ID does not exist', async () => {
+      prisma.orderItem.deleteMany.mockResolvedValue({ count: 0 });
+      prisma.order.delete.mockRejectedValue(
+        new Error('Record to delete does not exist.'),
+      );
+
+      await expect(service.deleteOrder('nonexistent')).rejects.toThrow(
+        'Record to delete does not exist.',
+      );
+    });
+
+    it('should handle order with 0 items', async () => {
+      prisma.orderItem.deleteMany.mockResolvedValue({ count: 0 });
+      prisma.order.delete.mockResolvedValue({ id: 'order-empty' });
+
+      const result = await service.deleteOrder('order-empty');
+
+      expect(prisma.orderItem.deleteMany).toHaveBeenCalled();
+      expect(result).toEqual({ id: 'order-empty' });
+    });
+
+    it('should delete order with multiple items', async () => {
+      prisma.orderItem.deleteMany.mockResolvedValue({ count: 5 });
+      prisma.order.delete.mockResolvedValue({ id: 'order-multi' });
+
+      const result = await service.deleteOrder('order-multi');
+
+      expect(prisma.orderItem.deleteMany).toHaveBeenCalledWith({
+        where: { orderId: 'order-multi' },
+      });
+      expect(result).toEqual({ id: 'order-multi' });
     });
   });
 

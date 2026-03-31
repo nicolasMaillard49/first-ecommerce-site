@@ -1,7 +1,7 @@
 # Geestock - Reprise du Projet
 
 > Document de reprise pour continuer le developpement sur un autre poste.
-> Derniere mise a jour : 27 mars 2026
+> Derniere mise a jour : 31 mars 2026
     
 ---
 
@@ -9,7 +9,9 @@
 
 **Geestock** est un site e-commerce mono-produit (dropshipping) pour un sac magnetique pour bouteille.
 
+- **Nom produit** : ClipBag (anciennement Geestock)
 - **Produit** : Sac Magnetique pour Bouteille - 29,99 EUR (prix barre 49,99 EUR, -40%) — cout produit : 12 EUR
+- **Domaine** : clipbag.shop (anciennement geestock.fr)
 - **Packs** : Solo (29,99 EUR), Duo (49,99 EUR, -17%), Equipe (99,99 EUR, -33%)
 - **Langue** : Francais uniquement
 - **Domaine cible** : geestock.fr
@@ -94,12 +96,13 @@ first-ecommerce-site/
     │   └── admin.ts            # Protection routes admin (redirect si non auth)
     ├── components/
     │   ├── SiteNavbar.vue      # Navbar flottante + mobile slide-in + lien "Suivre ma commande"
-    │   ├── HeroSection.vue     # Hero 2 colonnes, badge social proof, LiveViewers, bouton Decouvrir (image product-7.png)
+    │   ├── HeroSection.vue     # Hero mobile-first rewrite, gradient anime, wave underline, image centree mobile (product-7.png)
     │   ├── ProblemSection.vue  # Avant/Apres avec cartes gradient
     │   ├── FeaturesSection.vue # 3 colonnes, 6 features, hover glow
     │   ├── GallerySection.vue  # Galerie zoom, fleches, keyboard nav (images locales)
-    │   ├── TestimonialsSection.vue  # 6 temoignages, carousel mobile
-    │   ├── SocialVideoSection.vue   # Carrousel videos reseaux sociaux (TikTok/Instagram/YouTube)
+    │   ├── TestimonialsSection.vue  # Temoignages, carousel avec navigation + autoplay
+    │   ├── SocialVideoSection.vue   # Carrousel 3D videos reseaux sociaux (TikTok/Instagram/YouTube) + autoplay
+    │   ├── ExplanationSection.vue  # Section "Comment ca marche" avec video demo (clipbagPresentation.mp4)
     │   ├── OrderSection.vue    # Packs (Solo/Duo/Equipe) + question sport + 1-click checkout
     │   ├── LiveViewers.vue     # Widget "X personnes regardent ce produit"
     │   ├── PurchaseNotification.vue  # Toast fake "Thomas de Lyon vient de commander" (20s)
@@ -120,7 +123,8 @@ first-ecommerce-site/
     │       └── product.vue     # Edition produit (nom, description, prix, images, videos sociales, URL fournisseur)
     ├── tests/mocks/            # Mocks Nuxt pour Vitest (imports.ts, app.ts)
     └── public/
-        └── images/product/     # Images produit locales (product-1.jpg, product-2 a product-7.png)
+        ├── favicon.png         # Nouveau favicon PNG (remplace .ico)
+        └── images/product/     # Images produit locales (product-1.jpg, product-2 a product-7.png, clipbagPresentation.mp4)
 ```
 
 ---
@@ -136,7 +140,7 @@ model Product {
 
 model Order {
   id, orderNumber (unique, autoincrement), status (enum PENDING/PAID/PROCESSING/SHIPPED/DELIVERED/CANCELLED)
-  customerEmail, customerName, shippingAddress (Json)
+  customerEmail, customerName, customerPhone (default ""), shippingAddress (Json)
   total, stripeSessionId? (unique), stripePaymentId?
   trackingNumber?, trackingUrl?
   supplierOrderId?, supplierUrl?
@@ -221,9 +225,11 @@ stripe listen --forward-to localhost:3000/api/payments/webhook
 # → Redemarrer le backend
 
 # 7. Lancer les tests
-cd backend && npm test        # 23 tests Jest
-cd frontend && npm run test:run  # 10 tests Vitest
+cd backend && npm test        # 104 tests Jest
+cd frontend && npm run test:run  # 33 tests Vitest
 ```
+
+> **Apres un git pull** : voir la section dediee dans `frontend/README.md` (npm install, prisma generate, prisma migrate dev, seed, tests).
 
 ---
 
@@ -248,12 +254,14 @@ cd frontend && npm run test:run  # 10 tests Vitest
 | POST | /api/payments/webhook | Non | Webhook Stripe (raw body + signature) |
 | GET | /api/payments/session-status | Non | Statut d'une session Stripe (?session_id=) |
 | POST | /api/tracking/lookup | Non | Recherche commande (body: `{orderNumber?}` ou `{name, email}`) |
+| POST | /api/payments/cancel-order | Non | Annule une commande PENDING (body: `{session_id}`) |
 | POST | /api/auth/login | Non | Login admin (body: `{email, password}`) → JWT |
 | GET | /api/admin/dashboard | JWT | Stats: total commandes, revenue, commandes recentes |
 | GET | /api/admin/orders | JWT | Liste des commandes paginee |
 | PUT | /api/admin/orders/:id/status | JWT | Maj statut commande |
 | PUT | /api/admin/orders/:id/tracking | JWT | Maj tracking (trackingNumber, trackingUrl) |
 | PUT | /api/admin/orders/:id/supplier | JWT | Maj fournisseur (supplierOrderId, supplierUrl) |
+| DELETE | /api/admin/orders/:id | JWT | Supprime une commande et ses items |
 | GET | /api/admin/product | JWT | Detail produit (admin) |
 | PUT | /api/admin/product/:id | JWT | Maj produit (nom, description, prix, images, supplierUrl) |
 
@@ -272,8 +280,9 @@ cd frontend && npm run test:run  # 10 tests Vitest
 - [x] **Question sport** avant checkout : Musculation, Running, Velo, Randonnee, Autre (optionnel, envoye dans metadata Stripe)
 - [x] **1-click checkout** : pas de formulaire, Stripe gere l'adresse de livraison
 - [x] **Widget "Live Viewers"** : "X personnes regardent ce produit" (3-15, mise a jour 30-60s)
-- [x] **Notifications d'achat fake** : toast "Thomas de Lyon vient de commander il y a 3 min" (toutes les 20s, 30 prenoms + 20 villes)
-- [x] **Carrousel videos sociales** : TikTok/Instagram/YouTube, plateforme auto-detectee, clic ouvre la video originale
+- [x] **Notifications d'achat fake** : toast top-bar mobile (slide from top, 5s), bottom-left card desktop (25s rotation, 6s dismiss)
+- [x] **Carrousel videos sociales 3D** : TikTok/Instagram/YouTube, perspective 3D, autoplay 3.5s, navigation circulaire infinie, plateforme auto-detectee
+- [x] **Section Explication** : video demo produit (clipbagPresentation.mp4), play/pause au clic, design cinematique
 - [x] Countdown timer (urgence)
 - [x] Badge -40% sur l'image produit
 - [x] Bouton CTA flottant mobile
@@ -283,7 +292,8 @@ cd frontend && npm run test:run  # 10 tests Vitest
 - [x] **Page Success** : n° de commande unique (GS-00001), lien cliquable vers suivi, bouton "Commander a nouveau"
 - [x] **Page Cancel** : bouton "Retour a la commande" vers /#order-section
 - [x] **Page Suivi** (`/suivi`) : recherche par n° ou nom+email, multi-commandes avec pastille couleur, detail au clic, timeline animee, auto-recherche via ?order=
-- [x] **Panel admin** : Login, Dashboard (stats + revenue), Commandes (detail modal accessible, filtres par onglets, workflow fournisseur/tracking, auto-status), Edition produit (nom, description, prix, images, videos sociales, URL fournisseur)
+- [x] **Panel admin** : Login, Dashboard (stats + revenue), Commandes (detail modal accessible, filtres par onglets, workflow fournisseur/tracking, auto-status, suppression commande, telephone client cliquable), Edition produit (nom, description, prix, images, videos sociales, URL fournisseur)
+- [x] **Page Cancel amelioree** : annulation automatique de la commande PENDING via session_id
 - [x] **Workflow fournisseur AliExpress** : onglets (A commander / A expedier / Terminees), copie adresse client, lien AliExpress avec quantite auto, saisie n° commande, auto-avancement statut (PAID→PROCESSING→SHIPPED)
 - [x] **Accessibilite modal** : role="dialog", aria-modal, aria-labelledby, fermeture Escape, labels lies aux inputs, cibles tactiles 44px+, feedback succes sur sauvegardes
 - [x] Footer : icones paiement Visa, Mastercard, Stripe, Apple Pay, Google Pay, Samsung Pay
@@ -301,6 +311,11 @@ cd frontend && npm run test:run  # 10 tests Vitest
 - [x] **Suivi de commande** : module Tracking (POST /api/tracking/lookup), recherche par orderNumber ou nom+email, retourne toutes les commandes du client
 - [x] **Tracking expedition** : champs trackingNumber et trackingUrl sur Order, endpoint admin PUT /orders/:id/tracking
 - [x] **Sport dans metadata Stripe** : champ sport optionnel dans le checkout DTO
+- [x] **Telephone client** : champ customerPhone sur Order, collecte via `phone_number_collection` Stripe
+- [x] **Annulation commande** : endpoint POST /api/payments/cancel-order, auto-cancel des commandes PENDING depuis la page cancel
+- [x] **Suppression commande admin** : endpoint DELETE /api/admin/orders/:id (supprime OrderItems + Order)
+- [x] **Webhook ameliore** : re-fetch session complete, fallback multiple sources pour adresse (collected_information → shipping_details → customer_details), billing_address_collection required
+- [x] **Codes promo Stripe** : `allow_promotion_codes: true` dans la session checkout
 - [x] Auth JWT pour le panel admin
 - [x] Admin : gestion images produit + mise a jour produit complete (dont supplierUrl)
 - [x] **Fournisseur** : champs supplierOrderId + supplierUrl sur Order, supplierUrl sur Product, endpoint PUT /orders/:id/supplier
@@ -441,6 +456,96 @@ npx nest build && node dist/src/main.js
 - `frontend/components/HeroSection.vue` — nouvelle image hero product-7.png
 - `frontend/components/OrderSection.vue` — cadrage image produit
 - `frontend/public/images/product/product-7.png` — nouvelle image produit
+
+### 27-30 mars 2026 (autre poste)
+
+**Rebranding Geestock → ClipBag** :
+- Renommage du produit et de la marque dans tout le code (seed, SEO, videos, localStorage key `clipbag_social_videos`)
+- Nouveau domaine : `clipbag.shop` (remplace `geestock.fr`)
+- URLs canoniques et OG tags mis a jour
+
+**Nouvelle section ExplanationSection** :
+- Section "Comment ca marche" avec video demo produit (`clipbagPresentation.mp4`, 15 Mo)
+- Slogan "Clip ton Bag", design cinematique avec glow brand et border animee
+- Placee entre Hero et ProblemSection dans le flux de page
+
+**Refonte HeroSection (mobile-first)** :
+- Rewrite complet du layout mobile : badges → titre → IMAGE → prix → CTA (image au centre au lieu d'etre enterree en bas)
+- Texte gradient anime + effet wave underline sur le titre
+- Trust indicators en grille 3 colonnes sur mobile (plus de debordement)
+- Badge note positionne dans les limites de l'image
+- Image produit cappee a 280px mobile, 300px tablette
+- Tighter spacing sur tous les elements mobiles
+- Bouton Decouvrir centre avec `inset-x-0`
+
+**Refonte TestimonialsSection** :
+- Layout carousel avec navigation et styling ameliores
+- Autoplay integre
+
+**PurchaseNotification redesign** :
+- Mobile : slim top banner (slide from top, auto-dismiss 5s), ne couvre plus le CTA flottant
+- Desktop : bottom-left card (inchange)
+- Delai 3s avant premiere notification, rotation 25s
+
+**GallerySection** :
+- Auto-play 4s avec pause on hover/zoom
+- Reset timer sur navigation manuelle
+- Fond sombre restaure (images formats inconsistants)
+
+**SocialVideoSection** :
+- Navigation circulaire infinie (wrap-around positioning)
+- Autoplay 3.5s avec reset on interaction
+
+**DevOps & cleanup** :
+- Scripts `build` et `start:prod` corriges dans `backend/package.json`
+- Error handling SSR pour le fetch produit (try/catch + retry client)
+- Nouveau favicon PNG (remplace .ico)
+- Docs HTML (secrets deploiement) retires du git tracking (`.gitignore`)
+- Meta Pixel integre (`useMetaPixel` composable, `ViewContent` event sur index)
+
+**Fichiers modifies** :
+- `frontend/components/ExplanationSection.vue` — nouveau composant
+- `frontend/components/HeroSection.vue` — refonte mobile-first
+- `frontend/components/TestimonialsSection.vue` — refonte carousel
+- `frontend/components/PurchaseNotification.vue` — redesign toast
+- `frontend/components/GallerySection.vue` — autoplay + fond sombre
+- `frontend/components/SocialVideoSection.vue` — autoplay + infinite loop
+- `frontend/pages/index.vue` — ajout ExplanationSection + Meta Pixel
+- `frontend/public/favicon.png` — nouveau favicon
+- `frontend/public/images/product/clipbagPresentation.mp4` — video demo
+- `backend/package.json` — fix scripts prod
+- `backend/prisma/seed.ts` — rebranding ClipBag
+- `.gitignore` — exclusion docs HTML
+
+### 30 mars 2026
+
+**Telephone client + collecte d'infos Stripe amelioree** :
+- Ajout champ `customerPhone` sur le modele Order (migration Prisma)
+- Activation `phone_number_collection`, `billing_address_collection: 'required'`, `customer_creation: 'always'` et `allow_promotion_codes: true` dans la session Stripe checkout
+- Webhook ameliore : re-fetch de la session complete via `sessions.retrieve`, fallback multiple sources pour l'adresse de livraison (`collected_information` → `shipping_details` → `customer_details`), logging debug
+
+**Annulation de commande** :
+- Nouveau endpoint `POST /api/payments/cancel-order` : annule automatiquement les commandes PENDING quand l'utilisateur arrive sur `/cancel`
+- Page cancel mise a jour : envoie le `session_id` au backend pour annuler la commande
+- URL cancel Stripe mise a jour avec `?session_id={CHECKOUT_SESSION_ID}`
+
+**Suppression de commande (admin)** :
+- Nouveau endpoint `DELETE /api/admin/orders/:id` (protege JWT) : supprime les OrderItems puis la commande
+- Bouton de suppression dans la modal commande admin (confirmation requise, style rouge discret)
+
+**Admin orders — telephone client** :
+- Affichage du telephone client dans la modal commande avec lien `tel:` cliquable
+
+**Fichiers modifies** :
+- `backend/prisma/schema.prisma` — ajout `customerPhone`
+- `backend/prisma/migrations/` — nouvelle migration
+- `backend/src/payments/payments.service.ts` — refonte webhook, cancel order, options Stripe
+- `backend/src/payments/payments.controller.ts` — endpoint cancel-order
+- `backend/src/payments/payments.service.spec.ts` — maj tests
+- `backend/src/admin/admin.service.ts` — deleteOrder
+- `backend/src/admin/admin.controller.ts` — endpoint DELETE orders/:id
+- `frontend/pages/admin/orders.vue` — telephone, suppression commande
+- `frontend/pages/cancel.vue` — annulation auto via session_id
 
 ---
 

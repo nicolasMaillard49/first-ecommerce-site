@@ -55,4 +55,43 @@ describe('useProductStore', () => {
     await expect(store.fetchProduct()).rejects.toThrow('Network error')
     expect(store.loading).toBe(false)
   })
+
+  it('fetchProduct() should handle network timeout', async () => {
+    mockApiFetch.mockRejectedValue(new Error('timeout'))
+
+    const store = useProductStore()
+
+    await expect(store.fetchProduct()).rejects.toThrow('timeout')
+    expect(store.product).toBeNull()
+    expect(store.loading).toBe(false)
+  })
+
+  it('fetchProduct() should handle undefined API response', async () => {
+    mockApiFetch.mockResolvedValue(undefined)
+
+    const store = useProductStore()
+
+    // undefined[0] throws, so fetchProduct should throw
+    await expect(store.fetchProduct()).rejects.toThrow()
+    expect(store.loading).toBe(false)
+  })
+
+  it('fetchProduct() should set loading to true during fetch', async () => {
+    let resolvePromise: (value: any) => void
+    const pendingPromise = new Promise((resolve) => {
+      resolvePromise = resolve
+    })
+    mockApiFetch.mockReturnValue(pendingPromise)
+
+    const store = useProductStore()
+    const fetchPromise = store.fetchProduct()
+
+    // loading should be true while waiting
+    expect(store.loading).toBe(true)
+
+    // Resolve and check loading goes back to false
+    resolvePromise!([{ id: '1', name: 'Test' }])
+    await fetchPromise
+    expect(store.loading).toBe(false)
+  })
 })

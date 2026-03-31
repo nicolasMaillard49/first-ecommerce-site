@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { PrismaService } from '../prisma/prisma.service';
+import { EmailService } from '../email/email.service';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
 
 const PACK_CONFIG: Record<string, { qty: number; totalCents: number }> = {
@@ -17,6 +18,7 @@ export class PaymentsService {
   constructor(
     private configService: ConfigService,
     private prisma: PrismaService,
+    private emailService: EmailService,
   ) {
     this.stripe = new Stripe(this.configService.getOrThrow('STRIPE_SECRET_KEY'));
   }
@@ -55,9 +57,16 @@ export class PaymentsService {
 
     const order = await this.prisma.order.create({
       data: {
-        customerEmail: '',
-        customerName: '',
-        shippingAddress: {},
+        customerEmail: dto.customerEmail,
+        customerName: dto.customerName,
+        customerPhone: dto.customerPhone || '',
+        shippingAddress: {
+          line1: dto.shippingAddress.line1,
+          line2: dto.shippingAddress.line2 || '',
+          city: dto.shippingAddress.city,
+          postalCode: dto.shippingAddress.postalCode,
+          country: dto.shippingAddress.country || 'FR',
+        },
         total,
         items: {
           create: {
@@ -72,12 +81,7 @@ export class PaymentsService {
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      shipping_address_collection: {
-        allowed_countries: ['FR'],
-      },
-      billing_address_collection: 'required',
-      phone_number_collection: { enabled: true },
-      customer_creation: 'always',
+      customer_email: dto.customerEmail,
       allow_promotion_codes: true,
       line_items: [
         {
@@ -119,45 +123,29 @@ export class PaymentsService {
     );
 
     if (event.type === 'checkout.session.completed') {
-      const eventSession = event.data.object as Stripe.Checkout.Session;
+      const session = event.data.object as Stripe.Checkout.Session;
 
-      // Re-fetch full session with expanded fields
-      const session = await this.stripe.checkout.sessions.retrieve(eventSession.id);
-      const s = session as any;
-
-      // Log all address sources for debugging (remove after fixing)
-      console.log('[Webhook] Session address sources:', JSON.stringify({
-        collected_information: s.collected_information,
-        shipping_details: s.shipping_details,
-        shipping: s.shipping,
-        customer_details: session.customer_details,
-      }, null, 2));
-
-      // Try multiple sources for shipping address
-      const shipping = s.collected_information?.shipping_details
-        || s.shipping_details
-        || s.shipping;
-
-      // Fallback: use billing address from customer_details if no shipping found
-      const shippingAddress = shipping?.address || s.customer_details?.address;
-      const shippingName = shipping?.name || session.customer_details?.name || '';
-
-      await this.prisma.order.update({
+      const order = await this.prisma.order.update({
         where: { stripeSessionId: session.id },
         data: {
           status: 'PAID',
           stripePaymentId: session.payment_intent as string,
-          customerEmail: session.customer_details?.email || '',
-          customerName: shippingName,
-          customerPhone: session.customer_details?.phone || '',
-          shippingAddress: shippingAddress ? {
-            line1: shippingAddress.line1 || '',
-            line2: shippingAddress.line2 || '',
-            city: shippingAddress.city || '',
-            postalCode: shippingAddress.postal_code || '',
-            country: shippingAddress.country || 'FR',
-          } : {},
         },
+        include: { items: { include: { product: true } } },
+      });
+
+      // Send order confirmation email (non-blocking)
+      this.emailService.sendOrderConfirmation({
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        total: order.total,
+        items: order.items.map((item) => ({
+          name: item.product.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        shippingAddress: order.shippingAddress as any,
       });
     }
 
