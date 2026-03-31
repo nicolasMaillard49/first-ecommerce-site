@@ -26,6 +26,7 @@ export default defineNuxtConfig({
         { name: 'twitter:title', content: 'ClipBag - Le Sac Magnétique pour Bouteille' },
         { name: 'twitter:description', content: 'Libérez vos mains pendant le sport. -40% : 29,99€. Livraison gratuite.' },
         { name: 'theme-color', content: '#10b981' },
+        { name: 'google-site-verification', content: 'a20ya7ig--nHqsLOgvsGWQUFYM0Dpj4d5EKT2s8wWdo' },
       ],
       script: [
         {
