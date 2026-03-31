@@ -34,7 +34,8 @@
       "WebFetch(domain:first-ecommerce-site.vercel.app)",
       "WebFetch(domain:first-ecommerce-site-git-main-nicolasmaillard49s-projects.vercel.app)",
       "WebFetch(domain:clipbag.shop)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "WebFetch(domain:resend.com)"
     ]
   }
 }

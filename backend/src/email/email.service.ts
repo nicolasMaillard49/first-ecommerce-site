@@ -42,12 +42,14 @@ export class EmailService {
   async sendOrderConfirmation(data: OrderEmailData) {
     // 1. Email client
     try {
+      this.logger.log(`Sending order confirmation from="${this.from}" to="${data.customerEmail}"`);
       const result = await this.resend.emails.send({
         from: this.from,
         to: data.customerEmail,
         subject: `Commande confirmee #GS-${String(data.orderNumber).padStart(5, '0')}`,
         html: orderConfirmationTemplate(data),
       });
+      this.logger.log(`Resend response: ${JSON.stringify(result)}`);
       this.logger.log(`Order confirmation sent to ${data.customerEmail} (${result.data?.id})`);
     } catch (error) {
       this.logger.error(`Failed to send order confirmation to ${data.customerEmail}`, error);
