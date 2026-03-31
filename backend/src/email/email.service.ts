@@ -40,6 +40,7 @@ export class EmailService {
   }
 
   async sendOrderConfirmation(data: OrderEmailData) {
+    // 1. Email client
     try {
       const result = await this.resend.emails.send({
         from: this.from,
@@ -48,9 +49,39 @@ export class EmailService {
         html: orderConfirmationTemplate(data),
       });
       this.logger.log(`Order confirmation sent to ${data.customerEmail} (${result.data?.id})`);
-      return result;
     } catch (error) {
       this.logger.error(`Failed to send order confirmation to ${data.customerEmail}`, error);
+    }
+
+    // 2. Email admin notification
+    const adminEmail = this.configService.get('ADMIN_EMAIL');
+    if (adminEmail) {
+      try {
+        const itemsList = data.items
+          .map((i) => `${i.name} x${i.quantity} — ${i.price.toFixed(2)}€`)
+          .join('\n');
+        const addr = data.shippingAddress;
+        const addrStr = [addr.line1, addr.line2, `${addr.postalCode} ${addr.city}`, addr.country || 'FR']
+          .filter(Boolean)
+          .join(', ');
+
+        await this.resend.emails.send({
+          from: this.from,
+          to: adminEmail,
+          subject: `🛒 Nouvelle commande #GS-${String(data.orderNumber).padStart(5, '0')} — ${data.total.toFixed(2)}€`,
+          html: `
+            <h2>Nouvelle commande !</h2>
+            <p><strong>Client :</strong> ${data.customerName} (${data.customerEmail})</p>
+            <p><strong>Articles :</strong><br/>${itemsList.replace(/\n/g, '<br/>')}</p>
+            <p><strong>Total :</strong> ${data.total.toFixed(2)}€</p>
+            <p><strong>Adresse :</strong> ${addrStr}</p>
+            <p><a href="https://clipbag.shop/admin/orders">Voir dans le dashboard</a></p>
+          `,
+        });
+        this.logger.log(`Admin notification sent to ${adminEmail}`);
+      } catch (error) {
+        this.logger.error(`Failed to send admin notification`, error);
+      }
     }
   }
 
