@@ -34,13 +34,14 @@ useHead({
           <h2 class="font-display font-bold text-xl text-white mb-4">1. Éditeur du site</h2>
           <p>
             Le site <strong class="text-white">clipbag.shop</strong> est édité par :<br />
-            [Nom de la société ou de l'entrepreneur individuel]<br />
-            [Forme juridique] au capital de [montant] euros<br />
-            Siège social : [Adresse complète]<br />
-            SIRET : [Numéro SIRET]<br />
-            RCS : [Ville] [Numéro RCS]<br />
-            Numéro de TVA intracommunautaire : [Numéro TVA]<br />
-            Directeur de la publication : [Nom du responsable]<br />
+            <strong class="text-white">NMF Agence</strong><br />
+            Entrepreneur individuel<br />
+            Siège social : 1 rue Marguerin, 75014 Paris, France<br />
+            SIREN : 102 905 379<br />
+            SIRET : 102 905 379 00016<br />
+            Code APE : 6201Z – Programmation informatique<br />
+            TVA : Non applicable, article 293 B du CGI<br />
+            Directeur de la publication : NMF Agence<br />
             Contact : <a href="mailto:contact@clipbag.shop" class="text-brand hover:text-brand-light transition-colors">contact@clipbag.shop</a>
           </p>
         </section>
@@ -50,9 +51,9 @@ useHead({
           <h2 class="font-display font-bold text-xl text-white mb-4">2. Hébergeur</h2>
           <p>
             Le site est hébergé par :<br />
-            [Nom de l'hébergeur]<br />
-            [Adresse de l'hébergeur]<br />
-            [Téléphone de l'hébergeur]
+            OVH SAS<br />
+            2 rue Kellermann, 59100 Roubaix, France<br />
+            <a href="https://www.ovhcloud.com" target="_blank" rel="noopener noreferrer" class="text-brand hover:text-brand-light transition-colors">www.ovhcloud.com</a>
           </p>
         </section>
 
@@ -96,9 +97,7 @@ useHead({
             Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, en cas de litige non résolu, le consommateur peut recourir gratuitement au service de médiation :
           </p>
           <p class="mt-3">
-            [Nom du médiateur de la consommation]<br />
-            [Adresse du médiateur]<br />
-            [Site web du médiateur]
+            Plateforme européenne de médiation accessible ci-dessous.
           </p>
           <p class="mt-3">
             Plateforme européenne de règlement en ligne des litiges :
