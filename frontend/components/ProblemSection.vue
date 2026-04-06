@@ -109,20 +109,20 @@ const problems = [
 
 const solutions = [
   {
-    title: 'Fixation magnetique instantanee',
-    desc: 'Un clic et votre bouteille est securisee. Detachement tout aussi rapide.',
+    title: 'Fixation magnétique instantanée',
+    desc: 'Un clic et votre bouteille est sécurisée. Detachement tout aussi rapide.',
   },
   {
     title: 'Stabilite a toute epreuve',
-    desc: 'Les aimants neodyme tiennent fermement, meme en plein sprint ou sur terrain accidente.',
+    desc: 'Les aimants néodyme tiennent fermement, même en plein sprint ou sur terrain accidenté.',
   },
   {
     title: 'Ultra compact : 120g seulement',
-    desc: 'Si leger que vous oublierez que vous le portez. Zero contrainte, zero encombrement.',
+    desc: 'Si léger que vous oublierez que vous le portez. Zéro contrainte, zéro encombrement.',
   },
   {
     title: 'Hydratation sans effort',
-    desc: 'Votre bouteille toujours a portee de main. Buvez plus, performez mieux.',
+    desc: 'Votre bouteille toujours à portée de main. Buvez plus, performez mieux.',
   },
 ]
 </script>

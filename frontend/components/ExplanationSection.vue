@@ -118,14 +118,14 @@
             <span class="font-display font-black text-brand text-lg">1</span>
           </div>
           <h3 class="font-display font-bold text-white text-lg mb-2">Clipsez</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Fixez le ClipBag sur n'importe quelle surface metallique en un instant.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Fixez le ClipBag sur n'importe quelle surface métallique en un instant.</p>
         </div>
         <div class="animate-on-scroll text-center">
           <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto mb-4">
             <span class="font-display font-black text-brand text-lg">2</span>
           </div>
           <h3 class="font-display font-bold text-white text-lg mb-2">Rangez</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Glissez votre bouteille, gourde ou accessoires dans le sac magnetique.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Glissez votre bouteille, gourde ou accessoires dans le sac magnétique.</p>
         </div>
         <div class="animate-on-scroll text-center">
           <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto mb-4">

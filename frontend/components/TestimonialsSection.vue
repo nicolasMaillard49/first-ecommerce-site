@@ -6,7 +6,7 @@
     <div class="relative max-w-6xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-14 sm:mb-20 animate-on-scroll">
-        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Temoignages</span>
+        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Témoignages</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
           Ce que disent <span class="text-brand">nos clients</span>
         </h2>
@@ -20,7 +20,7 @@
           </div>
           <div class="text-left">
             <span class="text-white font-display font-bold text-lg">4.9/5</span>
-            <span class="text-gray-400 text-sm ml-1">base sur 2 000+ avis</span>
+            <span class="text-gray-400 text-sm ml-1">basé sur 2 000+ avis</span>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         <!-- Arrow left -->
         <button
           class="absolute left-0 sm:-left-5 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/[0.1] text-white/70 hover:text-brand hover:border-brand/30 hover:bg-brand/[0.08] transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand/50"
-          aria-label="Avis precedent"
+          aria-label="Avis précédent"
           @click="navigate(-1)"
         >
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -76,7 +76,7 @@
             <div class="relative h-full flex flex-col p-5 sm:p-6">
               <!-- Stars -->
               <div class="flex items-center gap-0.5 mb-4">
-                <svg v-for="star in 5" :key="star" class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <svg v-for="star in 5" :key="star" class="w-4 h-4 text-yellow-400 star-pulse" :style="{ animationDelay: `${star * 0.1}s` }" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </div>
@@ -99,7 +99,7 @@
                   <svg class="w-3 h-3 text-brand" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                   </svg>
-                  <span class="text-[10px] text-brand font-semibold">Verifie</span>
+                  <span class="text-[10px] text-brand font-semibold">Vérifié</span>
                 </div>
               </div>
             </div>
@@ -201,7 +201,7 @@ const testimonials = [
     name: 'Thomas L.',
     initials: 'TL',
     sport: 'Musculation',
-    quote: "Je l'accroche sur le rack entre chaque serie, ma bouteille est toujours a portee de main. Un game-changer en salle.",
+    quote: "Je l'accroche sur le rack entre chaque série, ma bouteille est toujours à portée de main. Un game-changer en salle.",
   },
   {
     name: 'Camille D.',
@@ -213,7 +213,7 @@ const testimonials = [
     name: 'Mehdi B.',
     initials: 'MB',
     sport: 'Musculation',
-    quote: "Sceptique au depart, convaincu apres 5 minutes. La fixation magnetique sur les machines est ultra solide. J'en ai pris un deuxieme.",
+    quote: "Sceptique au départ, convaincu après 5 minutes. La fixation magnétique sur les machines est ultra solide. J'en ai pris un deuxième.",
   },
   {
     name: 'Sophie M.',
@@ -231,7 +231,7 @@ const testimonials = [
     name: 'Lea P.',
     initials: 'LP',
     sport: 'Fitness',
-    quote: "Le design est canon et la qualite au top. Toutes les filles de ma salle me demandent ou je l'ai trouve.",
+    quote: "Le design est canon et la qualité au top. Toutes les filles de ma salle me demandent où je l'ai trouvé.",
   },
   {
     name: 'Antoine G.',
@@ -243,19 +243,19 @@ const testimonials = [
     name: 'Nathan F.',
     initials: 'NF',
     sport: 'Musculation',
-    quote: "Ca fait 4 mois que je l'utilise tous les jours en salle. Toujours comme neuf. La qualite des aimants est impressionnante.",
+    quote: "Ca fait 4 mois que je l'utilise tous les jours en salle. Toujours comme neuf. La qualité des aimants est impressionnante.",
   },
   {
     name: 'Julie V.',
     initials: 'JV',
     sport: 'Randonnee',
-    quote: "Je l'ai pris pour la rando. Sur les poteaux metalliques des refuges, sur la voiture, c'est genial meme en dehors de la salle.",
+    quote: "Je l'ai pris pour la rando. Sur les poteaux métalliques des refuges, sur la voiture, c'est génial même en dehors de la salle.",
   },
   {
     name: 'Maxime T.',
     initials: 'MT',
     sport: 'Quotidien & Bureau',
-    quote: "Je l'utilise meme au bureau, clipse sur le pied de mon ecran. Ma bouteille est toujours la sans encombrer le bureau. Malin.",
+    quote: "Je l'utilise même au bureau, clipsé sur le pied de mon écran. Ma bouteille est toujours là sans encombrer le bureau. Malin.",
   },
 ]
 </script>
@@ -341,11 +341,23 @@ const testimonials = [
   }
 }
 
+/* ---- Star pulse on active card ---- */
+.review-card--active .star-pulse {
+  animation: star-pulse 2s ease-in-out infinite;
+}
+
+@keyframes star-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.6)); }
+}
+
 /* ---- Reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
   .review-card,
-  .review-dot {
+  .review-dot,
+  .star-pulse {
     transition: none;
+    animation: none;
   }
 }
 </style>

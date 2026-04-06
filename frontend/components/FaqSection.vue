@@ -114,9 +114,9 @@ const faqs = [
       'Le ClipBag est compatible avec toutes les bouteilles standard (de 500ml a 1L). Son design universel s\'adapte a la grande majorite des bouteilles du marche, y compris les gourdes isothermes.',
   },
   {
-    question: 'La fixation magnetique est-elle solide ?',
+    question: 'La fixation magnétique est-elle solide ?',
     answer:
-      'Absolument. Nos aimants neodyme ultra-puissants garantissent une fixation ferme et securisee, meme pendant les activites sportives intenses. Votre bouteille ne bougera pas, que ce soit en course, a velo ou en escalade.',
+      'Absolument. Nos aimants néodyme ultra-puissants garantissent une fixation ferme et sécurisée, même pendant les activités sportives intenses. Votre bouteille ne bougera pas, que ce soit en course, à vélo ou en escalade.',
   },
   {
     question: 'Puis-je retourner le produit ?',
@@ -124,14 +124,14 @@ const faqs = [
       'Bien sur. Nous offrons une garantie satisfait ou rembourse de 30 jours. Si le produit ne vous convient pas, renvoyez-le et nous vous rembourserons integralement, sans poser de questions.',
   },
   {
-    question: 'Le paiement est-il securise ?',
+    question: 'Le paiement est-il sécurisé ?',
     answer:
-      'Oui, le paiement est 100% securise via Stripe, le leader mondial du paiement en ligne. Vos donnees bancaires sont chiffrees (TLS) et ne sont jamais stockees sur nos serveurs.',
+      'Oui, le paiement est 100% sécurisé via Stripe, le leader mondial du paiement en ligne. Vos donnees bancaires sont chiffrees (TLS) et ne sont jamais stockees sur nos serveurs.',
   },
   {
     question: 'Quelle est la capacite de poids maximale ?',
     answer:
-      'Le ClipBag supporte facilement des bouteilles jusqu\'a 1,5L remplies. Les aimants neodyme sont dimensionnes pour supporter largement ce poids avec une marge de securite confortable.',
+      'Le ClipBag supporte facilement des bouteilles jusqu\'a 1,5L remplies. Les aimants néodyme sont dimensionnes pour supporter largement ce poids avec une marge de sécurité confortable.',
   },
 ]
 

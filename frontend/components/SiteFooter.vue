@@ -26,7 +26,7 @@
             CLIPBAG
           </a>
           <p class="text-gray-500 text-sm leading-relaxed mb-6 max-w-xs">
-            Le sac magnetique revolutionnaire pour vos bouteilles. Concu pour les sportifs exigeants.
+            Le sac magnétique révolutionnaire pour vos bouteilles. Conçu pour les sportifs exigeants.
           </p>
           <!-- Social media links -->
           <div class="flex items-center gap-3">
@@ -54,7 +54,7 @@
           <nav class="flex flex-col gap-3" aria-label="Footer navigation">
             <a href="#features-section" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('features-section')">Avantages</a>
             <a href="#gallery-section" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('gallery-section')">Galerie</a>
-            <a href="#testimonials-section" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('testimonials-section')">Temoignages</a>
+            <a href="#testimonials-section" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('testimonials-section')">Témoignages</a>
             <a href="#faq-section" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('faq-section')">FAQ</a>
             <a href="#order-section" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('order-section')">Commander</a>
           </nav>
@@ -73,7 +73,7 @@
 
         <!-- Column 4: Payment methods -->
         <div>
-          <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Paiement securise</h4>
+          <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Paiement sécurisé</h4>
           <div class="flex flex-wrap gap-3 mb-6">
             <!-- Visa -->
             <div class="flex items-center justify-center w-16 h-10 bg-surface-light border border-surface-lighter rounded-lg">
@@ -139,7 +139,7 @@
             </div>
           </div>
           <p class="text-xs text-gray-600 leading-relaxed">
-            Toutes les transactions sont securisees et chiffrees via Stripe.
+            Toutes les transactions sont sécurisées et chiffrées via Stripe.
           </p>
         </div>
       </div>

@@ -11,25 +11,35 @@
 </template>
 
 <script setup lang="ts">
+const MIN_VIEWERS = 6
+const MAX_VIEWERS = 12
+
 const viewers = ref(0)
 let interval: ReturnType<typeof setInterval> | null = null
 
-const randomViewers = () => Math.floor(Math.random() * 13) + 3
+const randomBetween = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min
+
+const nextViewers = (current: number): number => {
+  // Soft variation: ±1 or ±2 max, always clamped between MIN and MAX
+  const delta = randomBetween(-2, 2)
+  return Math.min(MAX_VIEWERS, Math.max(MIN_VIEWERS, current + delta))
+}
 
 onMounted(() => {
-  viewers.value = randomViewers()
-  interval = setInterval(() => {
-    const current = viewers.value
-    let next = randomViewers()
-    // Avoid big jumps: keep within +-3 of current, clamped to 3-15
-    while (Math.abs(next - current) > 3) {
-      next = randomViewers()
-    }
-    viewers.value = next
-  }, (Math.random() * 30 + 30) * 1000)
+  viewers.value = randomBetween(MIN_VIEWERS, MAX_VIEWERS)
+
+  const scheduleNext = () => {
+    const delay = randomBetween(20_000, 40_000)
+    interval = setTimeout(() => {
+      viewers.value = nextViewers(viewers.value)
+      scheduleNext()
+    }, delay)
+  }
+
+  scheduleNext()
 })
 
 onUnmounted(() => {
-  if (interval) clearInterval(interval)
+  if (interval) clearTimeout(interval)
 })
 </script>

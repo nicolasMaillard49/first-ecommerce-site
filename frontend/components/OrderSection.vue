@@ -12,7 +12,7 @@
           Commandez Votre <span class="text-brand">ClipBag</span>
         </h2>
         <p class="text-gray-400 text-lg max-w-xl mx-auto">
-          Profitez de l'offre de lancement. Paiement securise, livraison gratuite.
+          Profitez de l'offre de lancement. Paiement sécurisé, livraison gratuite.
         </p>
 
         <!-- Live viewers -->
@@ -20,14 +20,7 @@
           <LiveViewers />
         </div>
 
-        <!-- Countdown timer -->
-        <div class="inline-flex items-center gap-3 mt-4 bg-surface/80 border border-surface-lighter rounded-2xl px-6 py-3">
-          <svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span class="text-sm text-gray-300">Offre valable encore</span>
-          <span class="font-display font-bold text-white text-lg tabular-nums">{{ countdownDisplay }}</span>
-        </div>
+
       </div>
 
       <!-- Product card -->
@@ -36,7 +29,7 @@
         <div class="aspect-[4/3] bg-surface-light rounded-2xl overflow-hidden mb-8 relative group">
           <img
             :src="productImage"
-            alt="ClipBag Sac Magnetique pour Bouteille"
+            alt="ClipBag Sac Magnétique pour Bouteille"
             class="w-full h-full object-cover object-[center_30%] transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />
@@ -138,12 +131,12 @@
 
           <!-- Quantity -->
           <div>
-            <p class="text-xs text-gray-500 mb-2 text-center font-medium">Quantite</p>
+            <p class="text-xs text-gray-500 mb-2 text-center font-medium">Quantité</p>
             <div class="inline-flex items-center bg-surface-light border border-surface-lighter rounded-2xl">
               <button
                 class="flex items-center justify-center w-11 h-11 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer focus:outline-none rounded-l-2xl disabled:opacity-30 disabled:cursor-not-allowed"
                 :disabled="quantity <= 1"
-                aria-label="Diminuer la quantite"
+                aria-label="Diminuer la quantité"
                 @click="decrementQuantity"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -154,7 +147,7 @@
               <button
                 class="flex items-center justify-center w-11 h-11 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer focus:outline-none rounded-r-2xl disabled:opacity-30 disabled:cursor-not-allowed"
                 :disabled="quantity >= 10"
-                aria-label="Augmenter la quantite"
+                aria-label="Augmenter la quantité"
                 @click="incrementQuantity"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -360,7 +353,7 @@
         </Transition>
 
         <p class="text-center text-xs text-gray-500 mt-3">
-          Paiement 100% securise par Stripe.
+          Paiement 100% sécurisé par Stripe.
         </p>
 
         <!-- Trust badges -->
@@ -622,46 +615,7 @@ const toggleSport = (value: string) => {
   selectedSport.value = selectedSport.value === value ? '' : value
 }
 
-// Countdown timer
-const countdown = ref({ hours: 2, minutes: 47, seconds: 33 })
 
-const countdownDisplay = computed(() => {
-  const hh = String(countdown.value.hours).padStart(2, '0')
-  const mm = String(countdown.value.minutes).padStart(2, '0')
-  const ss = String(countdown.value.seconds).padStart(2, '0')
-  return `${hh}:${mm}:${ss}`
-})
-
-let countdownInterval: ReturnType<typeof setInterval> | null = null
-
-const startCountdown = () => {
-  countdownInterval = setInterval(() => {
-    if (countdown.value.seconds > 0) {
-      countdown.value.seconds--
-    } else if (countdown.value.minutes > 0) {
-      countdown.value.minutes--
-      countdown.value.seconds = 59
-    } else if (countdown.value.hours > 0) {
-      countdown.value.hours--
-      countdown.value.minutes = 59
-      countdown.value.seconds = 59
-    } else {
-      countdown.value.hours = 2
-      countdown.value.minutes = 47
-      countdown.value.seconds = 33
-    }
-  }, 1000)
-}
-
-onMounted(() => {
-  startCountdown()
-})
-
-onUnmounted(() => {
-  if (countdownInterval) {
-    clearInterval(countdownInterval)
-  }
-})
 
 const handleCheckout = async () => {
   if (!isAddressValid.value) {
@@ -740,8 +694,11 @@ const ShieldCheckIcon = () =>
   ])
 
 const trustBadges = [
-  { label: 'Paiement\nSecurise', icon: LockIcon },
-  { label: 'Livraison\nGratuite', icon: TruckIcon },
-  { label: 'Garantie\n30 Jours', icon: ShieldCheckIcon },
+  { label: 'Paiement
+Sécurisé', icon: LockIcon },
+  { label: 'Livraison
+Gratuite', icon: TruckIcon },
+  { label: 'Garantie
+30 Jours', icon: ShieldCheckIcon },
 ]
 </script>

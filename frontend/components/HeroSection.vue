@@ -7,6 +7,11 @@
     <!-- Green radial glow -->
     <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
 
+    <!-- Floating particles -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div v-for="p in particles" :key="p.id" class="hero-particle" :style="p.style"></div>
+    </div>
+
     <!-- Content -->
     <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full pt-24 pb-16 sm:pt-32 sm:pb-28">
 
@@ -37,7 +42,7 @@
           <h1 class="font-display font-black text-[1.75rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-5 sm:mb-6">
             Plus Jamais Les Mains
             <span class="relative">
-              <span class="hero-gradient-text">Encombrees</span>
+              <span class="hero-gradient-text">Encombrées</span>
               <svg class="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-2 sm:h-3" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="hero-wave" d="M2 8C30 3 70 2 100 5C130 8 170 9 198 4" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
                 <defs>
@@ -57,7 +62,7 @@
 
           <!-- Description — hidden on mobile to save space, image speaks louder -->
           <p class="hidden sm:block text-xl text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            Le sac magnetique qui se fixe en un clic sur toute surface metallique. Ultra leger, indestructible, indispensable.
+            Le sac magnétique qui se fixe en un clic sur toute surface métallique. Ultra léger, indestructible, indispensable.
           </p>
 
           <!-- ===== PRODUCT IMAGE — MOBILE ONLY (between title and price) ===== -->
@@ -66,7 +71,7 @@
             <div class="relative w-full max-w-[300px] mx-auto motion-safe:animate-float">
               <img
                 :src="heroImage"
-                alt="ClipBag Sac Magnetique pour Bouteille"
+                alt="ClipBag Sac Magnétique pour Bouteille"
                 class="w-full rounded-3xl shadow-2xl shadow-black/40 aspect-square object-cover"
                 width="600"
                 height="600"
@@ -132,18 +137,18 @@
               <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <span class="text-[11px] sm:text-sm text-center leading-tight">Paiement securise</span>
+              <span class="text-[11px] sm:text-sm text-center leading-tight">Paiement sécurisé</span>
             </div>
           </div>
         </div>
 
         <!-- ===== Right col: Product image — DESKTOP ONLY ===== -->
-        <div class="hidden lg:flex relative items-center justify-center">
+        <div class="hidden lg:flex relative items-center justify-center" :style="{ transform: `translateY(${parallaxY}px)` }">
           <div class="absolute inset-0 bg-brand/10 rounded-full blur-[80px] scale-75"></div>
           <div class="relative w-full max-w-lg xl:max-w-xl mx-auto motion-safe:animate-float">
             <img
               :src="heroImage"
-              alt="ClipBag Sac Magnetique pour Bouteille"
+              alt="ClipBag Sac Magnétique pour Bouteille"
               class="w-full rounded-3xl shadow-2xl shadow-black/40 aspect-square object-cover"
               width="600"
               height="600"
@@ -177,10 +182,10 @@
     <!-- Scroll indicator -->
     <button
       class="absolute bottom-3 sm:bottom-8 inset-x-0 z-30 flex flex-col items-center gap-1 text-gray-600 motion-safe:animate-bounce cursor-pointer hover:text-brand transition-colors duration-200 focus:outline-none"
-      aria-label="Decouvrir le produit"
+      aria-label="Découvrir le produit"
       @click="scrollToDiscover"
     >
-      <span class="text-[10px] sm:text-xs uppercase tracking-widest font-medium">Decouvrir</span>
+      <span class="text-[10px] sm:text-xs uppercase tracking-widest font-medium">Découvrir</span>
       <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
       </svg>
@@ -192,23 +197,48 @@
 const productStore = useProductStore()
 const heroImage = computed(() => productStore.product?.images[0] || '/images/product/product-7.png')
 
+// Parallax
+const parallaxY = ref(0)
+const onScroll = () => {
+  parallaxY.value = window.scrollY * -0.08
+}
+
+// Floating particles
+interface Particle { id: number; style: Record<string, string> }
+const particles: Particle[] = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  style: {
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    width: `${Math.random() * 4 + 2}px`,
+    height: `${Math.random() * 4 + 2}px`,
+    opacity: `${Math.random() * 0.3 + 0.05}`,
+    animationDuration: `${Math.random() * 8 + 6}s`,
+    animationDelay: `${Math.random() * 5}s`,
+  },
+}))
+
 const scrollToOrder = () => {
   const el = document.getElementById('order-section')
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
-  }
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
 const scrollToDiscover = () => {
   const el = document.getElementById('problem-section') || document.getElementById('features-section')
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
-  }
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
+
+onMounted(() => {
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
 </script>
 
 <style scoped>
-/* ---- Animated gradient text on "Encombrees" ---- */
+/* ---- Animated gradient text on "Encombrées" ---- */
 .hero-gradient-text {
   background: linear-gradient(
     90deg,
@@ -246,8 +276,23 @@ const scrollToDiscover = () => {
   50% { d: path("M2 5C30 9 70 8 100 4C130 2 170 3 198 7"); }
 }
 
+/* ---- Floating particles ---- */
+.hero-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #10b981;
+  animation: particle-float var(--dur, 8s) ease-in-out var(--delay, 0s) infinite;
+}
+
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: var(--op, 0.1); }
+  33% { transform: translateY(-20px) scale(1.1); opacity: calc(var(--op, 0.1) * 1.5); }
+  66% { transform: translateY(10px) scale(0.9); opacity: calc(var(--op, 0.1) * 0.7); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-gradient-text { animation: none; }
   .hero-wave { animation: none; stroke-dashoffset: 0; }
+  .hero-particle { animation: none; }
 }
 </style>

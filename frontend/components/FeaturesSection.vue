@@ -11,7 +11,7 @@
           Pourquoi <span class="text-brand">ClipBag</span> ?
         </h2>
         <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-          Concu pour les sportifs exigeants qui refusent les compromis.
+          Conçu pour les sportifs exigeants qui refusent les compromis.
         </p>
       </div>
 
@@ -20,7 +20,7 @@
           v-for="(feature, idx) in features"
           :key="idx"
           :class="[
-            'animate-on-scroll group relative bg-surface-light rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-xl hover:shadow-brand/5 cursor-default border border-surface-lighter hover:border-brand/30 overflow-hidden',
+            'animate-on-scroll group relative bg-surface-light rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl hover:shadow-brand/15 hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-surface-lighter hover:border-brand/40 overflow-hidden feature-card',
             `stagger-${idx + 1}`,
           ]"
         >
@@ -148,15 +148,15 @@ const DropletIcon = () =>
 const features = [
   {
     icon: MagnetIcon,
-    title: 'Fixation Magnetique',
-    description: 'Aimants neodyme ultra-puissants. Se fixe en un instant, tient fermement meme en plein effort.',
+    title: 'Fixation Magnétique',
+    description: 'Aimants néodyme ultra-puissants. Se fixe en un instant, tient fermement même en plein effort.',
     stat: '< 1s',
     statLabel: 'pour fixer',
   },
   {
     icon: FeatherIcon,
     title: 'Leger Comme l\'Air',
-    description: 'Seulement 120g. Si leger que vous oublierez que vous le portez. Zero contrainte.',
+    description: 'Seulement 120g. Si léger que vous oublierez que vous le portez. Zéro contrainte.',
     stat: '120g',
     statLabel: 'seulement',
   },
@@ -170,7 +170,7 @@ const features = [
   {
     icon: ShieldIcon,
     title: 'Indestructible',
-    description: 'Materiaux premium resistants aux intemperies, aux chocs et a l\'usure. Concu pour durer des annees.',
+    description: 'Matériaux premium résistants aux intempéries, aux chocs et à l\'usure. Conçu pour durer des années.',
     stat: null,
     statLabel: null,
   },
@@ -190,3 +190,30 @@ const features = [
   },
 ]
 </script>
+
+<style scoped>
+.feature-card {
+  will-change: transform, box-shadow;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card {
+    transition: none;
+  }
+}
+</style>

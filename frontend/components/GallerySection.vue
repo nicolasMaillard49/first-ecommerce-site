@@ -5,10 +5,10 @@
       <div class="text-center mb-16 animate-on-scroll">
         <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Galerie</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Decouvrez le <span class="text-brand">ClipBag</span>
+          Découvrez le <span class="text-brand">ClipBag</span>
         </h2>
         <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-          Chaque detail a ete pense pour la performance et l'elegance.
+          Chaque détail a été pensé pour la performance et l'élégance.
         </p>
       </div>
 
@@ -22,7 +22,7 @@
         <!-- Navigation arrows -->
         <button
           class="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-surface/70 backdrop-blur-sm border border-surface-lighter text-white hover:bg-surface hover:text-brand transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:opacity-100"
-          aria-label="Image precedente"
+          aria-label="Image précédente"
           @click="prevImage"
         >
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -44,6 +44,20 @@
           {{ activeIndex + 1 }}/{{ images.length }}
         </div>
 
+        <!-- Hover overlay -->
+        <div
+          class="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
+          :class="zoomed ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'"
+        >
+          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            </svg>
+            Zoom
+          </div>
+        </div>
+
         <!-- Main image with crossfade -->
         <Transition
           enter-active-class="transition-opacity duration-500 ease-out"
@@ -57,7 +71,7 @@
           <img
             :key="activeIndex"
             :src="images[activeIndex]"
-            :alt="`ClipBag Sac Magnetique pour Bouteille - Vue ${activeIndex + 1}`"
+            :alt="`ClipBag Sac Magnétique pour Bouteille - Vue ${activeIndex + 1}`"
             :class="[
               'w-full h-full object-contain transition-transform duration-300',
               zoomed ? 'scale-150' : 'scale-100',
