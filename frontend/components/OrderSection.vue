@@ -698,5 +698,4 @@ const trustBadges = [
   { label: 'Livraison\nGratuite', icon: TruckIcon },
   { label: 'Garantie\n30 Jours', icon: ShieldCheckIcon }
 ]
-]
 </script>
