@@ -694,11 +694,9 @@ const ShieldCheckIcon = () =>
   ])
 
 const trustBadges = [
-  { label: 'Paiement
-Sécurisé', icon: LockIcon },
-  { label: 'Livraison
-Gratuite', icon: TruckIcon },
-  { label: 'Garantie
-30 Jours', icon: ShieldCheckIcon },
+    { label: 'Paiement\nSecurise', icon: LockIcon },
+  { label: 'Livraison\nGratuite', icon: TruckIcon },
+  { label: 'Garantie\n30 Jours', icon: ShieldCheckIcon }
+]
 ]
 </script>
