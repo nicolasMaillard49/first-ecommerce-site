@@ -25,7 +25,7 @@
         <div class="text-center lg:text-left">
 
           <!-- Social proof badge -->
-          <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+          <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4 hero-badge-in">
             <span class="flex h-2 w-2 relative">
               <span class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
@@ -34,12 +34,12 @@
           </div>
 
           <!-- Live viewers -->
-          <div class="mb-4 sm:mb-8">
+          <div class="mb-4 sm:mb-8 hero-viewers-in">
             <LiveViewers />
           </div>
 
           <!-- H1 -->
-          <h1 class="font-display font-black text-[1.75rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-5 sm:mb-6">
+          <h1 class="hero-title font-display font-black text-[2.6rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-5 sm:mb-6">
             Plus Jamais Les Mains
             <span class="relative">
               <span class="hero-gradient-text">Encombrées</span>
@@ -107,7 +107,7 @@
           </div>
 
           <!-- CTA button -->
-          <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center lg:justify-start">
+          <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center lg:justify-start hero-cta-in">
             <button
               class="group w-full sm:w-auto bg-brand hover:bg-brand-dark text-white font-display font-bold text-base sm:text-lg py-4 px-10 rounded-2xl cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface shadow-xl shadow-brand/25 hover:shadow-brand/40 hover:scale-105 flex items-center justify-center gap-3"
               @click="scrollToOrder"
@@ -238,6 +238,24 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* ---- Mobile title: entrée animée ---- */
+.hero-title {
+  animation: hero-title-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-title-in {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 /* ---- Animated gradient text on "Encombrées" ---- */
 .hero-gradient-text {
   background: linear-gradient(
@@ -290,9 +308,32 @@ onUnmounted(() => {
   66% { transform: translateY(10px) scale(0.9); opacity: calc(var(--op, 0.1) * 0.7); }
 }
 
+/* ---- Entrées décalées des éléments hero ---- */
+.hero-badge-in {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.hero-viewers-in {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+.hero-cta-in {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-gradient-text { animation: none; }
   .hero-wave { animation: none; stroke-dashoffset: 0; }
   .hero-particle { animation: none; }
+  .hero-title, .hero-badge-in, .hero-viewers-in, .hero-cta-in { animation: none; }
 }
 </style>
