@@ -22,11 +22,11 @@ const orders = ref<any[]>([])
 const selectedOrder = ref<any>(null)
 
 const steps = [
-  { status: 'PENDING', label: 'Commande recue', icon: 'clipboard' },
-  { status: 'PAID', label: 'Paiement confirme', icon: 'credit-card' },
-  { status: 'PROCESSING', label: 'En preparation', icon: 'cog' },
-  { status: 'SHIPPED', label: 'Expediee', icon: 'truck' },
-  { status: 'DELIVERED', label: 'Livree', icon: 'check-circle' },
+  { status: 'PENDING', label: 'Commande reçue', icon: 'clipboard' },
+  { status: 'PAID', label: 'Paiement confirmé', icon: 'credit-card' },
+  { status: 'PROCESSING', label: 'En préparation', icon: 'cog' },
+  { status: 'SHIPPED', label: 'Expédiée', icon: 'truck' },
+  { status: 'DELIVERED', label: 'Livrée', icon: 'check-circle' },
 ]
 
 const statusOrder = ['PENDING', 'PAID', 'PROCESSING', 'SHIPPED', 'DELIVERED']
@@ -88,7 +88,7 @@ async function submit() {
     const body: any = {}
     if (activeTab.value === 'order') {
       if (!orderNumber.value.trim()) {
-        error.value = 'Veuillez entrer un numero de commande.'
+        error.value = 'Veuillez entrer un numéro de commande.'
         loading.value = false
         return
       }
@@ -118,7 +118,7 @@ async function submit() {
       selectedOrder.value = orders.value[0]
     }
   } catch (e: any) {
-    error.value = e?.data?.message || 'Commande introuvable. Verifiez vos informations.'
+    error.value = e?.data?.message || 'Commande introuvable. Vérifiez vos informations.'
   } finally {
     loading.value = false
   }
@@ -146,14 +146,14 @@ onMounted(() => {
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
-        Retour a l'accueil
+        Retour à l'accueil
       </NuxtLink>
 
       <h1 class="font-display font-black text-3xl sm:text-4xl text-white mb-4">
         Suivi de commande
       </h1>
       <p class="text-gray-400 mb-10">
-        Entrez votre numero de commande ou vos coordonnees pour suivre votre colis.
+        Entrez votre numéro de commande ou vos coordonnées pour suivre votre colis.
       </p>
 
       <!-- Tabs -->
@@ -165,7 +165,7 @@ onMounted(() => {
             : 'text-gray-400 hover:text-white'"
           @click="activeTab = 'order'"
         >
-          Par numero de commande
+          Par numéro de commande
         </button>
         <button
           class="flex-1 py-3 px-4 rounded-lg text-sm font-semibold transition-all duration-200"
@@ -181,7 +181,7 @@ onMounted(() => {
       <!-- Form -->
       <form @submit.prevent="submit" class="space-y-4 mb-12">
         <div v-if="activeTab === 'order'">
-          <label class="block text-sm font-medium text-gray-300 mb-2">Numero de commande</label>
+          <label class="block text-sm font-medium text-gray-300 mb-2">Numéro de commande</label>
           <input
             v-model="orderNumber"
             type="text"
@@ -236,7 +236,7 @@ onMounted(() => {
       <div v-if="orders.length > 0" class="space-y-4 animate-fade-in">
         <!-- Multiple orders info -->
         <p v-if="orders.length > 1" class="text-gray-400 text-sm mb-2">
-          {{ orders.length }} commandes trouvees. Cliquez sur une commande pour voir le detail.
+          {{ orders.length }} commandes trouvées. Cliquez sur une commande pour voir le détail.
         </p>
 
         <!-- Order cards list -->
@@ -307,8 +307,8 @@ onMounted(() => {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
-                <h3 class="text-red-400 font-bold text-xl mb-2">Commande annulee</h3>
-                <p class="text-red-300/70 text-sm">Cette commande a ete annulee. Contactez-nous pour plus d'informations.</p>
+                <h3 class="text-red-400 font-bold text-xl mb-2">Commande annulée</h3>
+                <p class="text-red-300/70 text-sm">Cette commande a été annulée. Contactez-nous pour plus d'informations.</p>
               </div>
 
               <!-- Timeline -->
@@ -380,18 +380,18 @@ onMounted(() => {
 
                 <!-- Tracking number -->
                 <div v-if="o.trackingNumber" class="mt-6 pt-6 border-t border-surface-lighter">
-                  <p class="text-gray-400 text-sm">Numero de suivi : <span class="text-white font-mono">{{ o.trackingNumber }}</span></p>
+                  <p class="text-gray-400 text-sm">Numéro de suivi : <span class="text-white font-mono">{{ o.trackingNumber }}</span></p>
                 </div>
               </div>
 
               <!-- Order items -->
               <div class="bg-surface-light rounded-2xl p-6 border border-white/5">
-                <h2 class="text-white font-bold text-lg mb-4">Articles commandes</h2>
+                <h2 class="text-white font-bold text-lg mb-4">Articles commandés</h2>
                 <div class="divide-y divide-surface-lighter">
                   <div v-for="item in o.items" :key="item.name" class="flex items-center justify-between py-3">
                     <div>
                       <p class="text-white text-sm font-medium">{{ item.name }}</p>
-                      <p class="text-gray-500 text-xs">Quantite : {{ item.quantity }}</p>
+                      <p class="text-gray-500 text-xs">Quantité : {{ item.quantity }}</p>
                     </div>
                     <p class="text-brand font-semibold text-sm">{{ (item.price * item.quantity).toFixed(2) }} EUR</p>
                   </div>

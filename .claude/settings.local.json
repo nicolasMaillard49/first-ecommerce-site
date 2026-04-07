@@ -39,7 +39,11 @@
       "mcp__plugin_episodic-memory_episodic-memory__search",
       "WebFetch(domain:www.facebook.com)",
       "Bash(where gemini:*)",
-      "Bash(gemini:*)"
+      "Bash(gemini:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(gh api:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }

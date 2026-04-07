@@ -20,7 +20,7 @@
           v-for="(feature, idx) in features"
           :key="idx"
           :class="[
-            'animate-on-scroll group relative bg-surface-light rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl hover:shadow-brand/15 hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-surface-lighter hover:border-brand/40 overflow-hidden feature-card',
+            'feature-card-enter group relative bg-white/[0.08] backdrop-blur-xl rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl hover:shadow-brand/15 hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-white/[0.12] hover:border-brand/40 overflow-hidden feature-card',
             `stagger-${idx + 1}`,
           ]"
         >
@@ -61,6 +61,24 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
+
+onMounted(() => {
+  const cards = document.querySelectorAll('.feature-card-enter')
+  if (cards.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15 }
+    )
+    cards.forEach((el) => observer.observe(el))
+  }
+})
 
 const MagnetIcon = () =>
   h(
@@ -155,7 +173,7 @@ const features = [
   },
   {
     icon: FeatherIcon,
-    title: 'Leger Comme l\'Air',
+    title: 'Léger Comme l\'Air',
     description: 'Seulement 120g. Si léger que vous oublierez que vous le portez. Zéro contrainte.',
     stat: '120g',
     statLabel: 'seulement',
@@ -163,30 +181,9 @@ const features = [
   {
     icon: GlobeIcon,
     title: 'Compatible Universel',
-    description: 'Fonctionne avec toutes les bouteilles de 500ml a 1L. S\'adapte a votre style de vie.',
+    description: 'Fonctionne avec toutes les bouteilles de 500ml à 1L. S\'adapte à votre style de vie.',
     stat: '100%',
     statLabel: 'compatible',
-  },
-  {
-    icon: ShieldIcon,
-    title: 'Indestructible',
-    description: 'Matériaux premium résistants aux intempéries, aux chocs et à l\'usure. Conçu pour durer des années.',
-    stat: null,
-    statLabel: null,
-  },
-  {
-    icon: ZapIcon,
-    title: 'Performance Maximale',
-    description: 'Liberez vos mains pour vous concentrer sur votre sport. Plus de distraction, plus de performance.',
-    stat: null,
-    statLabel: null,
-  },
-  {
-    icon: DropletIcon,
-    title: 'Hydratation Optimale',
-    description: 'Votre bouteille toujours accessible. Buvez quand vous voulez, sans vous arreter, sans ralentir.',
-    stat: null,
-    statLabel: null,
   },
 ]
 </script>
@@ -211,9 +208,42 @@ const features = [
   opacity: 1;
 }
 
+/* Staggered entrance animation */
+.feature-card-enter {
+  opacity: 0;
+  transform: translateY(30px) scale(0.96);
+}
+
+.feature-card-enter.is-visible {
+  animation: feature-pop 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.feature-card-enter.is-visible.stagger-1 { animation-delay: 0s; }
+.feature-card-enter.is-visible.stagger-2 { animation-delay: 0.15s; }
+.feature-card-enter.is-visible.stagger-3 { animation-delay: 0.3s; }
+
+@keyframes feature-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .feature-card {
+  .feature-card,
+  .feature-card-enter {
     transition: none;
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 </style>

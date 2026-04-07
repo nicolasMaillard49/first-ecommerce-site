@@ -38,10 +38,10 @@
 
 <script setup lang="ts">
 useSeoMeta({
-  title: 'ClipBag - Le Sac Magnetique pour Bouteille | Liberez Vos Mains',
-  ogTitle: 'ClipBag - Le Sac Magnetique pour Bouteille',
-  description: 'Le sac magnetique revolutionnaire pour vos bouteilles d\'eau. Fixation instantanee, ultra leger (120g), compatible toutes bouteilles. Livraison gratuite. -40% en ce moment.',
-  ogDescription: 'Plus jamais les mains encombrees pendant le sport. Decouvrez le sac magnetique ClipBag - Fixation instantanee, 120g seulement. 29,99 EUR au lieu de 49,99 EUR.',
+  title: 'ClipBag - Le Sac Magnétique pour Bouteille | Libérez Vos Mains',
+  ogTitle: 'ClipBag - Le Sac Magnétique pour Bouteille',
+  description: 'Le sac magnétique révolutionnaire pour vos bouteilles d\'eau. Fixation instantanée, ultra léger (120g), compatible toutes bouteilles. Livraison gratuite. -40% en ce moment.',
+  ogDescription: 'Plus jamais les mains encombrées pendant le sport. Découvrez le sac magnétique ClipBag - Fixation instantanée, 120g seulement. 29,99 EUR au lieu de 49,99 EUR.',
   ogImage: 'https://clipbag.shop/og.png',
   ogType: 'website',
   ogLocale: 'fr_FR',

@@ -6,12 +6,12 @@
     <div class="relative z-10 max-w-5xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-10 sm:mb-16 animate-on-scroll">
-        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Comment ca marche ?</span>
+        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Comment ça marche ?</span>
         <h2 class="font-display font-black text-3xl leading-tight sm:text-4xl md:text-5xl text-white mb-3">
           La magie de <span class="text-brand">ClipBag</span> c'est simple,
         </h2>
         <p class="text-lg sm:text-xl md:text-2xl text-gray-300 font-medium">
-          regarde tu as juste a
+          regarde, tu as juste à
           <span class="relative inline-block mx-1">
             <span class="text-brand font-display font-bold border-2 border-dashed border-brand/50 rounded-xl px-3 py-1 sm:px-4 sm:py-1.5">Clip ton Bag</span>
           </span>
@@ -111,28 +111,47 @@
         </div>
       </div>
 
-      <!-- Steps below video -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
-        <div class="animate-on-scroll text-center">
-          <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto mb-4">
-            <span class="font-display font-black text-brand text-lg">1</span>
+      <!-- Steps below video — single glass strip -->
+      <div class="animate-on-scroll mt-10 sm:mt-16 flex justify-center">
+        <div class="liquid-glass rounded-full px-2 py-2 sm:px-4 sm:py-3 inline-flex">
+          <div class="flex items-center justify-center">
+            <!-- Step 1 -->
+            <div class="step-card-reveal flex-1 flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1.5 stagger-1">
+              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-display font-black text-sm sm:text-base">1</span>
+              <div class="min-w-0">
+                <p class="font-display font-bold text-white text-xs sm:text-sm leading-tight">Clipsez</p>
+                <p class="text-gray-500 text-[9px] sm:text-xs leading-tight hidden sm:block">Fixation magnétique</p>
+              </div>
+            </div>
+
+            <!-- Chevron 1→2 -->
+            <svg class="step-chevron-reveal shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-brand/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="animation-delay: 0.25s">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+
+            <!-- Step 2 -->
+            <div class="step-card-reveal flex-1 flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1.5 stagger-2">
+              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-display font-black text-sm sm:text-base">2</span>
+              <div class="min-w-0">
+                <p class="font-display font-bold text-white text-xs sm:text-sm leading-tight">Rangez</p>
+                <p class="text-gray-500 text-[9px] sm:text-xs leading-tight hidden sm:block">Bouteille sécurisée</p>
+              </div>
+            </div>
+
+            <!-- Chevron 2→3 -->
+            <svg class="step-chevron-reveal shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-brand/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="animation-delay: 0.45s">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+
+            <!-- Step 3 -->
+            <div class="step-card-reveal flex-1 flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1.5 stagger-3">
+              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-display font-black text-sm sm:text-base">3</span>
+              <div class="min-w-0">
+                <p class="font-display font-bold text-white text-xs sm:text-sm leading-tight">Profitez</p>
+                <p class="text-gray-500 text-[9px] sm:text-xs leading-tight hidden sm:block">Mains libres</p>
+              </div>
+            </div>
           </div>
-          <h3 class="font-display font-bold text-white text-lg mb-2">Clipsez</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Fixez le ClipBag sur n'importe quelle surface métallique en un instant.</p>
-        </div>
-        <div class="animate-on-scroll text-center">
-          <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto mb-4">
-            <span class="font-display font-black text-brand text-lg">2</span>
-          </div>
-          <h3 class="font-display font-bold text-white text-lg mb-2">Rangez</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Glissez votre bouteille, gourde ou accessoires dans le sac magnétique.</p>
-        </div>
-        <div class="animate-on-scroll text-center">
-          <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto mb-4">
-            <span class="font-display font-black text-brand text-lg">3</span>
-          </div>
-          <h3 class="font-display font-bold text-white text-lg mb-2">Profitez</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Les mains libres, concentrez-vous sur votre entrainement ou votre journee.</p>
         </div>
       </div>
     </div>
@@ -205,7 +224,33 @@ const formatTime = (seconds: number): string => {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
+const isMobile = ref(false)
+let videoObserver: IntersectionObserver | null = null
+
+onMounted(() => {
+  isMobile.value = window.innerWidth < 640
+  if (isMobile.value && videoRef.value) {
+    // Autoplay muted on mobile when video enters viewport
+    videoRef.value.muted = true
+    isMuted.value = true
+    videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isPlaying.value) {
+            videoRef.value?.play()
+            isPlaying.value = true
+            updateProgress()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+    videoObserver.observe(videoRef.value)
+  }
+})
+
 onUnmounted(() => {
+  if (videoObserver) videoObserver.disconnect()
   if (animFrame) cancelAnimationFrame(animFrame)
 })
 </script>

@@ -8,7 +8,7 @@
       <div class="text-center mb-16 animate-on-scroll">
         <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">FAQ</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Questions <span class="text-brand">frequentes</span>
+          Questions <span class="text-brand">fréquentes</span>
         </h2>
         <p class="text-gray-400 text-lg max-w-2xl mx-auto">
           Tout ce que vous devez savoir avant de commander.
@@ -75,7 +75,7 @@
             Vous avez d'autres questions ?
           </h3>
           <p class="text-gray-400 text-base mb-6">
-            Notre equipe est la pour vous aider. N'hesitez pas a nous contacter.
+            Notre équipe est là pour vous aider. N'hésitez pas à nous contacter.
           </p>
           <a
             href="mailto:contact@clipbag.shop"
@@ -106,12 +106,12 @@ const faqs = [
   {
     question: 'Combien de temps dure la livraison ?',
     answer:
-      'La livraison prend entre 7 et 14 jours ouvres. Vous recevrez un numero de suivi par email des l\'expedition de votre commande. La livraison est offerte en France metropolitaine.',
+      'La livraison prend entre 7 et 14 jours ouvrés. Vous recevrez un numéro de suivi par email dès l\'expédition de votre commande. La livraison est offerte en France métropolitaine.',
   },
   {
     question: 'Est-ce compatible avec ma bouteille ?',
     answer:
-      'Le ClipBag est compatible avec toutes les bouteilles standard (de 500ml a 1L). Son design universel s\'adapte a la grande majorite des bouteilles du marche, y compris les gourdes isothermes.',
+      'Le ClipBag est compatible avec toutes les bouteilles standard (de 500ml à 1L). Son design universel s\'adapte à la grande majorité des bouteilles du marché, y compris les gourdes isothermes.',
   },
   {
     question: 'La fixation magnétique est-elle solide ?',
@@ -121,17 +121,17 @@ const faqs = [
   {
     question: 'Puis-je retourner le produit ?',
     answer:
-      'Bien sur. Nous offrons une garantie satisfait ou rembourse de 30 jours. Si le produit ne vous convient pas, renvoyez-le et nous vous rembourserons integralement, sans poser de questions.',
+      'Bien sûr. Nous offrons une garantie satisfait ou remboursé de 30 jours. Si le produit ne vous convient pas, renvoyez-le et nous vous rembourserons intégralement, sans poser de questions.',
   },
   {
     question: 'Le paiement est-il sécurisé ?',
     answer:
-      'Oui, le paiement est 100% sécurisé via Stripe, le leader mondial du paiement en ligne. Vos donnees bancaires sont chiffrees (TLS) et ne sont jamais stockees sur nos serveurs.',
+      'Oui, le paiement est 100% sécurisé via Stripe, le leader mondial du paiement en ligne. Vos données bancaires sont chiffrées (TLS) et ne sont jamais stockées sur nos serveurs.',
   },
   {
-    question: 'Quelle est la capacite de poids maximale ?',
+    question: 'Quelle est la capacité de poids maximale ?',
     answer:
-      'Le ClipBag supporte facilement des bouteilles jusqu\'a 1,5L remplies. Les aimants néodyme sont dimensionnes pour supporter largement ce poids avec une marge de sécurité confortable.',
+      'Le ClipBag supporte facilement des bouteilles jusqu\'à 1,5L remplies. Les aimants néodyme sont dimensionnés pour supporter largement ce poids avec une marge de sécurité confortable.',
   },
 ]
 

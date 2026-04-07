@@ -10,7 +10,7 @@
           <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
           </svg>
-          <span class="text-sm font-medium">Livraison offerte en France metropolitaine</span>
+          <span class="text-sm font-medium">Livraison offerte en France métropolitaine</span>
         </div>
       </div>
 
@@ -64,9 +64,9 @@
         <div>
           <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Informations</h4>
           <nav class="flex flex-col gap-3" aria-label="Legal links">
-            <a href="/mentions-legales" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Mentions legales</a>
-            <a href="/cgv" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Conditions generales de vente</a>
-            <a href="/confidentialite" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Politique de confidentialite</a>
+            <a href="/mentions-legales" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Mentions légales</a>
+            <a href="/cgv" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Conditions générales de vente</a>
+            <a href="/confidentialite" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Politique de confidentialité</a>
             <a href="mailto:contact@clipbag.shop" class="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200 cursor-pointer">Contact</a>
           </nav>
         </div>
@@ -147,7 +147,7 @@
       <!-- Bottom bar -->
       <div class="border-t border-surface-lighter/50 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-xs text-gray-600">
-          &copy; 2026 ClipBag. Tous droits reserves.
+          &copy; 2026 ClipBag. Tous droits réservés.
         </p>
         <p class="text-xs text-gray-600">
           Fait avec soin en France

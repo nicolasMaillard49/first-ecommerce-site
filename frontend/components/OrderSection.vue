@@ -125,7 +125,7 @@
               <svg class="w-4 h-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <span class="text-brand text-sm font-semibold">Vous economisez {{ savedAmount }}</span>
+              <span class="text-brand text-sm font-semibold">Vous économisez {{ savedAmount }}</span>
             </div>
           </div>
 
@@ -155,27 +155,6 @@
                 </svg>
               </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Sport selection -->
-        <div class="mb-8">
-          <p class="text-xs text-gray-500 mb-3 font-medium uppercase tracking-wider">Pour quel sport ? <span class="text-gray-600 normal-case">(optionnel)</span></p>
-          <div class="grid grid-cols-5 gap-2 sm:gap-3">
-            <button
-              v-for="s in sports"
-              :key="s.value"
-              :class="[
-                'flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200 cursor-pointer focus:outline-none',
-                selectedSport === s.value
-                  ? 'border-brand bg-brand/10'
-                  : 'border-surface-lighter bg-surface-light hover:border-gray-600'
-              ]"
-              @click="toggleSport(s.value)"
-            >
-              <span class="text-2xl">{{ s.emoji }}</span>
-              <span class="text-[10px] sm:text-xs text-gray-400 leading-tight text-center font-medium">{{ s.label }}</span>
-            </button>
           </div>
         </div>
 
@@ -241,7 +220,7 @@
 
                 <!-- Telephone -->
                 <div>
-                  <label for="customer-phone" class="block text-xs text-gray-400 mb-1.5 font-medium">Telephone <span class="text-gray-600">(optionnel)</span></label>
+                  <label for="customer-phone" class="block text-xs text-gray-400 mb-1.5 font-medium">Téléphone <span class="text-gray-600">(optionnel)</span></label>
                   <input
                     id="customer-phone"
                     v-model="customerPhone"
@@ -250,6 +229,28 @@
                     placeholder="06 12 34 56 78"
                     class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   />
+                </div>
+
+                <!-- Sport (optionnel) -->
+                <div>
+                  <p class="text-xs text-gray-400 mb-2 font-medium">Pour quel sport ? <span class="text-gray-600 normal-case">(optionnel)</span></p>
+                  <div class="grid grid-cols-5 gap-2">
+                    <button
+                      v-for="s in sports"
+                      :key="s.value"
+                      type="button"
+                      :class="[
+                        'flex flex-col items-center gap-1 p-2 rounded-xl border-2 transition-all duration-200 cursor-pointer focus:outline-none',
+                        selectedSport === s.value
+                          ? 'border-brand bg-brand/10'
+                          : 'border-surface-lighter bg-surface-light hover:border-gray-600'
+                      ]"
+                      @click="toggleSport(s.value)"
+                    >
+                      <span class="text-lg">{{ s.emoji }}</span>
+                      <span class="text-[9px] sm:text-[10px] text-gray-400 leading-tight text-center font-medium">{{ s.label }}</span>
+                    </button>
+                  </div>
                 </div>
 
                 <!-- Adresse -->
@@ -267,13 +268,13 @@
                 </div>
 
                 <div>
-                  <label for="address-line2" class="block text-xs text-gray-400 mb-1.5 font-medium">Complement <span class="text-gray-600">(optionnel)</span></label>
+                  <label for="address-line2" class="block text-xs text-gray-400 mb-1.5 font-medium">Complément <span class="text-gray-600">(optionnel)</span></label>
                   <input
                     id="address-line2"
                     v-model="addressLine2"
                     type="text"
                     autocomplete="address-line2"
-                    placeholder="Appartement, batiment, etage..."
+                    placeholder="Appartement, bâtiment, étage..."
                     class="w-full bg-surface border border-surface-lighter rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   />
                 </div>
@@ -443,7 +444,7 @@ const packs: Pack[] = [
   },
   {
     name: 'equipe',
-    label: 'Equipe',
+    label: 'Équipe',
     qty: 5,
     packPrice: 99.99,
     badge: '-33%',
@@ -517,7 +518,7 @@ const upsellMessage = computed<UpsellMessage | null>(() => {
 
   if (pack === 'solo' || (qty === 1 && !pack)) {
     return {
-      text: 'Le <strong>pack Duo</strong> (2 articles) revient a 25,00\u20AC/piece au lieu de 29,99\u20AC',
+      text: 'Le <strong>pack Duo</strong> (2 articles) revient à 25,00\u20AC/pièce au lieu de 29,99\u20AC',
       icon: '\uD83D\uDCA1',
       type: 'upgrade',
       action: () => selectPack('duo'),
@@ -527,18 +528,18 @@ const upsellMessage = computed<UpsellMessage | null>(() => {
 
   if (pack === 'duo' || qty === 2) {
     return {
-      text: 'Le <strong>pack Equipe</strong> (5 articles) revient a 20,00\u20AC/piece \u2014 <strong>33% d\u2019economie</strong>',
+      text: 'Le <strong>pack Équipe</strong> (5 articles) revient à 20,00\u20AC/pièce \u2014 <strong>33% d\u2019économie</strong>',
       icon: '\uD83D\uDCA1',
       type: 'upgrade',
       action: () => selectPack('equipe'),
-      actionLabel: 'Equipe \u2192',
+      actionLabel: 'Équipe \u2192',
     }
   }
 
   if (qty === 3) {
     const currentTotal = (UNIT_PRICE * 3).toFixed(2).replace('.', ',')
     return {
-      text: `Seulement <strong>10,02\u20AC de plus</strong> pour 2 articles supplementaires ! Pack Equipe (5) a 99,99\u20AC au lieu de ${currentTotal}\u20AC`,
+      text: `Seulement <strong>10,02\u20AC de plus</strong> pour 2 articles supplémentaires ! Pack Équipe (5) à 99,99\u20AC au lieu de ${currentTotal}\u20AC`,
       icon: '\uD83C\uDF81',
       type: 'upgrade',
       action: () => selectPack('equipe'),
@@ -548,7 +549,7 @@ const upsellMessage = computed<UpsellMessage | null>(() => {
 
   if (qty === 4) {
     return {
-      text: '<strong>1 de plus et le 5eme est offert !</strong> Pack Equipe : 99,99\u20AC au lieu de 119,96\u20AC',
+      text: '<strong>1 de plus et le 5ème est offert !</strong> Pack Équipe : 99,99\u20AC au lieu de 119,96\u20AC',
       icon: '\uD83C\uDF89',
       type: 'upgrade',
       action: () => selectPack('equipe'),
@@ -558,7 +559,7 @@ const upsellMessage = computed<UpsellMessage | null>(() => {
 
   if (pack === 'equipe') {
     return {
-      text: 'Vous economisez <strong>49,96\u20AC</strong> avec le pack Equipe \u2014 soit 20,00\u20AC/piece',
+      text: 'Vous économisez <strong>49,96\u20AC</strong> avec le pack Équipe \u2014 soit 20,00\u20AC/pièce',
       icon: '\u2705',
       type: 'saving',
     }
@@ -606,8 +607,8 @@ const savedAmount = computed(() => {
 const sports = [
   { emoji: '\uD83C\uDFCB\uFE0F', value: 'musculation', label: 'Musculation' },
   { emoji: '\uD83C\uDFC3', value: 'running', label: 'Running' },
-  { emoji: '\uD83D\uDEB4', value: 'velo', label: 'Velo' },
-  { emoji: '\uD83E\uDD7E', value: 'randonnee', label: 'Randonnee' },
+  { emoji: '\uD83D\uDEB4', value: 'velo', label: 'Vélo' },
+  { emoji: '\uD83E\uDD7E', value: 'randonnee', label: 'Randonnée' },
   { emoji: '\uD83C\uDFBE', value: 'autre', label: 'Autre' },
 ]
 
@@ -668,9 +669,9 @@ const handleCheckout = async () => {
     }
   } catch (e: any) {
     if (e?.message?.includes('fetch') || e?.cause?.code === 'ECONNREFUSED' || !navigator.onLine) {
-      error.value = 'Le serveur est temporairement indisponible. Veuillez reessayer dans quelques instants.'
+      error.value = 'Le serveur est temporairement indisponible. Veuillez réessayer dans quelques instants.'
     } else {
-      error.value = e?.data?.message || 'Une erreur est survenue. Veuillez reessayer.'
+      error.value = e?.data?.message || 'Une erreur est survenue. Veuillez réessayer.'
     }
   } finally {
     loading.value = false
@@ -694,7 +695,7 @@ const ShieldCheckIcon = () =>
   ])
 
 const trustBadges = [
-    { label: 'Paiement\nSecurise', icon: LockIcon },
+    { label: 'Paiement\nSécurisé', icon: LockIcon },
   { label: 'Livraison\nGratuite', icon: TruckIcon },
   { label: 'Garantie\n30 Jours', icon: ShieldCheckIcon }
 ]

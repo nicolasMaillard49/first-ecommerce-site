@@ -9,7 +9,7 @@
   >
     <div
       v-if="visible"
-      class="fixed top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-auto z-50 bg-surface-light/95 backdrop-blur-lg border border-surface-lighter rounded-2xl shadow-2xl shadow-black/30 px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
+      class="fixed top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-auto z-50 bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl shadow-2xl shadow-black/40 px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
     >
       <!-- Accent bar left -->
       <div class="absolute left-0 top-3 bottom-3 w-1 rounded-full bg-brand"></div>

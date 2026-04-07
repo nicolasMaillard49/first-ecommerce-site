@@ -39,12 +39,12 @@
           </div>
 
           <!-- H1 -->
-          <h1 class="hero-title font-display font-black text-[2.6rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] tracking-tight text-white mb-5 sm:mb-6">
+          <h1 class="hero-title font-hero font-black text-[2.6rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl sm:leading-[1.05] uppercase tracking-wide text-white mb-5 sm:mb-6">
             Plus Jamais Les Mains
-            <span class="relative">
+            <span class="relative inline-block">
               <span class="hero-gradient-text">Encombrées</span>
-              <svg class="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-2 sm:h-3" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="hero-wave" d="M2 8C30 3 70 2 100 5C130 8 170 9 198 4" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+              <svg class="absolute -bottom-2 sm:-bottom-3 left-0 w-full h-3 sm:h-4" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="hero-wave" d="M0 8C30 3 70 2 100 5C130 8 170 9 200 4" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
                 <defs>
                   <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#10b981" stop-opacity="0.6" />
@@ -56,12 +56,7 @@
             </span>
           </h1>
 
-          <p class="text-sm sm:text-lg text-gray-400 mb-5 sm:mb-6 max-w-md mx-auto lg:mx-0">
-            Avec ClipBag, clipse ton sac partout en salle, en rando, au quotidien.
-          </p>
-
-          <!-- Description — hidden on mobile to save space, image speaks louder -->
-          <p class="hidden sm:block text-xl text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+          <p class="text-sm sm:text-lg text-gray-400 mb-5 sm:mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
             Le sac magnétique qui se fixe en un clic sur toute surface métallique. Ultra léger, indestructible, indispensable.
           </p>
 
