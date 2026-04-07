@@ -2,12 +2,10 @@
   <nav
     ref="navRef"
     :class="[
-      'fixed z-50 transition-all duration-500',
+      'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
       scrolled
-        ? 'top-0 left-0 right-0 bg-white/[0.03] backdrop-blur-xl shadow-lg shadow-black/30 border-b border-white/[0.06]'
-        : mobileOpen
-          ? 'top-4 left-4 right-4 bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06]'
-          : 'top-4 left-4 right-4 bg-white/[0.03] backdrop-blur-xl rounded-full border border-white/[0.06]',
+        ? 'bg-white/80 backdrop-blur-lg border-b border-border shadow-subtle'
+        : 'bg-transparent',
     ]"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +13,7 @@
         <!-- Logo -->
         <NuxtLink
           to="/"
-          class="font-display font-black text-xl sm:text-2xl text-brand-neon tracking-tight cursor-pointer select-none transition-colors duration-200 hover:text-brand-light"
+          class="text-text font-display font-bold text-xl sm:text-2xl uppercase tracking-wider cursor-pointer select-none transition-colors duration-200 hover:text-text/70"
         >
           CLIPBAG
         </NuxtLink>
@@ -29,8 +27,8 @@
               :class="[
                 'px-4 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer rounded-lg',
                 link.highlight
-                  ? 'text-brand-neon hover:text-brand-light hover:bg-brand-neon/5'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'text-accent hover:text-accent-hover'
+                  : 'text-text-muted hover:text-text'
               ]"
             >
               {{ link.label }}
@@ -39,17 +37,17 @@
               v-else
               :href="link.href"
               :class="[
-                'relative px-4 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer rounded-lg hover:bg-white/5',
+                'relative px-4 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer rounded-lg hover:bg-surface-alt',
                 activeSection === link.href.replace('#', '')
-                  ? 'text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-text'
+                  : 'text-text-muted hover:text-text'
               ]"
               @click.prevent="scrollToSection(link.href)"
             >
               {{ link.label }}
               <span
                 v-if="activeSection === link.href.replace('#', '')"
-                class="absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full bg-brand/60"
+                class="absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full bg-accent"
               ></span>
             </a>
           </template>
@@ -57,7 +55,7 @@
 
         <!-- Desktop CTA -->
         <button
-          class="hidden md:inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white py-2.5 px-6 rounded-full font-display font-bold text-sm cursor-pointer transition-all duration-200 focus:outline-none hover:scale-105 shadow-lg shadow-brand/25"
+          class="hidden md:inline-flex items-center gap-2 bg-accent text-text py-2.5 px-6 rounded-pill font-display font-semibold text-sm cursor-pointer transition-colors duration-200 focus:outline-none hover:bg-accent-hover"
           @click="scrollToSection('#order-section')"
         >
           Commander
@@ -68,10 +66,10 @@
 
         <!-- Mobile hamburger -->
         <button
-          class="md:hidden flex items-center justify-center w-11 h-11 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-neon"
+          class="md:hidden flex items-center justify-center w-11 h-11 rounded-xl text-text-muted hover:text-text hover:bg-surface-alt transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent"
           :aria-expanded="mobileOpen"
           aria-label="Menu de navigation"
-          @click="mobileOpen = !mobileOpen"
+          @click.stop="mobileOpen = !mobileOpen"
         >
           <svg
             v-if="!mobileOpen"
@@ -108,8 +106,7 @@
     >
       <div
         v-if="mobileOpen"
-        class="md:hidden overflow-hidden border-t border-white/[0.06] bg-white/[0.05] backdrop-blur-xl"
-        :class="[scrolled ? '' : 'rounded-b-2xl']"
+        class="md:hidden overflow-hidden border-t border-border bg-white"
       >
         <div class="px-4 py-4 space-y-1">
           <template v-for="link in navLinks" :key="link.href">
@@ -119,8 +116,8 @@
               :class="[
                 'flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-colors duration-200 cursor-pointer',
                 link.highlight
-                  ? 'text-brand-neon hover:text-brand-light hover:bg-brand-neon/5'
-                  : 'text-gray-300 hover:text-white hover:bg-white/5'
+                  ? 'text-accent hover:text-accent-hover'
+                  : 'text-text-muted hover:text-text hover:bg-surface-alt'
               ]"
               @click="mobileOpen = false"
             >
@@ -129,7 +126,7 @@
             <a
               v-else
               :href="link.href"
-              class="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors duration-200 cursor-pointer"
+              class="flex items-center gap-3 px-4 py-3 text-base font-medium text-text-muted hover:text-text hover:bg-surface-alt rounded-xl transition-colors duration-200 cursor-pointer"
               @click.prevent="scrollToSection(link.href); mobileOpen = false"
             >
               {{ link.label }}
@@ -137,10 +134,10 @@
           </template>
           <div class="pt-2">
             <button
-              class="w-full bg-brand hover:bg-brand-dark text-white font-display font-bold text-base py-3.5 px-6 rounded-full cursor-pointer transition-all duration-200 focus:outline-none shadow-lg shadow-brand/25 flex items-center justify-center gap-2"
+              class="w-full bg-accent hover:bg-accent-hover text-text font-display font-semibold text-sm uppercase tracking-wider py-3.5 px-6 rounded-pill cursor-pointer transition-colors duration-200 focus:outline-none flex items-center justify-center gap-2"
               @click="scrollToSection('#order-section'); mobileOpen = false"
             >
-              Commander Maintenant
+              Commander
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

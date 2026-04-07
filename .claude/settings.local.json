@@ -43,7 +43,10 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:api.github.com)",
       "Bash(gh api:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "WebFetch(domain:actuscore.com)",
+      "Bash(npx prisma:*)",
+      "Bash(PGPASSWORD=postgres psql:*)"
     ]
   }
 }

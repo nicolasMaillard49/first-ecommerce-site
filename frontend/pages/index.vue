@@ -21,7 +21,7 @@
     >
       <button
         v-if="showFloatingCta"
-        class="fixed bottom-6 left-4 right-4 z-40 sm:hidden bg-brand hover:bg-brand-dark text-white font-display font-bold text-base py-4 rounded-2xl shadow-lg shadow-brand/30 cursor-pointer transition-colors duration-200 flex items-center justify-center gap-2"
+        class="fixed bottom-6 left-4 right-4 z-40 sm:hidden bg-accent hover:bg-accent-hover text-text font-display font-semibold text-sm uppercase tracking-wider py-3.5 rounded-pill shadow-lg shadow-accent/30 cursor-pointer transition-colors duration-200 flex items-center justify-center gap-2"
         @click="scrollToOrder"
       >
         Commander - 29,99&euro;

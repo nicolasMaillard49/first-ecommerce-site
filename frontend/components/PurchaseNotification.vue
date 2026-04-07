@@ -9,29 +9,29 @@
   >
     <div
       v-if="visible"
-      class="fixed top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-auto z-50 bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl shadow-2xl shadow-black/40 px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
+      class="fixed top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-auto z-50 bg-white border border-border rounded-2xl shadow-card px-4 py-3.5 sm:px-5 sm:py-4 flex items-center gap-3 sm:max-w-sm"
     >
       <!-- Accent bar left -->
-      <div class="absolute left-0 top-3 bottom-3 w-1 rounded-full bg-brand"></div>
+      <div class="absolute left-0 top-3 bottom-3 w-1 rounded-full bg-accent"></div>
 
       <!-- Avatar icon -->
-      <div class="shrink-0 w-10 h-10 rounded-full bg-brand/15 border border-brand/25 flex items-center justify-center">
+      <div class="shrink-0 w-10 h-10 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center">
         <span class="text-lg">🛒</span>
       </div>
 
       <!-- Text -->
       <div class="flex-1 min-w-0">
-        <p class="text-sm text-white font-semibold leading-tight truncate">
+        <p class="text-sm text-text font-display font-semibold leading-tight truncate">
           {{ currentName }} de {{ currentCity }}
         </p>
-        <p class="text-xs text-gray-400 mt-0.5">
-          A commandé un ClipBag · <span class="text-brand font-medium">il y a {{ currentMinutes }} min</span>
+        <p class="text-xs text-text-muted mt-0.5">
+          A commandé un ClipBag · <span class="text-accent-dark font-medium">il y a {{ currentMinutes }} min</span>
         </p>
       </div>
 
       <!-- Close -->
       <button
-        class="shrink-0 text-white/30 hover:text-white/70 transition-colors cursor-pointer p-1"
+        class="shrink-0 text-text-muted/50 hover:text-text-muted transition-colors cursor-pointer p-1"
         aria-label="Fermer"
         @click="dismiss"
       >

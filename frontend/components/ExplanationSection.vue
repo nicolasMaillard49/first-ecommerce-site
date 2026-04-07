@@ -1,29 +1,23 @@
 <template>
-  <section id="explanation-section" class="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-surface">
-    <!-- Ambient glow -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
-
+  <section id="explanation-section" class="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-surface-alt">
     <div class="relative z-10 max-w-5xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-10 sm:mb-16 animate-on-scroll">
-        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Comment ça marche ?</span>
-        <h2 class="font-display font-black text-3xl leading-tight sm:text-4xl md:text-5xl text-white mb-3">
-          La magie de <span class="text-brand">ClipBag</span> c'est simple,
+        <span class="inline-block text-accent-dark text-sm font-display font-semibold uppercase tracking-widest mb-4">Comment ça marche ?</span>
+        <h2 class="font-display font-bold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.15] text-text mb-3">
+          La magie de <span class="text-accent-dark">ClipBag</span> c'est simple,
         </h2>
-        <p class="text-lg sm:text-xl md:text-2xl text-gray-300 font-medium">
+        <p class="text-base sm:text-lg text-text-muted font-medium">
           regarde, tu as juste à
           <span class="relative inline-block mx-1">
-            <span class="text-brand font-display font-bold border-2 border-dashed border-brand/50 rounded-xl px-3 py-1 sm:px-4 sm:py-1.5">Clip ton Bag</span>
+            <span class="text-accent-dark font-display font-semibold border-2 border-dashed border-accent/50 rounded-xl px-3 py-1 sm:px-4 sm:py-1.5">Clip ton Bag</span>
           </span>
         </p>
       </div>
 
       <!-- Video container -->
       <div class="animate-on-scroll-scale relative max-w-3xl mx-auto">
-        <!-- Decorative border glow -->
-        <div class="absolute -inset-1 bg-gradient-to-br from-brand/20 via-transparent to-brand/10 rounded-[1.75rem] blur-sm pointer-events-none"></div>
-
-        <div class="relative bg-surface-light border border-surface-lighter rounded-3xl overflow-hidden shadow-2xl shadow-black/40">
+        <div class="relative bg-white border border-border rounded-3xl overflow-hidden shadow-card">
           <!-- Video — mobile: taller vertical card, desktop: landscape card -->
           <div class="relative min-h-[65vh] sm:min-h-0 sm:aspect-video bg-black">
             <video
@@ -53,7 +47,7 @@
                 aria-label="Lancer la video"
                 @click="togglePlay"
               >
-                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-brand/90 backdrop-blur-sm flex items-center justify-center shadow-xl shadow-brand/30 transition-transform duration-200 group-hover:scale-110">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/90 backdrop-blur-sm flex items-center justify-center shadow-xl shadow-accent/30 transition-transform duration-200 group-hover:scale-110">
                   <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
@@ -63,9 +57,9 @@
           </div>
 
           <!-- Controls bar -->
-          <div class="flex items-center gap-3 px-4 py-3 bg-surface-light border-t border-surface-lighter">
+          <div class="flex items-center gap-3 px-4 py-3 bg-white border-t border-border">
             <button
-              class="shrink-0 text-white/70 hover:text-brand transition-colors cursor-pointer focus:outline-none"
+              class="shrink-0 text-text-muted hover:text-accent-dark transition-colors cursor-pointer focus:outline-none"
               :aria-label="isPlaying ? 'Pause' : 'Lecture'"
               @click="togglePlay"
             >
@@ -79,23 +73,23 @@
 
             <!-- Progress bar -->
             <div
-              class="flex-1 h-1.5 bg-surface rounded-full overflow-hidden cursor-pointer group"
+              class="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden cursor-pointer group"
               @click="seekTo"
             >
               <div
-                class="h-full bg-brand rounded-full transition-[width] duration-150"
+                class="h-full bg-accent rounded-full transition-[width] duration-150"
                 :style="{ width: `${progress}%` }"
               ></div>
             </div>
 
             <!-- Time -->
-            <span class="shrink-0 text-xs text-gray-500 font-medium tabular-nums min-w-[70px] text-right">
+            <span class="shrink-0 text-xs text-text-muted font-medium tabular-nums min-w-[70px] text-right">
               {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
             </span>
 
             <!-- Mute -->
             <button
-              class="shrink-0 text-white/70 hover:text-brand transition-colors cursor-pointer focus:outline-none"
+              class="shrink-0 text-text-muted hover:text-accent-dark transition-colors cursor-pointer focus:outline-none"
               :aria-label="isMuted ? 'Activer le son' : 'Couper le son'"
               @click="toggleMute"
             >
@@ -111,44 +105,44 @@
         </div>
       </div>
 
-      <!-- Steps below video — single glass strip -->
+      <!-- Steps below video — single strip -->
       <div class="animate-on-scroll mt-10 sm:mt-16 flex justify-center">
-        <div class="liquid-glass rounded-full px-2 py-2 sm:px-4 sm:py-3 inline-flex">
+        <div class="bg-white border border-border rounded-full px-2 py-2 sm:px-4 sm:py-3 inline-flex shadow-subtle">
           <div class="flex items-center justify-center">
             <!-- Step 1 -->
             <div class="step-card-reveal flex-1 flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1.5 stagger-1">
-              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-display font-black text-sm sm:text-base">1</span>
+              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-sm sm:text-base">1</span>
               <div class="min-w-0">
-                <p class="font-display font-bold text-white text-xs sm:text-sm leading-tight">Clipsez</p>
-                <p class="text-gray-500 text-[9px] sm:text-xs leading-tight hidden sm:block">Fixation magnétique</p>
+                <p class="font-display font-bold text-text text-xs sm:text-sm leading-tight">Clipsez</p>
+                <p class="text-text-muted text-[9px] sm:text-xs leading-tight hidden sm:block">Fixation magnétique</p>
               </div>
             </div>
 
             <!-- Chevron 1→2 -->
-            <svg class="step-chevron-reveal shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-brand/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="animation-delay: 0.25s">
+            <svg class="step-chevron-reveal shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-accent/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="animation-delay: 0.25s">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
 
             <!-- Step 2 -->
             <div class="step-card-reveal flex-1 flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1.5 stagger-2">
-              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-display font-black text-sm sm:text-base">2</span>
+              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-sm sm:text-base">2</span>
               <div class="min-w-0">
-                <p class="font-display font-bold text-white text-xs sm:text-sm leading-tight">Rangez</p>
-                <p class="text-gray-500 text-[9px] sm:text-xs leading-tight hidden sm:block">Bouteille sécurisée</p>
+                <p class="font-display font-bold text-text text-xs sm:text-sm leading-tight">Rangez</p>
+                <p class="text-text-muted text-[9px] sm:text-xs leading-tight hidden sm:block">Bouteille sécurisée</p>
               </div>
             </div>
 
             <!-- Chevron 2→3 -->
-            <svg class="step-chevron-reveal shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-brand/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="animation-delay: 0.45s">
+            <svg class="step-chevron-reveal shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-accent/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="animation-delay: 0.45s">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
 
             <!-- Step 3 -->
             <div class="step-card-reveal flex-1 flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-1.5 stagger-3">
-              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-display font-black text-sm sm:text-base">3</span>
+              <span class="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-sm sm:text-base">3</span>
               <div class="min-w-0">
-                <p class="font-display font-bold text-white text-xs sm:text-sm leading-tight">Profitez</p>
-                <p class="text-gray-500 text-[9px] sm:text-xs leading-tight hidden sm:block">Mains libres</p>
+                <p class="font-display font-bold text-text text-xs sm:text-sm leading-tight">Profitez</p>
+                <p class="text-text-muted text-[9px] sm:text-xs leading-tight hidden sm:block">Mains libres</p>
               </div>
             </div>
           </div>
@@ -166,7 +160,7 @@ const currentTime = ref(0)
 const duration = ref(0)
 const progress = ref(0)
 
-const posterImage = computed(() => '/images/product/product-7.png')
+const posterImage = computed(() => '/images/product/product-1.png')
 
 let animFrame: number | null = null
 
