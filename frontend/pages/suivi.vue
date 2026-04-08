@@ -137,7 +137,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 sm:py-32 px-4 sm:px-6">
+  <div class="min-h-screen py-24 sm:py-32 px-4 sm:px-6 bg-surface-dark">
     <div class="max-w-3xl mx-auto">
       <NuxtLink
         to="/"
@@ -157,7 +157,7 @@ onMounted(() => {
       </p>
 
       <!-- Tabs -->
-      <div class="flex gap-1 bg-surface rounded-xl p-1 mb-8">
+      <div class="flex gap-1 bg-surface-darker rounded-xl p-1 mb-8">
         <button
           class="flex-1 py-3 px-4 rounded-lg text-sm font-semibold transition-all duration-200"
           :class="activeTab === 'order'
@@ -186,7 +186,7 @@ onMounted(() => {
             v-model="orderNumber"
             type="text"
             placeholder="Ex: 3f2a8b1c-..."
-            class="w-full px-4 py-3 bg-surface border border-surface-lighter rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+            class="w-full px-4 py-3 bg-surface-darker border border-surface-lighter rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
           />
         </div>
 
@@ -197,7 +197,7 @@ onMounted(() => {
               v-model="name"
               type="text"
               placeholder="Jean Dupont"
-              class="w-full px-4 py-3 bg-surface border border-surface-lighter rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+              class="w-full px-4 py-3 bg-surface-darker border border-surface-lighter rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
             />
           </div>
           <div>
@@ -206,7 +206,7 @@ onMounted(() => {
               v-model="email"
               type="email"
               placeholder="jean@exemple.fr"
-              class="w-full px-4 py-3 bg-surface border border-surface-lighter rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+              class="w-full px-4 py-3 bg-surface-darker border border-surface-lighter rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
             />
           </div>
         </div>
@@ -248,7 +248,7 @@ onMounted(() => {
           <!-- Order summary card (always visible) -->
           <button
             :class="[
-              'w-full text-left bg-surface rounded-2xl p-5 border-2 transition-all duration-200 cursor-pointer focus:outline-none',
+              'w-full text-left bg-surface-darker rounded-2xl p-5 border-2 transition-all duration-200 cursor-pointer focus:outline-none',
               selectedOrder?.id === o.id
                 ? 'border-brand shadow-lg shadow-brand/10'
                 : 'border-surface-lighter hover:border-gray-600'

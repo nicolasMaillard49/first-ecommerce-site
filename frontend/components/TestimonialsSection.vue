@@ -3,7 +3,7 @@
     <div class="relative max-w-6xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-14 sm:mb-20 animate-on-scroll">
-        <span class="inline-block text-accent-dark text-sm font-display font-semibold uppercase tracking-widest mb-4">Témoignages</span>
+        <span class="inline-block text-accent-dark text-xs font-display font-semibold uppercase tracking-widest mb-4">Témoignages</span>
         <h2 class="font-display font-bold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.15] text-text mb-4">
           Ce que disent <span class="text-accent-dark">nos clients</span>
         </h2>

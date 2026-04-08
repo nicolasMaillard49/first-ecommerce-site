@@ -15,6 +15,12 @@ export default {
           alt: '#f5f5f5',
           dark: '#101010',
           darker: '#0a0a0a',
+          light: '#1a1a1a',
+          lighter: '#2a2a2a',
+        },
+        brand: {
+          DEFAULT: '#a9f955',
+          dark: '#96e040',
         },
         text: {
           DEFAULT: '#101010',

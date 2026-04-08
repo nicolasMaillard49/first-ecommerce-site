@@ -3,7 +3,7 @@
     <div class="relative max-w-7xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-16 animate-on-scroll">
-        <span class="inline-block text-accent-dark text-sm font-display font-semibold uppercase tracking-widest mb-4">Avantages</span>
+        <span class="inline-block text-accent-dark text-xs font-display font-semibold uppercase tracking-widest mb-4">Avantages</span>
         <h2 class="font-display font-bold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.15] text-text mb-4">
           Pourquoi <span class="text-accent-dark">ClipBag</span> ?
         </h2>

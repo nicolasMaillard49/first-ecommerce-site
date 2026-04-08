@@ -7,7 +7,6 @@
     <GallerySection />
     <TestimonialsSection />
     <SocialVideoSection />
-    <OrderSection />
     <FaqSection />
 
     <!-- Floating mobile CTA -->
@@ -21,7 +20,7 @@
     >
       <button
         v-if="showFloatingCta"
-        class="fixed bottom-6 left-4 right-4 z-40 sm:hidden bg-accent hover:bg-accent-hover text-text font-display font-semibold text-sm uppercase tracking-wider py-3.5 rounded-pill shadow-lg shadow-accent/30 cursor-pointer transition-colors duration-200 flex items-center justify-center gap-2"
+        class="fixed bottom-6 left-4 right-4 z-40 sm:hidden bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-base uppercase tracking-wider py-3.5 rounded-xl shadow-[0_4px_20px_rgba(169,249,85,0.35)] cursor-pointer transition-all duration-200 flex items-center justify-center gap-3"
         @click="scrollToOrder"
       >
         Commander - 29,99&euro;
@@ -67,7 +66,6 @@ await callOnce(async () => {
   }
 })
 
-// Retry on client if SSR fetch failed
 onMounted(async () => {
   if (!productStore.product) {
     try {
@@ -91,29 +89,20 @@ onMounted(async () => {
 const showFloatingCta = ref(false)
 
 const scrollToOrder = () => {
-  const el = document.getElementById('order-section')
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
-  }
+  const el = document.getElementById('order-section') || document.getElementById('hero-section')
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
 onMounted(() => {
-  // Floating CTA visibility
   const handleScroll = () => {
     const hero = document.getElementById('hero-section')
-    const order = document.getElementById('order-section')
-    if (!hero || !order) return
-
+    if (!hero) return
     const heroBottom = hero.getBoundingClientRect().bottom
-    const orderTop = order.getBoundingClientRect().top
-    const windowHeight = window.innerHeight
-
-    showFloatingCta.value = heroBottom < 0 && orderTop > windowHeight * 0.5
+    showFloatingCta.value = heroBottom < 0
   }
 
   window.addEventListener('scroll', handleScroll, { passive: true })
 
-  // Scroll-triggered animation observer
   const animatedElements = document.querySelectorAll(
     '.animate-on-scroll, .animate-on-scroll-left, .animate-on-scroll-right, .animate-on-scroll-scale'
   )
@@ -128,12 +117,8 @@ onMounted(() => {
           }
         })
       },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px',
-      }
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     )
-
     animatedElements.forEach((el) => observer.observe(el))
   }
 })

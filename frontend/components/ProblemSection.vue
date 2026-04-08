@@ -139,7 +139,7 @@
       <!-- Bottom CTA -->
       <div class="text-center mt-10 sm:mt-14 animate-on-scroll">
         <button
-          class="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-sm sm:text-base uppercase tracking-wider py-3 sm:py-3.5 px-8 sm:px-10 rounded-pill cursor-pointer transition-all duration-200 shadow-[0_4px_16px_rgba(169,249,85,0.3)] hover:shadow-[0_6px_24px_rgba(169,249,85,0.4)]"
+          class="inline-flex items-center gap-3 bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-base sm:text-lg uppercase tracking-wider py-3.5 sm:py-4 px-12 rounded-xl cursor-pointer transition-all duration-200 shadow-[0_4px_20px_rgba(169,249,85,0.35)] hover:shadow-[0_6px_30px_rgba(169,249,85,0.45)]"
           @click="scrollToOrder"
         >
           Découvrir la solution
