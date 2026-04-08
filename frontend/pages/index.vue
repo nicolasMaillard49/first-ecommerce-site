@@ -6,7 +6,6 @@
     <FeaturesSection />
     <GallerySection />
     <TestimonialsSection />
-    <SocialVideoSection />
     <FaqSection />
 
     <!-- Floating mobile CTA -->

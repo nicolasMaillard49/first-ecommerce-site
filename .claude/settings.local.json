@@ -57,7 +57,9 @@
       "Bash(python3 __TRACKED_VAR__/.claude/plugins/marketplaces/ui-ux-pro-max-skill/.claude/skills/ui-ux-pro-max/scripts/search.py 'ecommerce product carousel mobile touch swipe' --domain ux)",
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git stash:*)",
+      "Bash(git pull:*)"
     ]
   }
 }
