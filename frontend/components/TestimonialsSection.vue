@@ -196,67 +196,78 @@ const cardStyle = (idx: number) => {
   }
 }
 
-// ---- Testimonials data (~90% gym, ~10% other sport/lifestyle) ----
 const testimonials = [
   {
     name: 'Thomas L.',
     initials: 'TL',
     sport: 'Musculation',
-    quote: "Je l'accroche sur le rack entre chaque série, ma bouteille est toujours à portée de main. Un game-changer en salle.",
+    quote: "Game changer pour le gym en vrai. Je le clip sur le rack entre chaque série, ma bouteille est toujours la. J'y retourne plus sans.",
   },
   {
-    name: 'Camille D.',
-    initials: 'CD',
-    sport: 'Fitness & Cardio',
-    quote: "Plus besoin de poser ma gourde par terre entre les machines. Le ClipBag se fixe partout en salle, c'est hyper pratique.",
+    name: 'Kévin M.',
+    initials: 'KM',
+    sport: 'Musculation',
+    quote: "Bien recu nickel",
   },
   {
     name: 'Mehdi B.',
     initials: 'MB',
     sport: 'Musculation',
-    quote: "Sceptique au départ, convaincu après 5 minutes. La fixation magnétique sur les machines est ultra solide. J'en ai pris un deuxième.",
+    quote: "Sceptique au départ, convaincu après 5 min. La fixation sur les machines est ultra solide. J'en ai repris un deuxieme pour un pote.",
   },
   {
-    name: 'Sophie M.',
-    initials: 'SM',
-    sport: 'CrossFit',
-    quote: "Entre les WODs j'ai toujours ma bouteille sous la main. Plus de temps perdu à la chercher dans la salle. Indispensable.",
+    name: 'Camille D.',
+    initials: 'CD',
+    sport: 'Musculation',
+    quote: "Plus besoin de poser ma gourde par terre entre les machines. Ca se fixe partout en salle c'est hyper pratique.",
+  },
+  {
+    name: 'Dylan R.',
+    initials: 'DR',
+    sport: 'Musculation',
+    quote: "Recu en 7j bonne qualité c'est pratique d'avoir les poche vide a la salle",
   },
   {
     name: 'Lucas R.',
     initials: 'LR',
     sport: 'Musculation',
-    quote: "120g seulement et ça tient une bouteille d'1L sans broncher. Je le fixe sur la smith machine, sur le banc, partout.",
+    quote: "120g et ca tient une bouteille d'1L sans broncher. Je le fixe sur la smith machine, sur le banc, partout. Franchement au top.",
   },
   {
     name: 'Léa P.',
     initials: 'LP',
-    sport: 'Fitness',
-    quote: "Le design est canon et la qualité au top. Toutes les filles de ma salle me demandent où je l'ai trouvé.",
+    sport: 'Musculation',
+    quote: "Le design est canon et la qualité au top. Toute les filles de ma salle me demandent ou je l'ai trouvé haha",
   },
   {
     name: 'Antoine G.',
     initials: 'AG',
-    sport: 'Powerlifting',
-    quote: "Je soulève lourd et j'ai besoin de m'hydrater souvent. Le ClipBag sur le rack c'est la solution parfaite, zéro contrainte.",
+    sport: 'Musculation',
+    quote: "Je soulève lourd et j'ai besoin de m'hydrater souvent. Le ClipBag sur le rack c'est la solution parfaite, zero contrainte.",
   },
   {
     name: 'Nathan F.',
     initials: 'NF',
     sport: 'Musculation',
-    quote: "Ça fait 4 mois que je l'utilise tous les jours en salle. Toujours comme neuf. La qualité des aimants est impressionnante.",
+    quote: "Ca fais 4 mois que je l'utilise tout les jours en salle. Toujours comme neuf. La qualité des aimants est impressionante.",
   },
   {
-    name: 'Julie V.',
-    initials: 'JV',
-    sport: 'Randonnée',
-    quote: "Je l'ai pris pour la rando. Sur les poteaux métalliques des refuges, sur la voiture, c'est génial même en dehors de la salle.",
+    name: 'Florian T.',
+    initials: 'FT',
+    sport: 'Musculation',
+    quote: "Enfin les poches vides pendant ma séance. Plus de bouteille qui traine par terre. Nickel.",
   },
   {
-    name: 'Maxime T.',
-    initials: 'MT',
-    sport: 'Quotidien & Bureau',
-    quote: "Je l'utilise même au bureau, clipsé sur le pied de mon écran. Ma bouteille est toujours là sans encombrer le bureau. Malin.",
+    name: 'Romain S.',
+    initials: 'RS',
+    sport: 'Musculation',
+    quote: "livraison rapide, bonne qualite. je recommande",
+  },
+  {
+    name: 'Hugo C.',
+    initials: 'HC',
+    sport: 'Musculation',
+    quote: "Mes potes au gym étaient tous mode 'c'est quoi ce truc' et maintenant y'en a 3 qui l'ont commandé mdr",
   },
 ]
 </script>
