@@ -44,7 +44,7 @@
             <span class="shrink-0 w-12 h-12 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-lg">1</span>
             <div>
               <p class="font-display font-bold text-text text-lg mb-1">Clipsez</p>
-              <p class="text-text-muted text-sm leading-relaxed">Fixation magnétique instantanée sur n'importe quelle bouteille. Un geste, c'est accroché.</p>
+              <p class="text-text-muted text-sm leading-relaxed">Se clippe sur <span class="text-text font-medium">n'importe quelle surface métallique</span>. Un geste, c'est fixé.</p>
             </div>
           </div>
 
@@ -52,8 +52,8 @@
           <div class="animate-on-scroll flex items-start gap-4 mb-8">
             <span class="shrink-0 w-12 h-12 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-lg">2</span>
             <div>
-              <p class="font-display font-bold text-text text-lg mb-1">Rangez</p>
-              <p class="text-text-muted text-sm leading-relaxed">Votre bouteille est sécurisée, les mains libres pour votre entraînement.</p>
+              <p class="font-display font-bold text-text text-lg mb-1">Videz vos poches</p>
+              <p class="text-text-muted text-sm leading-relaxed"><span class="text-text font-medium">Plus rien dans les mains, plus rien dans les poches.</span> Votre bouteille est à portée de main, sécurisée.</p>
             </div>
           </div>
 
@@ -61,8 +61,8 @@
           <div class="animate-on-scroll flex items-start gap-4">
             <span class="shrink-0 w-12 h-12 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-lg">3</span>
             <div>
-              <p class="font-display font-bold text-text text-lg mb-1">Profitez</p>
-              <p class="text-text-muted text-sm leading-relaxed">Ultra léger (120g), vous oubliez qu'il est là. En salle, en rando, au quotidien.</p>
+              <p class="font-display font-bold text-text text-lg mb-1">Bougez libre</p>
+              <p class="text-text-muted text-sm leading-relaxed">Ultra léger (120g), <span class="text-text font-medium">bouteille toujours à portée de main</span>. Salle, rando, vélo, quotidien.</p>
             </div>
           </div>
         </div>
