@@ -1,14 +1,11 @@
 <template>
-  <section id="testimonials-section" class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
-    <!-- Background glow -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand/3 rounded-full blur-[150px] pointer-events-none"></div>
-
+  <section id="testimonials-section" class="py-20 sm:py-28 px-4 sm:px-6 bg-surface-alt relative overflow-hidden">
     <div class="relative max-w-6xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-14 sm:mb-20 animate-on-scroll">
-        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Témoignages</span>
-        <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Ce que disent <span class="text-brand">nos clients</span>
+        <span class="inline-block text-accent-dark text-xs font-display font-semibold uppercase tracking-widest mb-4">Témoignages</span>
+        <h2 class="font-display font-bold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.15] text-text mb-4">
+          Ce que disent <span class="text-accent-dark">nos clients</span>
         </h2>
 
         <!-- Overall rating summary -->
@@ -19,8 +16,8 @@
             </svg>
           </div>
           <div class="text-left">
-            <span class="text-white font-display font-bold text-lg">4.9/5</span>
-            <span class="text-gray-400 text-sm ml-1">basé sur 2 000+ avis</span>
+            <span class="text-text font-display font-bold text-lg">4.9/5</span>
+            <span class="text-text-muted text-sm ml-1">basé sur 200 avis</span>
           </div>
         </div>
       </div>
@@ -29,7 +26,7 @@
       <div class="relative">
         <!-- Arrow left -->
         <button
-          class="absolute left-0 sm:-left-5 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/[0.1] text-white/70 hover:text-brand hover:border-brand/30 hover:bg-brand/[0.08] transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand/50"
+          class="absolute left-0 sm:-left-5 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border border-border text-text-muted hover:text-accent-dark hover:border-accent/30 hover:bg-surface-alt transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50"
           aria-label="Avis précédent"
           @click="navigate(-1)"
         >
@@ -40,7 +37,7 @@
 
         <!-- Arrow right -->
         <button
-          class="absolute right-0 sm:-right-5 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/[0.1] text-white/70 hover:text-brand hover:border-brand/30 hover:bg-brand/[0.08] transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand/50"
+          class="absolute right-0 sm:-right-5 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border border-border text-text-muted hover:text-accent-dark hover:border-accent/30 hover:bg-surface-alt transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50"
           aria-label="Avis suivant"
           @click="navigate(1)"
         >
@@ -82,24 +79,24 @@
               </div>
 
               <!-- Quote -->
-              <blockquote class="text-gray-300 text-sm leading-relaxed flex-1 mb-5">
+              <blockquote class="text-text-muted text-sm leading-relaxed flex-1 mb-5">
                 "{{ testimonial.quote }}"
               </blockquote>
 
               <!-- Author -->
-              <div class="flex items-center gap-3 pt-4 border-t border-white/[0.06]">
-                <div class="flex items-center justify-center w-9 h-9 rounded-full bg-brand/10 text-brand font-display font-bold text-xs ring-2 ring-brand/20">
+              <div class="flex items-center gap-3 pt-4 border-t border-border">
+                <div class="flex items-center justify-center w-9 h-9 rounded-full bg-accent/10 text-accent-dark font-display font-bold text-xs ring-2 ring-accent/20">
                   {{ testimonial.initials }}
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-white font-semibold text-sm">{{ testimonial.name }}</p>
-                  <p class="text-gray-500 text-xs">{{ testimonial.sport }}</p>
+                  <p class="text-text font-display font-semibold text-sm">{{ testimonial.name }}</p>
+                  <p class="text-text-muted text-xs">{{ testimonial.sport }}</p>
                 </div>
-                <div class="flex items-center gap-1 bg-brand/10 rounded-full px-2 py-0.5">
-                  <svg class="w-3 h-3 text-brand" fill="currentColor" viewBox="0 0 20 20">
+                <div class="flex items-center gap-1 bg-accent/10 rounded-full px-2 py-0.5">
+                  <svg class="w-3 h-3 text-accent-dark" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                   </svg>
-                  <span class="text-[10px] text-brand font-semibold">Vérifié</span>
+                  <span class="text-[10px] text-accent-dark font-display font-semibold">Vérifié</span>
                 </div>
               </div>
             </div>
@@ -191,7 +188,7 @@ const cardStyle = (idx: number) => {
     opacity: o,
     zIndex: 20 - abs,
     pointerEvents: abs > 2 ? 'none' as const : 'auto' as const,
-    filter: abs > 0 ? `brightness(${0.55 + (1 - abs * 0.15) * 0.45})` : 'none',
+    filter: abs > 0 ? `brightness(${0.92 + (1 - abs * 0.15) * 0.08})` : 'none',
   }
 }
 
@@ -278,7 +275,7 @@ const testimonials = [
   width: clamp(260px, 70vw, 320px);
   height: 260px;
   margin-left: calc(clamp(260px, 70vw, 320px) / -2);
-  border-radius: 1.25rem;
+  border-radius: 1rem;
   overflow: hidden;
   transform-style: preserve-3d;
   transition:
@@ -287,18 +284,18 @@ const testimonials = [
     filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
+  background: #fff;
+  border: 1px solid rgba(16, 16, 16, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-/* ---- Active card glow ---- */
+/* ---- Active card ---- */
 .review-card--active {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(16, 185, 129, 0.2);
+  background: #fff;
+  border-color: rgba(16, 16, 16, 0.12);
   box-shadow:
-    0 0 30px rgba(16, 185, 129, 0.08),
-    0 20px 40px rgba(0, 0, 0, 0.25);
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 /* ---- Dots ---- */
@@ -306,7 +303,7 @@ const testimonials = [
   width: 8px;
   height: 8px;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(16, 16, 16, 0.15);
   border: none;
   padding: 0;
   cursor: pointer;
@@ -314,13 +311,13 @@ const testimonials = [
 }
 
 .review-dot:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(16, 16, 16, 0.35);
 }
 
 .review-dot--active {
   width: 28px;
-  background: #10b981;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  background: var(--color-accent, #a9f955);
+  box-shadow: 0 0 12px rgba(169, 249, 85, 0.4);
 }
 
 /* ---- Desktop: larger cards ---- */
@@ -333,7 +330,7 @@ const testimonials = [
     width: clamp(340px, 32vw, 440px);
     height: 280px;
     margin-left: calc(clamp(340px, 32vw, 440px) / -2);
-    border-radius: 1.5rem;
+    border-radius: 1rem;
   }
 
   .review-dot--active {

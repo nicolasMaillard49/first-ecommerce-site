@@ -16,7 +16,7 @@ const isActive = (path: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface flex">
+  <div class="min-h-screen bg-surface-dark flex">
     <!-- Mobile overlay -->
     <div
       v-if="sidebarOpen"

@@ -1,27 +1,24 @@
 <template>
-  <section id="gallery-section" class="py-20 sm:py-28 px-4 sm:px-6 bg-surface-light">
+  <section v-if="hasImages" id="gallery-section" class="py-20 sm:py-28 px-4 sm:px-6 bg-white">
     <div class="max-w-5xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-16 animate-on-scroll">
-        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Galerie</span>
-        <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Découvrez le <span class="text-brand">ClipBag</span>
+        <span class="inline-block text-accent-dark text-xs font-display font-semibold uppercase tracking-widest mb-4">Galerie</span>
+        <h2 class="font-display font-bold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.15] text-text mb-4">
+          Découvrez le <span class="text-accent-dark">ClipBag</span>
         </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        <p class="text-text-muted text-lg max-w-2xl mx-auto">
           Chaque détail a été pensé pour la performance et l'élégance.
         </p>
       </div>
 
-      <!-- Main image — no card background -->
+      <!-- Main image -->
       <div
-        class="animate-on-scroll-scale relative aspect-[4/3] sm:aspect-[16/10] bg-surface rounded-3xl overflow-hidden mb-4 sm:mb-6 border border-surface-lighter group cursor-pointer"
-        @mouseenter="zoomed = true; stopAutoplay()"
-        @mouseleave="zoomed = false; startAutoplay()"
-        @mousemove="handleZoomMove"
+        class="animate-on-scroll-scale relative aspect-[3/4] sm:aspect-[3/4] max-w-md sm:max-w-lg mx-auto bg-surface-alt rounded-3xl overflow-hidden mb-4 sm:mb-6 border border-border group"
       >
         <!-- Navigation arrows -->
         <button
-          class="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-surface/70 backdrop-blur-sm border border-surface-lighter text-white hover:bg-surface hover:text-brand transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:opacity-100"
+          class="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-white/70 backdrop-blur-sm border border-border text-text hover:bg-white hover:text-accent-dark transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent focus:opacity-100"
           aria-label="Image précédente"
           @click="prevImage"
         >
@@ -30,7 +27,7 @@
           </svg>
         </button>
         <button
-          class="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-surface/70 backdrop-blur-sm border border-surface-lighter text-white hover:bg-surface hover:text-brand transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:opacity-100"
+          class="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-white/70 backdrop-blur-sm border border-border text-text hover:bg-white hover:text-accent-dark transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent focus:opacity-100"
           aria-label="Image suivante"
           @click="nextImage"
         >
@@ -40,22 +37,8 @@
         </button>
 
         <!-- Image counter -->
-        <div class="absolute top-4 right-4 z-20 bg-surface/70 backdrop-blur-sm border border-surface-lighter rounded-full px-3 py-1 text-sm text-gray-300 font-medium">
+        <div class="absolute top-4 right-4 z-20 bg-white/70 backdrop-blur-sm border border-border rounded-full px-3 py-1 text-sm text-text-muted font-medium">
           {{ activeIndex + 1 }}/{{ images.length }}
-        </div>
-
-        <!-- Hover overlay -->
-        <div
-          class="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
-          :class="zoomed ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'"
-        >
-          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-full">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-            </svg>
-            Zoom
-          </div>
         </div>
 
         <!-- Main image with crossfade -->
@@ -72,11 +55,7 @@
             :key="activeIndex"
             :src="images[activeIndex]"
             :alt="`ClipBag Sac Magnétique pour Bouteille - Vue ${activeIndex + 1}`"
-            :class="[
-              'w-full h-full object-contain transition-transform duration-300',
-              zoomed ? 'scale-150' : 'scale-100',
-            ]"
-            :style="zoomed ? { transformOrigin: `${zoomX}% ${zoomY}%` } : {}"
+            class="w-full h-full object-contain"
             width="600"
             height="600"
             loading="lazy"
@@ -90,10 +69,10 @@
           v-for="(image, idx) in images"
           :key="idx"
           :class="[
-            'flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface-light',
+            'flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-white',
             activeIndex === idx
-              ? 'border-2 border-brand shadow-lg shadow-brand/20 ring-2 ring-brand/20 scale-105'
-              : 'border-2 border-surface-lighter hover:border-brand/40 opacity-60 hover:opacity-100',
+              ? 'border-2 border-accent shadow-lg shadow-accent/20 ring-2 ring-accent/20 scale-105'
+              : 'border border-border hover:border-accent/40 opacity-60 hover:opacity-100',
           ]"
           :aria-label="`Voir image ${idx + 1}`"
           @click="goToImage(idx)"
@@ -116,19 +95,9 @@
 const productStore = useProductStore()
 
 const activeIndex = ref(0)
-const zoomed = ref(false)
-const zoomX = ref(50)
-const zoomY = ref(50)
 
-const images = computed(() => productStore.product?.images?.length ? productStore.product.images : [
-  '/images/product/product-7.png',
-  '/images/product/product-1.jpg',
-  '/images/product/product-2.png',
-  '/images/product/product-3.png',
-  '/images/product/product-4.png',
-  '/images/product/product-5.png',
-  '/images/product/product-6.png',
-])
+const images = computed(() => productStore.product?.images?.length ? productStore.product.images : [])
+const hasImages = computed(() => images.value.length > 0)
 
 // ---- Auto-play ----
 let autoplayTimer: ReturnType<typeof setInterval> | null = null
@@ -154,14 +123,6 @@ const prevImage = () => {
 const goToImage = (idx: number) => {
   activeIndex.value = idx
   startAutoplay()
-}
-
-const handleZoomMove = (e: MouseEvent) => {
-  if (!zoomed.value) return
-  const target = e.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
-  zoomX.value = ((e.clientX - rect.left) / rect.width) * 100
-  zoomY.value = ((e.clientY - rect.top) / rect.height) * 100
 }
 
 // Keyboard navigation

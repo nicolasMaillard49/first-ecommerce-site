@@ -1,11 +1,11 @@
 <template>
-  <div class="inline-flex items-center gap-2 bg-surface/80 border border-surface-lighter rounded-full px-4 py-2">
+  <div class="inline-flex items-center gap-2 bg-surface-alt/80 border border-border rounded-full px-3 py-1.5">
     <span class="relative flex h-2.5 w-2.5">
-      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
     </span>
-    <span class="text-sm text-gray-300">
-      <span class="font-semibold text-white tabular-nums">{{ viewers }}</span> personnes regardent ce produit
+    <span class="text-xs text-text-muted">
+      <span class="font-display font-semibold text-text text-xs tabular-nums">{{ viewers }}</span> personnes regardent ce produit
     </span>
   </div>
 </template>

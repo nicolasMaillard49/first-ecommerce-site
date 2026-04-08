@@ -33,7 +33,7 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface flex items-center justify-center px-4">
+  <div class="min-h-screen bg-surface-dark flex items-center justify-center px-4">
     <div class="w-full max-w-sm">
       <!-- Logo -->
       <div class="text-center mb-8">
@@ -60,7 +60,7 @@ const handleLogin = async () => {
               type="email"
               required
               autocomplete="email"
-              class="w-full px-3 py-2.5 bg-surface border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
+              class="w-full px-3 py-2.5 bg-surface-darker border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
               placeholder="admin@clipbag.shop"
             />
           </div>
@@ -74,7 +74,7 @@ const handleLogin = async () => {
               type="password"
               required
               autocomplete="current-password"
-              class="w-full px-3 py-2.5 bg-surface border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
+              class="w-full px-3 py-2.5 bg-surface-darker border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors"
               placeholder="••••••••"
             />
           </div>

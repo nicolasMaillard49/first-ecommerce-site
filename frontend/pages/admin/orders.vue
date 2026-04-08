@@ -436,7 +436,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- Client info -->
-              <div class="bg-surface rounded-xl p-4 border border-white/5 space-y-3">
+              <div class="bg-surface-darker rounded-xl p-4 border border-white/5 space-y-3">
                 <h3 class="text-sm font-semibold text-white">Client</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div>
@@ -457,7 +457,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- Shipping address -->
-              <div v-if="selectedOrder.shippingAddress && Object.keys(selectedOrder.shippingAddress).length > 0" class="bg-surface rounded-xl p-4 border border-white/5 space-y-3">
+              <div v-if="selectedOrder.shippingAddress && Object.keys(selectedOrder.shippingAddress).length > 0" class="bg-surface-darker rounded-xl p-4 border border-white/5 space-y-3">
                 <div class="flex items-center justify-between">
                   <h3 class="text-sm font-semibold text-white">Adresse de livraison</h3>
                   <button
@@ -482,7 +482,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- STEP 1: Commander chez le fournisseur -->
-              <div v-if="selectedOrder.status !== 'PENDING' && selectedOrder.status !== 'CANCELLED'" class="bg-surface rounded-xl p-4 border border-orange-500/20 space-y-4">
+              <div v-if="selectedOrder.status !== 'PENDING' && selectedOrder.status !== 'CANCELLED'" class="bg-surface-darker rounded-xl p-4 border border-orange-500/20 space-y-4">
                 <div class="flex items-center justify-between">
                   <h3 class="text-sm font-semibold text-orange-400 flex items-center gap-2">
                     <span class="w-5 h-5 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex items-center justify-center">1</span>
@@ -563,7 +563,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- STEP 2: Tracking / expedition -->
-              <div v-if="['PROCESSING', 'SHIPPED', 'DELIVERED'].includes(selectedOrder.status)" class="bg-surface rounded-xl p-4 border border-blue-500/20 space-y-4">
+              <div v-if="['PROCESSING', 'SHIPPED', 'DELIVERED'].includes(selectedOrder.status)" class="bg-surface-darker rounded-xl p-4 border border-blue-500/20 space-y-4">
                 <div class="flex items-center justify-between">
                   <h3 class="text-sm font-semibold text-blue-400 flex items-center gap-2">
                     <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center">2</span>
@@ -611,7 +611,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- Order items -->
-              <div class="bg-surface rounded-xl p-4 border border-white/5 space-y-3">
+              <div class="bg-surface-darker rounded-xl p-4 border border-white/5 space-y-3">
                 <h3 class="text-sm font-semibold text-white">Articles</h3>
                 <div
                   v-for="item in selectedOrder.items"
@@ -650,7 +650,7 @@ onBeforeUnmount(() => {
                   id="manual-status"
                   :value="selectedOrder.status"
                   :disabled="updatingOrderId === selectedOrder.id"
-                  class="bg-surface border border-white/10 text-gray-300 text-sm rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-brand/50 disabled:opacity-50 cursor-pointer"
+                  class="bg-surface-darker border border-white/10 text-gray-300 text-sm rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-brand/50 disabled:opacity-50 cursor-pointer"
                   @change="updateStatus(selectedOrder.id, ($event.target as HTMLSelectElement).value)"
                 >
                   <option v-for="s in statuses" :key="s" :value="s">

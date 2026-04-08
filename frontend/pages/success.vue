@@ -90,7 +90,7 @@ onMounted(async () => {
             </div>
             <div class="border-t border-surface-lighter pt-4 flex justify-between items-center">
               <span class="text-white font-semibold">Total</span>
-              <span class="text-brand font-display font-bold text-2xl">{{ order.total?.toFixed(2).replace('.', ',') }}&euro;</span>
+              <span class="text-brand font-display font-medium text-[34px] tracking-tight leading-none">{{ order.total?.toFixed(2).replace('.', ',') }}&euro;</span>
             </div>
           </div>
         </div>

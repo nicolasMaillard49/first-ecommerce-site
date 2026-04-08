@@ -1,56 +1,100 @@
 <template>
-  <section id="features-section" class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
-    <!-- Background accent -->
-    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand/3 rounded-full blur-[120px]"></div>
-
+  <section id="features-section" class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden bg-surface-alt">
     <div class="relative max-w-7xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-16 animate-on-scroll">
-        <span class="inline-block text-brand text-sm font-semibold uppercase tracking-widest mb-4">Avantages</span>
-        <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mb-4">
-          Pourquoi <span class="text-brand">ClipBag</span> ?
+        <span class="inline-block text-accent-dark text-xs font-display font-semibold uppercase tracking-widest mb-4">Avantages</span>
+        <h2 class="font-display font-bold text-[22px] sm:text-[26px] lg:text-[32px] leading-[1.15] text-text mb-4">
+          Pourquoi <span class="text-accent-dark">ClipBag</span> ?
         </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        <p class="text-text-muted text-lg max-w-2xl mx-auto">
           Conçu pour les sportifs exigeants qui refusent les compromis.
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <!-- Mobile: horizontal swipable carousel -->
+      <div class="sm:hidden relative">
+        <div
+          ref="carouselRef"
+          class="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 px-4"
+          @scroll="onCarouselScroll"
+        >
+          <div
+            v-for="(feature, idx) in features"
+            :key="idx"
+            class="feature-card-enter snap-center flex-shrink-0 w-[85vw] group relative bg-white rounded-2xl p-8 transition-all duration-300 border border-border overflow-hidden feature-card"
+            :class="`stagger-${idx + 1}`"
+          >
+            <div class="relative">
+              <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/10 text-accent-dark">
+                  <component :is="feature.icon" />
+                </div>
+                <span class="text-6xl font-display font-bold text-gray-200 select-none">
+                  {{ String(idx + 1).padStart(2, '0') }}
+                </span>
+              </div>
+
+              <h3 class="font-display font-bold text-lg text-text mb-3">
+                {{ feature.title }}
+              </h3>
+              <p class="text-text-muted leading-relaxed text-base">
+                {{ feature.description }}
+              </p>
+
+              <div v-if="feature.stat" class="mt-6 pt-6 border-t border-border">
+                <span class="text-accent-dark font-display font-bold text-2xl">{{ feature.stat }}</span>
+                <span class="text-text-muted text-sm ml-2">{{ feature.statLabel }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dot indicators -->
+        <div class="flex justify-center gap-2 mt-2">
+          <button
+            v-for="(_, idx) in features"
+            :key="idx"
+            :class="[
+              'w-2 h-2 rounded-full transition-all duration-300 cursor-pointer focus:outline-none',
+              activeCard === idx ? 'bg-accent-dark w-6' : 'bg-border',
+            ]"
+            :aria-label="`Voir avantage ${idx + 1}`"
+            @click="scrollToCard(idx)"
+          />
+        </div>
+      </div>
+
+      <!-- Desktop: grid layout -->
+      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         <div
           v-for="(feature, idx) in features"
           :key="idx"
           :class="[
-            'feature-card-enter group relative bg-white/[0.08] backdrop-blur-xl rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl hover:shadow-brand/15 hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-white/[0.12] hover:border-brand/40 overflow-hidden feature-card',
+            'feature-card-enter group relative bg-white rounded-2xl p-8 sm:p-10 transition-all duration-300 hover:shadow-card hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-border hover:border-accent/40 overflow-hidden feature-card',
             `stagger-${idx + 1}`,
           ]"
         >
-          <!-- Hover glow effect -->
-          <div class="absolute inset-0 bg-gradient-to-br from-brand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <!-- Top accent -->
-          <div class="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-surface-lighter group-hover:via-brand/30 to-transparent transition-colors duration-500"></div>
-
           <div class="relative">
-            <!-- Number + Icon row -->
             <div class="flex items-center justify-between mb-8">
-              <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-brand/10 text-brand transition-all duration-300 group-hover:bg-brand/20 group-hover:scale-110">
+              <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/10 text-accent-dark transition-all duration-300 group-hover:bg-accent/20 group-hover:scale-110">
                 <component :is="feature.icon" />
               </div>
-              <span class="text-6xl font-display font-black text-surface-lighter/60 group-hover:text-brand/10 transition-colors duration-300 select-none">
+              <span class="text-6xl font-display font-bold text-gray-200 group-hover:text-accent/10 transition-colors duration-300 select-none">
                 {{ String(idx + 1).padStart(2, '0') }}
               </span>
             </div>
 
-            <h3 class="font-display font-bold text-xl sm:text-2xl text-white mb-3 transition-colors duration-300 group-hover:text-brand-light">
+            <h3 class="font-display font-bold text-lg sm:text-xl text-text mb-3 transition-colors duration-300 group-hover:text-accent-dark">
               {{ feature.title }}
             </h3>
-            <p class="text-gray-400 leading-relaxed text-base">
+            <p class="text-text-muted leading-relaxed text-base">
               {{ feature.description }}
             </p>
 
-            <!-- Stat callout -->
-            <div v-if="feature.stat" class="mt-6 pt-6 border-t border-surface-lighter/50">
-              <span class="text-brand font-display font-black text-2xl">{{ feature.stat }}</span>
-              <span class="text-gray-500 text-sm ml-2">{{ feature.statLabel }}</span>
+            <div v-if="feature.stat" class="mt-6 pt-6 border-t border-border">
+              <span class="text-accent-dark font-display font-bold text-2xl">{{ feature.stat }}</span>
+              <span class="text-text-muted text-sm ml-2">{{ feature.statLabel }}</span>
             </div>
           </div>
         </div>
@@ -61,6 +105,26 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
+
+const carouselRef = ref<HTMLElement | null>(null)
+const activeCard = ref(0)
+
+const onCarouselScroll = () => {
+  const el = carouselRef.value
+  if (!el) return
+  const scrollLeft = el.scrollLeft
+  const cardWidth = el.firstElementChild?.clientWidth || 1
+  const gap = 16
+  activeCard.value = Math.round(scrollLeft / (cardWidth + gap))
+}
+
+const scrollToCard = (idx: number) => {
+  const el = carouselRef.value
+  if (!el) return
+  const cardWidth = el.firstElementChild?.clientWidth || 1
+  const gap = 16
+  el.scrollTo({ left: idx * (cardWidth + gap), behavior: 'smooth' })
+}
 
 onMounted(() => {
   const cards = document.querySelectorAll('.feature-card-enter')
@@ -193,21 +257,6 @@ const features = [
   will-change: transform, box-shadow;
 }
 
-.feature-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 1.5rem;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.feature-card:hover::before {
-  opacity: 1;
-}
-
 /* Staggered entrance animation */
 .feature-card-enter {
   opacity: 0;
@@ -235,6 +284,15 @@ const features = [
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

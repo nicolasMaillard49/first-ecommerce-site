@@ -13,7 +13,16 @@ async function main() {
   // Seed product
   await prisma.product.upsert({
     where: { slug: 'clipbag-magnetic-bottle-bag' },
-    update: {},
+    update: {
+      images: [
+        '/images/product/product-1.png',
+        '/images/product/product-2.png',
+        '/images/product/product-3.png',
+        '/images/product/product-4.png',
+        '/images/product/product-5.png',
+        '/images/product/product-6.png',
+      ],
+    },
     create: {
       name: 'ClipBag - Sac Magnétique pour Bouteille',
       slug: 'clipbag-magnetic-bottle-bag',
@@ -23,8 +32,7 @@ async function main() {
       comparePrice: 49.99,
       costPrice: 0,
       images: [
-        '/images/product/product-7.png',
-        '/images/product/product-1.jpg',
+        '/images/product/product-1.png',
         '/images/product/product-2.png',
         '/images/product/product-3.png',
         '/images/product/product-4.png',
