@@ -54,7 +54,10 @@
       "Bash(where psql:*)",
       "Bash(ls /c/Users/n.maillard/VueJS/first-ecommerce-site/frontend/tailwind*)",
       "Bash(npm run:*)",
-      "Bash(python3 __TRACKED_VAR__/.claude/plugins/marketplaces/ui-ux-pro-max-skill/.claude/skills/ui-ux-pro-max/scripts/search.py 'ecommerce product carousel mobile touch swipe' --domain ux)"
+      "Bash(python3 __TRACKED_VAR__/.claude/plugins/marketplaces/ui-ux-pro-max-skill/.claude/skills/ui-ux-pro-max/scripts/search.py 'ecommerce product carousel mobile touch swipe' --domain ux)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)"
     ]
   }
 }
