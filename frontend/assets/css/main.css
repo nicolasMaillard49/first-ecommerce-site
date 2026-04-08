@@ -41,7 +41,7 @@
 
   .scrollbar-brand {
     scrollbar-width: thin;
-    scrollbar-color: #a9f955 #f5f5f5;
+    scrollbar-color: #5cb829 #f5f5f5;
   }
 
   .scrollbar-brand::-webkit-scrollbar {
@@ -124,8 +124,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(169, 249, 85, 0.4); }
-  50% { box-shadow: 0 0 24px 4px rgba(169, 249, 85, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(92, 184, 41, 0.4); }
+  50% { box-shadow: 0 0 24px 4px rgba(92, 184, 41, 0.15); }
 }
 
 .animate-float {

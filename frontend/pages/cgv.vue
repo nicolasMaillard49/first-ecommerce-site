@@ -87,7 +87,7 @@ useHead({
         <section>
           <h2 class="font-display font-bold text-xl text-white mb-4">6. Livraison</h2>
           <p>
-            Les délais de livraison sont estimés entre <strong class="text-white">10 et 20 jours ouvrés</strong> pour la France métropolitaine.
+            Les délais de livraison sont estimés entre <strong class="text-white">5 et 7 jours ouvrés</strong> pour la France métropolitaine.
             Un numéro de suivi vous sera communiqué par email dès l'expédition.
           </p>
           <p class="mt-3">

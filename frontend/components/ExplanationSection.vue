@@ -1,5 +1,5 @@
 <template>
-  <section id="explanation-section" class="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden">
+  <section id="explanation-section" class="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-white">
     <div class="relative z-10 max-w-6xl mx-auto">
       <!-- Section header -->
       <div class="text-center mb-10 sm:mb-16 animate-on-scroll">
@@ -61,7 +61,7 @@
           <div class="animate-on-scroll flex items-start gap-4">
             <span class="shrink-0 w-12 h-12 rounded-full bg-accent/20 text-text border border-accent/30 flex items-center justify-center font-display font-bold text-lg">3</span>
             <div>
-              <p class="font-display font-bold text-text text-lg mb-1">Bougez libre</p>
+              <p class="font-display font-bold text-text text-lg mb-1">Bougez librement</p>
               <p class="text-text-muted text-sm leading-relaxed">Ultra léger (120g), <span class="text-text font-medium">bouteille toujours à portée de main</span>. Salle, rando, vélo, quotidien.</p>
             </div>
           </div>

@@ -123,7 +123,7 @@
       </div>
 
       <!-- Social card -->
-      <div id="social-section" class="max-w-md mx-auto mt-12 sm:mt-16 mb-4 py-6 sm:py-8 px-5 sm:px-8 bg-white border border-border rounded-2xl shadow-lg text-center">
+      <div id="social-section" class="max-w-md mx-auto mt-12 sm:mt-16 mb-4 py-6 sm:py-8 px-5 sm:px-8 bg-surface-alt border border-border rounded-2xl shadow-lg text-center">
         <span class="inline-block text-accent-dark text-xs font-display font-semibold uppercase tracking-widest mb-3">Social</span>
         <h3 class="font-display font-bold text-[20px] sm:text-[24px] leading-[1.15] text-text mb-3">
           Vu sur les <span class="text-accent-dark">Réseaux Sociaux</span>
@@ -140,7 +140,7 @@
             :href="platform.url"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-surface-alt border border-border rounded-full px-3 py-1.5 sm:px-4 sm:py-2 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300 cursor-pointer group"
+            class="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-white border border-border rounded-full px-3 py-1.5 sm:px-4 sm:py-2 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300 cursor-pointer group"
           >
             <component :is="platform.icon" />
             <span class="text-xs sm:text-sm font-medium text-text-muted group-hover:text-text transition-colors duration-300 whitespace-nowrap">{{ platform.name }}</span>
@@ -398,8 +398,8 @@ const testimonials = [
 
 .review-dot--active {
   width: 28px;
-  background: var(--color-accent, #a9f955);
-  box-shadow: 0 0 12px rgba(169, 249, 85, 0.4);
+  background: var(--color-accent, #5cb829);
+  box-shadow: 0 0 12px rgba(92, 184, 41, 0.4);
 }
 
 /* ---- Desktop: larger cards ---- */

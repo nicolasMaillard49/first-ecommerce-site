@@ -1,189 +1,157 @@
 <template>
-  <section id="problem-section" class="relative overflow-hidden bg-surface-alt">
-    <!-- Subtle accent glow -->
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/[0.06] rounded-full blur-[120px] pointer-events-none"></div>
-
-    <div class="relative max-w-5xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-32 lg:py-40">
-      <!-- Section header — left-aligned, editorial -->
-      <div class="mb-16 sm:mb-24 animate-on-scroll">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-8 h-px bg-accent-dark"></div>
-          <span class="text-accent-dark text-xs font-display font-semibold uppercase tracking-[0.3em]">Le constat</span>
+  <section id="problem-section" class="problem-section" aria-label="Problèmes et solutions">
+    <div class="problem-inner">
+      <!-- Section header -->
+      <div class="problem-header">
+        <div class="header-label">
+          <div class="header-label__line"></div>
+          <span>Solution</span>
         </div>
-        <h2 class="font-display font-bold text-[28px] sm:text-[36px] lg:text-[48px] uppercase tracking-tight text-text leading-[1.05] max-w-2xl">
+        <h2 class="header-title">
           Arrêtez de
-          <span class="relative inline-block">
-            <span class="text-urgency">subir</span>
-            <svg class="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 8" fill="none" preserveAspectRatio="none">
-              <path d="M0 5C40 2 60 7 100 4C140 1 160 6 200 3" stroke="#d43a35" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </span>,<br>
+          <s class="header-title__strike" aria-label="subir, barré">subir</s>,<br>
           commencez à
-          <span class="text-accent-dark">performer</span>.
+          <span class="header-title__accent">performer</span>.
         </h2>
       </div>
 
-      <!-- Strike & Resolve blocks -->
-      <div class="space-y-6 sm:space-y-8">
+      <!-- ===== Mobile / Tablet: horizontal carousel ===== -->
+      <div class="carousel" role="region" aria-label="Fonctionnalités ClipBag">
         <div
           v-for="(item, idx) in items"
-          :key="idx"
-          class="strike-block animate-on-scroll cursor-pointer"
-          :class="{ 'is-revealed': item.revealed, 'is-visible': item.visible }"
-          :data-idx="idx"
-          :style="{ animationDelay: idx * 0.1 + 's' }"
-          @click="reveal(idx)"
+          :key="'m-' + idx"
+          class="carousel__card"
         >
-          <div class="relative rounded-2xl overflow-hidden">
-            <!-- Glass card bg -->
-            <div class="absolute inset-0 glass-card rounded-2xl transition-all duration-500"></div>
-
-            <div class="relative flex flex-col lg:flex-row lg:items-stretch">
-              <!-- Problem side -->
-              <div class="flex-1 px-6 sm:px-8 py-6 sm:py-8 lg:border-r lg:border-text/[0.06]">
-                <div class="flex items-start gap-4 sm:gap-5">
-                  <!-- Large number -->
-                  <span class="font-display font-black text-[56px] sm:text-[72px] leading-none text-text/[0.04] select-none -mt-2 transition-colors duration-500 number-glow">
-                    {{ idx + 1 }}
-                  </span>
-                  <div class="pt-2 sm:pt-3 min-w-0">
-                    <!-- Struck problem text -->
-                    <div class="relative inline-block">
-                      <h3 class="font-display font-bold text-lg sm:text-xl lg:text-2xl uppercase tracking-tight text-text/60 leading-tight transition-colors duration-500">
-                        {{ item.pain }}
-                      </h3>
-                      <!-- Animated strike line -->
-                      <div class="absolute top-1/2 left-0 h-[2px] bg-urgency/80 -translate-y-1/2 strike-line rounded-full"></div>
-                    </div>
-                    <p class="text-text-muted text-sm sm:text-base mt-2 leading-relaxed max-w-md">{{ item.painDetail }}</p>
-
-                    <!-- Tap hint (hidden once revealed) -->
-                    <div class="tap-hint flex items-center gap-1.5 mt-3 transition-all duration-300">
-                      <svg class="w-3.5 h-3.5 text-accent-dark/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
-                      </svg>
-                      <span class="text-accent-dark/50 text-xs font-display uppercase tracking-wider">Voir la solution</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Arrow transition (desktop) -->
-              <div class="hidden lg:flex items-center justify-center w-16 flex-shrink-0 relative">
-                <div class="w-10 h-10 rounded-full bg-accent/15 flex items-center justify-center transition-all duration-500 arrow-circle">
-                  <svg class="w-4 h-4 text-accent-dark transition-transform duration-500 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Mobile arrow -->
-              <div class="flex lg:hidden justify-center -my-1 relative z-10">
-                <div class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center transition-all duration-500 arrow-circle">
-                  <svg class="w-3.5 h-3.5 text-accent-dark transition-transform duration-500 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Solution side (hidden by default) -->
-              <div class="flex-1 solution-panel overflow-hidden">
-                <div class="px-6 sm:px-8 py-6 sm:py-8">
-                  <div class="flex items-start gap-4">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-500 check-icon">
-                      <svg class="w-4 h-4 sm:w-5 sm:h-5 text-accent-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div class="pt-0.5 sm:pt-1">
-                      <h4 class="font-display font-bold text-lg sm:text-xl lg:text-2xl uppercase tracking-tight text-accent-dark leading-tight">
-                        {{ item.solution }}
-                      </h4>
-                      <p class="text-text-muted text-sm sm:text-base mt-2 leading-relaxed">{{ item.solutionDetail }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <img :src="item.image" :alt="item.alt" class="carousel__img" loading="lazy" />
+          <div class="card-body">
+            <span class="counter">{{ String(idx + 1).padStart(2, '0') }}</span>
+            <p class="card-problem">{{ item.problem }}</p>
+            <p class="card-pain">{{ item.pain }}</p>
+            <p class="card-solution">{{ item.solution }}</p>
           </div>
         </div>
       </div>
 
+      <!-- ===== Desktop: grid + sticky image (page scroll) ===== -->
+      <div class="panel">
+        <!-- Left: text items stacked vertically -->
+        <div class="panel__content">
+          <div
+            v-for="(item, idx) in items"
+            :key="'d-' + idx"
+            :data-idx="idx"
+            role="tab"
+            tabindex="0"
+            :aria-selected="activeIndex === idx"
+            class="panel__item"
+            :class="{ 'is-active': activeIndex === idx }"
+            @click="goTo(idx)"
+            @keydown.enter="goTo(idx)"
+            @keydown.space.prevent="goTo(idx)"
+          >
+            <div class="panel__item-indicator"></div>
+            <div class="panel__item-body">
+              <span class="counter">{{ String(idx + 1).padStart(2, '0') }}</span>
+              <p class="card-problem card-problem--lg">{{ item.problem }}</p>
+              <p class="card-pain">{{ item.pain }}</p>
+              <p class="card-solution">{{ item.solution }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: sticky image that changes on scroll -->
+        <div class="panel__media" role="tabpanel">
+          <img
+            v-for="(item, idx) in items"
+            :key="'img-' + idx"
+            :src="item.image"
+            :alt="item.alt"
+            class="panel__img"
+            :class="{ 'is-active': activeIndex === idx }"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
       <!-- Bottom CTA -->
-      <div class="mt-16 sm:mt-20 animate-on-scroll flex flex-col sm:flex-row items-start sm:items-center gap-6">
-        <button
-          class="inline-flex items-center gap-3 bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-base sm:text-lg uppercase tracking-wider py-4 px-10 sm:px-12 rounded-xl cursor-pointer transition-all duration-200 shadow-[0_4px_24px_rgba(169,249,85,0.25)] hover:shadow-[0_8px_40px_rgba(169,249,85,0.35)]"
-          @click="scrollToOrder"
-        >
+      <div class="cta">
+        <button type="button" class="cta__btn" @click="scrollToOrder">
           Découvrir ClipBag
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
-        <span class="text-text-muted text-sm font-display uppercase tracking-wider">4 problèmes. 1 solution.</span>
+        <span class="cta__sub">4 problèmes. 1 solution.</span>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
-const items = reactive([
+const items = [
   {
-    pain: 'Mains occupées pendant le sport',
-    painDetail: 'Impossible de tenir sa bouteille et s\'entraîner correctement.',
-    solution: 'Fixation magnétique en un clic',
-    solutionDetail: 'Clipse et décroche instantanément, les mains libres.',
-    revealed: false,
-    visible: false,
+    problem: 'Désordre total',
+    pain: 'Affaires en vrac, poches pleines, rien à sa place.',
+    solution: 'Range gourde + essentiels dans le Kit Bag. Tout accessible en 1 seconde.',
+    image: '/images/product/product-4.png',
+    alt: 'ClipBag ouvert avec gourde, téléphone et accessoires rangés',
   },
   {
-    pain: 'Porte-bouteilles instables',
-    painDetail: 'Ça bouge, ça tombe, c\'est frustrant à chaque séance.',
-    solution: 'Aimants néodyme ultra-stables',
-    solutionDetail: 'Tient même en plein effort, garanti.',
-    revealed: false,
-    visible: false,
+    problem: 'Tu cherches toujours tes affaires',
+    pain: 'Téléphone, gourde, clés… toujours en train de fouiller.',
+    solution: 'Fixation magnétique sur toute surface métallique. Tout visible, tout accessible.',
+    image: '/images/product/product-6.png',
+    alt: 'ClipBag fixé magnétiquement sur un rack de musculation',
   },
   {
-    pain: 'Sac à dos trop encombrant',
-    painDetail: 'On transpire plus, on est moins libre de ses mouvements.',
-    solution: '120g seulement, zéro gêne',
-    solutionDetail: 'On oublie qu\'on le porte.',
-    revealed: false,
-    visible: false,
+    problem: 'Toujours une main prise',
+    pain: 'Chiant pour bouger, s\'entraîner, enchaîner.',
+    solution: 'Bandoulière intégrée, mains libres. Focus 100% sur ta perf.',
+    image: '/images/product/product-3.png',
+    alt: 'ClipBag porté en bandoulière, mains libres',
   },
   {
-    pain: 'On boit moins, on performe moins',
-    painDetail: 'La bouteille reste dans le sac, on oublie de s\'hydrater.',
-    solution: 'Bouteille toujours à portée',
-    solutionDetail: 'Hydratation optimale, performance maximale.',
-    revealed: false,
-    visible: false,
+    problem: 'Ta bouteille traîne partout',
+    pain: 'Au sol, pas hygiénique, toujours dans le passage.',
+    solution: 'Fixe-la en hauteur sur n\'importe quel support métallique. Propre et accessible.',
+    image: '/images/product/product-7.png',
+    alt: 'ClipBag suspendu en hauteur avec gourde et téléphone',
   },
-])
+]
 
-const reveal = (idx: number) => {
-  items[idx].revealed = true
-}
-
+const activeIndex = ref(0)
 let observer: IntersectionObserver | null = null
 
-onMounted(() => {
+const goTo = (idx: number) => {
+  const el = document.querySelectorAll('#problem-section .panel__item')[idx] as HTMLElement
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+}
+
+onMounted(async () => {
+  await nextTick()
+
+  // Observe items in the VIEWPORT (page scroll, not internal scroll)
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const idx = Number(entry.target.getAttribute('data-idx'))
-          if (!isNaN(idx)) items[idx].visible = true
+          if (!isNaN(idx)) activeIndex.value = idx
         }
       })
     },
-    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    {
+      // No root = viewport
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0,
+    }
   )
 
-  document.querySelectorAll('#problem-section .strike-block').forEach((el) => {
+  document.querySelectorAll('#problem-section .panel__item').forEach((el) => {
     observer?.observe(el)
   })
 })
@@ -199,125 +167,375 @@ const scrollToOrder = () => {
 </script>
 
 <style scoped>
-/* Glass card */
-.glass-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 4px 16px rgba(16, 16, 16, 0.06),
-    0 1px 3px rgba(16, 16, 16, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+/* ==============================
+   Section
+   ============================== */
+.problem-section {
+  background: #f5f5f5;
+  position: relative;
 }
 
-.strike-block:hover .glass-card {
-  box-shadow:
-    0 8px 32px rgba(16, 16, 16, 0.1),
-    0 2px 8px rgba(16, 16, 16, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  border-color: rgba(255, 255, 255, 0.7);
+.problem-inner {
+  max-width: 1190px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem;
+}
+@media (min-width: 640px) {
+  .problem-inner { padding: 3.5rem 2rem; }
+}
+@media (min-width: 1024px) {
+  .problem-inner { padding: 4rem 2.5rem; }
 }
 
-.is-revealed .glass-card {
-  background: rgba(255, 255, 255, 0.75);
-  box-shadow:
-    0 12px 40px rgba(16, 16, 16, 0.1),
-    0 4px 12px rgba(169, 249, 85, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(169, 249, 85, 0.2);
+/* ==============================
+   Header
+   ============================== */
+.problem-header {
+  margin-bottom: 1.75rem;
+}
+@media (min-width: 640px) {
+  .problem-header { margin-bottom: 2.25rem; }
 }
 
-/* Strike blocks — entrance */
-.strike-block {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+.header-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.625rem;
 }
 
-.strike-block.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.header-label__line {
+  width: 1.5rem;
+  height: 1px;
+  background: #3d8a1b;
 }
 
-/* Animated strike line — draws on scroll */
-.strike-line {
-  width: 0;
-  transition: width 0.6s cubic-bezier(0.33, 1, 0.68, 1) 0.4s;
+.header-label span {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #3d8a1b;
 }
 
-.strike-block.is-visible .strike-line {
+.header-title {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #101010;
+  max-width: 36rem;
+}
+@media (min-width: 640px) { .header-title { font-size: 2rem; } }
+@media (min-width: 1024px) { .header-title { font-size: 2.25rem; } }
+
+.header-title__strike {
+  text-decoration: none;
+  color: #d43a35;
+  position: relative;
+  display: inline-block;
+}
+.header-title__strike::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 55%;
   width: 100%;
+  height: 2px;
+  background: #d43a35;
+  border-radius: 1px;
 }
 
-/* Number glow on reveal */
-.is-revealed .number-glow {
-  color: rgba(169, 249, 85, 0.12);
+.header-title__accent { color: #3d8a1b; }
+
+/* ==============================
+   Shared type
+   ============================== */
+.counter {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.6875rem;
+  line-height: 1;
+  color: rgba(16, 16, 16, 0.2);
+  letter-spacing: 0.04em;
 }
 
-/* Tap hint — hidden on reveal */
-.tap-hint {
+.card-problem {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #101010;
+  margin: 0;
+}
+.card-problem--lg { font-size: 1.125rem; }
+@media (min-width: 1280px) { .card-problem--lg { font-size: 1.25rem; } }
+
+.card-pain {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgba(16, 16, 16, 0.4);
+  margin: 0;
+}
+
+.card-solution {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgba(16, 16, 16, 0.55);
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .card-pain { font-size: 0.8125rem; }
+  .card-solution { font-size: 0.8125rem; }
+}
+
+/* ==============================
+   Mobile / Tablet carousel
+   ============================== */
+.carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-bottom: 0.5rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar { display: none; }
+
+@media (min-width: 640px) {
+  .carousel {
+    scroll-padding-left: 2rem;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    gap: 1.25rem;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel { display: none; }
+}
+
+.carousel__card {
+  flex: 0 0 68vw;
+  max-width: 280px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+@media (min-width: 640px) {
+  .carousel__card {
+    flex: 0 0 45vw;
+    max-width: 300px;
+  }
+}
+
+.carousel__img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 0.375rem;
+  display: block;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 0.75rem;
+}
+
+.card-body .card-solution {
+  margin-top: 0.25rem;
+}
+
+/* ==============================
+   Desktop: CSS Grid + sticky image
+   Page scroll drives everything.
+   ============================== */
+.panel {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+}
+
+/* --- Left column: text items --- */
+.panel__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel__item {
+  display: flex;
+  align-items: stretch;
+  min-height: 55vh;
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.4s ease;
+  opacity: 0.18;
+}
+
+.panel__item:last-child {
+  min-height: 40vh;
+}
+
+.panel__item:focus-visible {
+  outline: 2px solid #5cb829;
+  outline-offset: -2px;
+  border-radius: 0.25rem;
+}
+
+.panel__item.is-active {
   opacity: 1;
-  max-height: 40px;
 }
 
-.is-revealed .tap-hint {
-  opacity: 0;
-  max-height: 0;
-  margin-top: 0;
+/* Accent bar */
+.panel__item-indicator {
+  width: 2px;
+  flex-shrink: 0;
+  border-radius: 1px;
+  background: transparent;
+  transition: background 0.4s ease;
+}
+
+.panel__item.is-active .panel__item-indicator {
+  background: #5cb829;
+}
+
+.panel__item-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+  padding-left: 1.25rem;
+  padding-right: 0.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.panel__item-body .card-solution {
+  margin-top: 0.15rem;
+}
+
+/* --- Right column: sticky image --- */
+.panel__media {
+  position: sticky;
+  top: 5.5rem;
+  height: calc(100vh - 7rem);
+  max-height: 36rem;
+  border-radius: 0.375rem;
   overflow: hidden;
-  transition: opacity 0.3s ease, max-height 0.4s ease 0.1s, margin-top 0.4s ease 0.1s;
+  background: #eaeaea;
 }
 
-/* Problem text dims on reveal */
-.is-revealed h3 {
-  color: rgba(16, 16, 16, 0.3);
-}
-
-/* Solution panel — collapsed by default, expands on click */
-.solution-panel {
-  max-height: 0;
+.panel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
-  transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.5s ease 0.15s;
+  transform: scale(1.04);
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.is-revealed .solution-panel {
-  max-height: 200px;
+.panel__img.is-active {
   opacity: 1;
+  transform: scale(1);
 }
 
-/* Arrow circle glow on reveal */
-.is-revealed .arrow-circle {
-  background: rgba(169, 249, 85, 0.25);
-  box-shadow: 0 0 20px rgba(169, 249, 85, 0.2);
+/* ==============================
+   CTA
+   ============================== */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+@media (min-width: 640px) {
+  .cta {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
 }
 
-/* Check icon pop on reveal */
-.is-revealed .check-icon {
-  background: rgba(169, 249, 85, 0.3);
-  box-shadow: 0 0 16px rgba(169, 249, 85, 0.15);
+.cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #5cb829;
+  color: #101010;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 3px 14px rgba(92, 184, 41, 0.25);
+}
+.cta__btn:hover { background: #4da223; }
+.cta__btn:active { transform: scale(0.97); }
+.cta__btn:focus-visible {
+  outline: 2px solid #3d8a1b;
+  outline-offset: 2px;
+}
+@media (min-width: 640px) {
+  .cta__btn {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.875rem;
+  }
 }
 
+.cta__sub {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(16, 16, 16, 0.35);
+}
+
+/* ==============================
+   Reduced motion
+   ============================== */
 @media (prefers-reduced-motion: reduce) {
-  .strike-block {
-    opacity: 1;
-    transform: none;
+  .panel__img,
+  .panel__item,
+  .panel__item-indicator {
     transition: none;
-  }
-  .strike-line {
-    width: 100%;
-    transition: none;
-  }
-  .solution-panel {
-    max-height: none;
-    opacity: 1;
-    transition: none;
-  }
-  .tap-hint {
-    display: none;
   }
 }
 </style>

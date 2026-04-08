@@ -161,11 +161,9 @@ const onClickOutside = (e: MouseEvent) => {
 }
 const activeSection = ref('')
 
-const sectionIds = ['features-section', 'gallery-section', 'testimonials-section', 'faq-section']
+const sectionIds = ['testimonials-section', 'faq-section']
 
 const navLinks = [
-  { label: 'Avantages', href: '#features-section' },
-  { label: 'Galerie', href: '#gallery-section' },
   { label: 'Avis', href: '#testimonials-section' },
   { label: 'FAQ', href: '#faq-section' },
   { label: 'Suivre ma commande', href: '/suivi', isPage: true, highlight: true },

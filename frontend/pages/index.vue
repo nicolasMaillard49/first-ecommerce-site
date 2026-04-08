@@ -1,10 +1,8 @@
 <template>
   <div>
     <HeroSection />
-    <ExplanationSection />
     <ProblemSection />
-    <FeaturesSection />
-    <GallerySection />
+    <ExplanationSection />
     <TestimonialsSection />
     <FaqSection />
 
