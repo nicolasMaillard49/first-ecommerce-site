@@ -59,7 +59,12 @@
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
       "Bash(git stash:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(findstr \":4000 :3000\")",
+      "Bash(findstr LISTENING)",
+      "Read(//c/Users/n.maillard/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.0.1/**)",
+      "Bash(python3 skills/ui-ux-pro-max/scripts/search.py \"sport ecommerce product premium landing\" --design-system -p \"ClipBag\")",
+      "Bash(rm -rf .nuxt .output node_modules/.cache node_modules/.vite)"
     ]
   }
 }
