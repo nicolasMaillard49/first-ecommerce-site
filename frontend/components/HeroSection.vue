@@ -132,19 +132,19 @@
           </div>
 
           <!-- Social proof -->
-          <div class="flex items-center justify-center lg:justify-start gap-3 mb-4 hero-fade-in flex-nowrap" style="animation-delay: 0.1s">
-            <div class="flex items-center gap-0.5">
-              <svg v-for="s in 5" :key="s" class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+          <div class="flex items-center justify-center lg:justify-start gap-2 mb-4 hero-fade-in flex-nowrap overflow-hidden" style="animation-delay: 0.1s">
+            <div class="flex items-center gap-0.5 flex-shrink-0">
+              <svg v-for="s in 5" :key="s" class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
-            <span class="text-text-muted text-sm font-medium">200 avis</span>
-            <span class="w-1 h-1 rounded-full bg-text-muted/40"></span>
+            <span class="text-text-muted text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0">200 avis</span>
+            <span class="w-1 h-1 rounded-full bg-text-muted/40 flex-shrink-0"></span>
             <LiveViewers />
           </div>
 
           <!-- H1 -->
-          <h1 class="font-display font-bold text-[1.5rem] sm:text-[26px] lg:text-[32px] uppercase tracking-tight text-text leading-[1.15] mb-3 hero-fade-in whitespace-nowrap" style="animation-delay: 0.2s">
+          <h1 class="font-display font-bold text-[22px] sm:text-[28px] lg:text-[34px] uppercase tracking-tight text-text leading-[1.1] mb-3 hero-fade-in whitespace-nowrap" style="animation-delay: 0.2s">
             Plus Jamais Les Mains
             <span class="relative inline-block">
               <span class="text-accent-dark">Encombrées</span>
@@ -157,7 +157,8 @@
             Fixation magnétique instantanée, ultra léger (120g), compatible toutes bouteilles.
           </p>
 
-          <!-- Pack selection (Duo + Équipe only, minimal) -->
+          <!-- Product name + Pack selection -->
+          <p class="text-text font-display font-semibold text-sm mb-2 hero-fade-in text-left" style="animation-delay: 0.33s">ClipBag :</p>
           <div class="mb-5 hero-fade-in" style="animation-delay: 0.35s">
             <div class="flex flex-col gap-2">
               <button
@@ -171,31 +172,34 @@
                 ]"
                 @click="selectPack(pack.name)"
               >
-                <div class="flex items-center gap-3">
-                  <!-- Radio dot -->
-                  <span :class="['w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0', selectedPack === pack.name ? 'border-accent-dark' : 'border-border']">
-                    <span v-if="selectedPack === pack.name" class="w-2 h-2 rounded-full bg-accent-dark" />
+                <div class="flex items-center gap-2 flex-shrink-0 min-w-0">
+                  <span :class="['w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0', selectedPack === pack.name ? 'border-accent-dark' : 'border-border']">
+                    <span v-if="selectedPack === pack.name" class="w-1.5 h-1.5 rounded-full bg-accent-dark" />
                   </span>
-                  <span class="text-text font-display font-semibold text-sm">{{ pack.label }}</span>
-                  <span class="text-text-muted text-xs">{{ pack.qty }}x</span>
-                  <span v-if="pack.badge" class="text-urgency text-[10px] font-display font-bold uppercase">{{ pack.badge }}</span>
+                  <span class="text-text font-display font-semibold text-xs sm:text-sm whitespace-nowrap">{{ pack.label }}</span>
+                  <span class="text-text-muted text-[10px] sm:text-xs whitespace-nowrap">{{ pack.qty }}x</span>
+                  <span v-if="pack.badge" class="text-urgency text-[9px] sm:text-[10px] font-display font-bold uppercase whitespace-nowrap">{{ pack.badge }}</span>
                 </div>
-                <div class="flex items-baseline gap-2">
-                  <span v-if="pack.oldPriceDisplay" class="text-text-muted line-through text-xs">{{ pack.oldPriceDisplay }}</span>
-                  <span class="text-text font-display font-medium text-base tracking-tight">{{ pack.priceDisplay }}</span>
+                <div class="flex items-baseline gap-1.5 flex-shrink-0">
+                  <span v-if="pack.oldPriceDisplay" class="text-text-muted line-through text-[10px] sm:text-xs whitespace-nowrap">{{ pack.oldPriceDisplay }}</span>
+                  <span class="text-text font-display font-medium text-sm sm:text-base tracking-tight whitespace-nowrap">{{ pack.priceDisplay }}</span>
                 </div>
               </button>
             </div>
           </div>
 
-          <!-- Price + Quantity -->
-          <div class="flex items-end justify-center lg:justify-between gap-4 mb-5 hero-fade-in" style="animation-delay: 0.4s">
-            <div class="text-center lg:text-left">
-              <div class="flex items-baseline gap-2 justify-center lg:justify-start">
-                <span class="font-display text-text-muted line-through text-base">{{ originalTotal }}</span>
-                <span class="font-display font-medium text-[34px] sm:text-[40px] text-text tracking-tight leading-none">{{ formattedTotal }}</span>
+          <!-- In stock badge + Price + Quantity -->
+          <div class="flex items-center gap-1.5 mb-2 hero-fade-in" style="animation-delay: 0.38s">
+            <span class="w-2 h-2 rounded-full bg-accent flex-shrink-0"></span>
+            <span class="text-accent-dark text-xs font-display font-semibold uppercase tracking-wide">En stock</span>
+          </div>
+          <div class="flex items-end justify-between gap-3 mb-5 hero-fade-in" style="animation-delay: 0.4s">
+            <div class="text-left min-w-0">
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-text-muted line-through text-sm sm:text-base whitespace-nowrap">{{ originalTotal }}</span>
+                <span class="font-display font-medium text-[28px] sm:text-[34px] lg:text-[40px] text-text tracking-tight leading-none whitespace-nowrap">{{ formattedTotal }}</span>
               </div>
-              <div class="flex items-center gap-1.5 mt-1 justify-center lg:justify-start">
+              <div class="flex items-center gap-1.5 mt-1">
                 <svg class="w-3.5 h-3.5 text-accent-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
@@ -231,7 +235,7 @@
           <div class="hero-fade-in" style="animation-delay: 0.5s">
             <div v-if="!showAddressForm">
               <button
-                class="group w-full bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-base sm:text-lg uppercase tracking-wider py-3.5 sm:py-4 px-12 rounded-xl cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(169,249,85,0.35)] hover:shadow-[0_6px_30px_rgba(169,249,85,0.45)]"
+                class="group w-full bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-sm sm:text-lg uppercase tracking-wider py-3 sm:py-4 px-6 sm:px-12 rounded-xl cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-[0_4px_20px_rgba(169,249,85,0.35)] hover:shadow-[0_6px_30px_rgba(169,249,85,0.45)]"
                 @click="showAddressForm = true"
               >
                 Commander &mdash; {{ formattedTotal }}
