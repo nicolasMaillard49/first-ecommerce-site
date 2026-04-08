@@ -49,8 +49,6 @@
         <div>
           <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Navigation</h4>
           <nav class="flex flex-col gap-3" aria-label="Footer navigation">
-            <a href="#features-section" class="text-sm text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('features-section')">Avantages</a>
-            <a href="#gallery-section" class="text-sm text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('gallery-section')">Galerie</a>
             <a href="#testimonials-section" class="text-sm text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('testimonials-section')">Témoignages</a>
             <a href="#faq-section" class="text-sm text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('faq-section')">FAQ</a>
             <a href="#order-section" class="text-sm text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer" @click.prevent="scrollToSection('order-section')">Commander</a>

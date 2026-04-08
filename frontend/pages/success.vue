@@ -121,7 +121,7 @@ onMounted(async () => {
               <svg class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10" />
               </svg>
-              Livraison estimée : 10 à 20 jours ouvrés
+              Livraison estimée : 5 à 7 jours ouvrés
             </li>
           </ul>
         </div>

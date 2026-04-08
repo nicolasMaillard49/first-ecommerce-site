@@ -6,9 +6,9 @@ export default {
     extend: {
       colors: {
         accent: {
-          DEFAULT: '#a9f955',
-          hover: '#96e040',
-          dark: '#7ec832',
+          DEFAULT: '#5cb829',
+          hover: '#4da223',
+          dark: '#3d8a1b',
         },
         surface: {
           DEFAULT: '#ffffff',
@@ -19,8 +19,8 @@ export default {
           lighter: '#2a2a2a',
         },
         brand: {
-          DEFAULT: '#a9f955',
-          dark: '#96e040',
+          DEFAULT: '#5cb829',
+          dark: '#4da223',
         },
         text: {
           DEFAULT: '#101010',
@@ -38,7 +38,7 @@ export default {
       },
       fontFamily: {
         sans: ['Barlow', 'system-ui', 'sans-serif'],
-        display: ['Barlow Condensed', 'system-ui', 'sans-serif'],
+        display: ['Barlow', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         pill: '3.75rem',

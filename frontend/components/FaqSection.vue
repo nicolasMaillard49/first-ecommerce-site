@@ -103,7 +103,7 @@ const faqs = [
   {
     question: 'Combien de temps dure la livraison ?',
     answer:
-      'La livraison prend entre 7 et 14 jours ouvrés. Vous recevrez un numéro de suivi par email dès l\'expédition de votre commande. La livraison est offerte en France métropolitaine.',
+      'La livraison prend entre 5 et 7 jours ouvrés. Vous recevrez un numéro de suivi par email dès l\'expédition de votre commande. La livraison est offerte en France métropolitaine.',
   },
   {
     question: 'Est-ce compatible avec ma bouteille ?',
