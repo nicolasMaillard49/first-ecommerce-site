@@ -134,11 +134,16 @@
           <!-- Social proof -->
           <div class="flex items-center justify-center lg:justify-start gap-2 mb-4 hero-fade-in flex-nowrap overflow-hidden" style="animation-delay: 0.1s">
             <div class="flex items-center gap-0.5 flex-shrink-0">
-              <svg v-for="s in 5" :key="s" class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg v-for="s in 4" :key="s" class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
+              <!-- Half star -->
+              <svg class="w-3 h-3 sm:w-4 sm:h-4" viewBox="0 0 20 20">
+                <defs><linearGradient id="half"><stop offset="50%" stop-color="#FACC15" /><stop offset="50%" stop-color="#D1D5DB" /></linearGradient></defs>
+                <path fill="url(#half)" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
             </div>
-            <span class="text-text-muted text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0">200 avis</span>
+            <span class="text-text-muted text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0">172 avis</span>
             <span class="w-1 h-1 rounded-full bg-text-muted/40 flex-shrink-0"></span>
             <LiveViewers />
           </div>
@@ -176,13 +181,13 @@
                   <span :class="['w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0', selectedPack === pack.name ? 'border-accent-dark' : 'border-border']">
                     <span v-if="selectedPack === pack.name" class="w-1.5 h-1.5 rounded-full bg-accent-dark" />
                   </span>
-                  <span class="text-text font-display font-semibold text-xs sm:text-sm whitespace-nowrap">{{ pack.label }}</span>
-                  <span class="text-text-muted text-[10px] sm:text-xs whitespace-nowrap">{{ pack.qty }}x</span>
-                  <span v-if="pack.badge" class="text-urgency text-[9px] sm:text-[10px] font-display font-bold uppercase whitespace-nowrap">{{ pack.badge }}</span>
+                  <span class="text-text font-display font-semibold text-sm sm:text-base whitespace-nowrap">{{ pack.label }}</span>
+                  <span class="text-text-muted text-xs sm:text-sm whitespace-nowrap">{{ pack.qty }}x</span>
+                  <span v-if="pack.badge" class="text-urgency text-[10px] sm:text-xs font-display font-bold uppercase whitespace-nowrap">{{ pack.badge }}</span>
                 </div>
                 <div class="flex items-baseline gap-1.5 flex-shrink-0">
-                  <span v-if="pack.oldPriceDisplay" class="text-text-muted line-through text-[10px] sm:text-xs whitespace-nowrap">{{ pack.oldPriceDisplay }}</span>
-                  <span class="text-text font-display font-medium text-sm sm:text-base tracking-tight whitespace-nowrap">{{ pack.priceDisplay }}</span>
+                  <span v-if="pack.oldPriceDisplay" class="text-text-muted line-through text-xs sm:text-sm whitespace-nowrap">{{ pack.oldPriceDisplay }}</span>
+                  <span class="text-text font-display font-medium text-base sm:text-lg tracking-tight whitespace-nowrap">{{ pack.priceDisplay }}</span>
                 </div>
               </button>
             </div>
@@ -485,8 +490,8 @@ const ORIGINAL_UNIT_PRICE = 49.99
 interface Pack { name: string; label: string; qty: number; packPrice: number; badge: string; priceDisplay: string; oldPriceDisplay: string }
 
 const packs: Pack[] = [
-  { name: 'duo', label: 'Duo', qty: 2, packPrice: 49.99, badge: '-17%', priceDisplay: '49,99\u20AC', oldPriceDisplay: '59,98\u20AC' },
-  { name: 'equipe', label: 'Équipe', qty: 5, packPrice: 99.99, badge: '-33%', priceDisplay: '99,99\u20AC', oldPriceDisplay: '149,95\u20AC' },
+  { name: 'duo', label: 'Duo', qty: 2, packPrice: 49.99, badge: '-50%', priceDisplay: '49,99\u20AC', oldPriceDisplay: '99,98\u20AC' },
+  { name: 'equipe', label: 'Équipe', qty: 5, packPrice: 99.99, badge: '-60%', priceDisplay: '99,99\u20AC', oldPriceDisplay: '249,95\u20AC' },
 ]
 
 const currentPack = computed(() => packs.find(p => p.name === selectedPack.value))
@@ -530,7 +535,7 @@ const handleCheckout = async () => {
     const response = await apiFetch<{ sessionId: string; url: string }>('/payments/create-checkout', {
       method: 'POST',
       body: {
-        productId: productStore.product?.id || '', quantity: quantity.value, packType: selectedPack.value,
+        productId: productStore.product?.id || '', quantity: quantity.value, packType: selectedPack.value || undefined,
         customerName: customerName.value.trim(), customerEmail: customerEmail.value.trim(),
         customerPhone: customerPhone.value.trim() || undefined,
         shippingAddress: { line1: addressLine1.value.trim(), city: city.value.trim(), postalCode: postalCode.value.trim(), country: 'FR' },

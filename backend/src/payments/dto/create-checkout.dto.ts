@@ -34,7 +34,7 @@ export class CreateCheckoutDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['solo', 'duo', 'equipe'])
+  @IsIn(['solo', 'duo', 'equipe', ''])
   packType?: string;
 
   @IsOptional()

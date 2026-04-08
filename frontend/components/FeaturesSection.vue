@@ -66,12 +66,12 @@
       </div>
 
       <!-- Desktop: grid layout -->
-      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div class="hidden sm:flex sm:flex-wrap sm:justify-center gap-6 sm:gap-8">
         <div
           v-for="(feature, idx) in features"
           :key="idx"
           :class="[
-            'feature-card-enter group relative bg-white rounded-2xl p-8 sm:p-10 transition-all duration-300 hover:shadow-card hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-border hover:border-accent/40 overflow-hidden feature-card',
+            'feature-card-enter group relative bg-white rounded-2xl p-8 sm:p-10 transition-all duration-300 hover:shadow-card hover:-translate-y-2 hover:scale-[1.02] cursor-default border border-border hover:border-accent/40 overflow-hidden feature-card w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)]',
             `stagger-${idx + 1}`,
           ]"
         >
