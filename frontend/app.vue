@@ -6,7 +6,7 @@ const siteUrl = config.public.siteUrl || 'https://clipbag.shop'
 // Build absolute image URLs from product store (fallback to defaults)
 const productImages = computed(() => {
   const images = productStore.product?.images || [
-    '/images/product/product-1.jpg',
+    '/images/product/product-1.png',
     '/images/product/product-2.png',
     '/images/product/product-3.png',
   ]
