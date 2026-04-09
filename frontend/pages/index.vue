@@ -17,13 +17,10 @@
     >
       <button
         v-if="showFloatingCta"
-        class="fixed bottom-6 left-4 right-4 z-40 sm:hidden bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-base uppercase tracking-wider py-3.5 rounded-xl shadow-[0_4px_20px_rgba(169,249,85,0.35)] cursor-pointer transition-all duration-200 flex items-center justify-center gap-3"
+        class="fixed bottom-6 left-4 right-4 z-40 sm:hidden bg-text hover:bg-text/90 active:scale-[0.98] text-white font-sans font-semibold text-base py-3 px-8 rounded-pill cursor-pointer transition-colors duration-150 ease-in-out flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
         @click="scrollToOrder"
       >
-        Commander - 29,99&euro;
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
+        AJOUTER AU PANIER
       </button>
     </Transition>
 

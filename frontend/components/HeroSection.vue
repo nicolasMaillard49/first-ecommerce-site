@@ -3,8 +3,8 @@
     <!-- Subtle geometric accent -->
     <div class="absolute top-0 right-0 w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-accent/[0.04] rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="lg:grid lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:items-start">
+    <div class="relative z-10 max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-12">
+      <div class="lg:grid lg:grid-cols-[1.15fr_1fr] lg:gap-12 xl:gap-16 lg:items-start">
 
         <!-- LEFT: Product gallery -->
         <div class="relative mb-8 lg:mb-0 hero-image-in">
@@ -26,7 +26,7 @@
                 <img
                   :src="img"
                   alt="ClipBag Sac Magnétique pour Bouteille"
-                  class="w-full h-full object-cover object-[center_55%] rounded-lg"
+                  class="w-full h-full object-cover object-[center_55%] rounded-2xl"
                   :fetchpriority="i === 0 ? 'high' : 'auto'"
                   :loading="i < 2 ? 'eager' : 'lazy'"
                 />
@@ -49,15 +49,11 @@
                 />
               </button>
             </div>
-            <!-- Floating -40% badge (mobile) -->
-            <div class="absolute top-3 right-7 bg-urgency text-white text-xs font-display font-semibold px-3 py-1.5 rounded-full shadow-lg z-10">
-              -40%
-            </div>
           </div>
 
           <!-- DESKTOP: Thumbnails left + main image -->
           <div class="hidden lg:flex lg:flex-row lg:gap-3">
-            <div class="flex flex-col gap-2 overflow-y-auto thumbnails-scroll max-h-[70vh] w-[72px] flex-shrink-0">
+            <div class="flex flex-col gap-2 overflow-y-auto thumbnails-scroll max-h-[clamp(400px,60vh,720px)] w-[72px] flex-shrink-0">
               <button
                 v-for="(img, i) in productImages"
                 :key="i"
@@ -80,21 +76,18 @@
               class="relative group flex-1 cursor-pointer"
               @click="onDesktopClick"
             >
-              <div class="gallery-main relative overflow-hidden rounded-lg bg-transparent">
-                <div class="gallery-main__container relative w-full h-[70vh] max-h-[720px]">
+              <div class="gallery-main relative overflow-hidden rounded-2xl bg-transparent">
+                <div class="gallery-main__container relative w-full aspect-square lg:aspect-auto lg:h-[clamp(400px,60vh,720px)]">
                   <transition :name="carouselDirection">
                     <img
                       :key="currentImageIndex"
                       :src="productImages[currentImageIndex]"
                       alt="ClipBag Sac Magnétique pour Bouteille"
-                      class="absolute -top-[2%] left-0 w-full h-[102%] rounded-lg object-contain"
+                      class="absolute inset-0 w-full h-full rounded-2xl object-cover"
                       fetchpriority="high"
                       loading="eager"
                     />
                   </transition>
-                </div>
-                <div class="absolute top-4 right-4 bg-urgency text-white text-sm font-display font-semibold px-4 py-2 rounded-full shadow-lg z-10">
-                  -40%
                 </div>
               </div>
             </div>
@@ -104,8 +97,11 @@
         <!-- RIGHT: Product info + Order form -->
         <div id="order-section" class="text-center lg:text-left min-w-0">
 
+          <!-- BLOC 1: Aligned with carousel height -->
+          <div class="lg:flex lg:flex-col">
+
           <!-- Promo adbar -->
-          <div class="adbar overflow-hidden mb-4 hero-fade-in" style="animation-delay: 0.05s">
+          <div class="adbar overflow-hidden mb-6 hero-fade-in" style="animation-delay: 0.05s">
             <div class="adbar__track">
               <div class="adbar__msg">
                 ACHETEZ 2 &rarr; 24,99&euro; L'UNITÉ (ÉCONOMISEZ 10&euro;)
@@ -132,7 +128,7 @@
           </div>
 
           <!-- Social proof -->
-          <div class="flex items-center justify-center lg:justify-start gap-2 mb-4 hero-fade-in flex-nowrap overflow-hidden" style="animation-delay: 0.1s">
+          <div class="flex items-center justify-center lg:justify-start gap-2 mb-5 hero-fade-in flex-nowrap overflow-hidden" style="animation-delay: 0.1s">
             <div class="flex items-center gap-0.5 flex-shrink-0">
               <svg v-for="s in 4" :key="s" class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -149,23 +145,23 @@
           </div>
 
           <!-- H1 -->
-          <h1 class="font-display font-bold text-[22px] sm:text-[28px] lg:text-[34px] uppercase tracking-tight text-text leading-[1.1] mb-3 hero-fade-in whitespace-nowrap" style="animation-delay: 0.2s">
+          <h1 class="font-display font-bold text-[22px] sm:text-[28px] lg:text-[clamp(1.5rem,2.5vw,2.125rem)] uppercase tracking-tight text-text leading-[1.1] mb-5 lg:mb-6 hero-fade-in" style="animation-delay: 0.2s">
             Plus Jamais Les Mains
             <span class="relative inline-block">
-              <span class="text-accent-dark">Encombrées</span>
+              <span class="text-accent-dark">Prises</span>
               <span class="absolute -bottom-1 left-0 w-full h-1 bg-accent rounded-full"></span>
             </span>
           </h1>
 
           <!-- Description -->
-          <p class="text-text-muted text-sm sm:text-base mb-6 max-w-lg mx-auto lg:mx-0 leading-relaxed hero-fade-in" style="animation-delay: 0.3s">
+          <p class="text-text-muted text-sm sm:text-base mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0 leading-relaxed hero-fade-in" style="animation-delay: 0.3s">
             Fixation magnétique instantanée, ultra léger (120g), compatible toutes bouteilles.
           </p>
 
           <!-- Product name + Pack selection -->
-          <p class="text-text font-display font-semibold text-sm mb-2 hero-fade-in text-left" style="animation-delay: 0.33s">ClipBag :</p>
-          <div class="mb-5 hero-fade-in" style="animation-delay: 0.35s">
-            <div class="flex flex-col gap-2">
+          <p class="text-text font-display font-semibold text-sm mb-3 hero-fade-in text-left" style="animation-delay: 0.33s">ClipBag :</p>
+          <div class="mb-4 lg:mb-5 hero-fade-in" style="animation-delay: 0.35s">
+            <div class="flex flex-col gap-3">
               <button
                 v-for="pack in packs"
                 :key="pack.name"
@@ -191,14 +187,21 @@
                 </div>
               </button>
             </div>
+            <div class="inline-flex items-center gap-1.5 mt-3 bg-urgency/10 text-urgency text-xs sm:text-sm font-display font-semibold px-3 py-1.5 rounded-full">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
+              </svg>
+              -40% de réduction
+            </div>
           </div>
 
           <!-- In stock badge + Price + Quantity -->
-          <div class="flex items-center gap-1.5 mb-2 hero-fade-in" style="animation-delay: 0.38s">
+          <div class="flex items-center gap-1.5 mb-3 hero-fade-in" style="animation-delay: 0.38s">
             <span class="w-2 h-2 rounded-full bg-accent flex-shrink-0"></span>
             <span class="text-accent-dark text-xs font-display font-semibold uppercase tracking-wide">En stock</span>
           </div>
-          <div class="flex items-end justify-between gap-3 mb-5 hero-fade-in" style="animation-delay: 0.4s">
+          <div class="flex items-end justify-between gap-3 mb-4 lg:mb-5 hero-fade-in" style="animation-delay: 0.4s">
             <div class="text-left min-w-0">
               <div class="flex items-baseline gap-2">
                 <span class="font-display text-text-muted line-through text-sm sm:text-base whitespace-nowrap">{{ originalTotal }}</span>
@@ -236,107 +239,194 @@
             </div>
           </div>
 
-          <!-- CTA / Address form -->
+          <!-- CTA -->
           <div class="hero-fade-in" style="animation-delay: 0.5s">
-            <div v-if="!showAddressForm">
-              <button
-                class="group w-full bg-accent hover:bg-accent-hover active:scale-[0.98] text-text font-display font-bold text-sm sm:text-lg uppercase tracking-wider py-3 sm:py-4 px-6 sm:px-12 rounded-xl cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-[0_4px_20px_rgba(169,249,85,0.35)] hover:shadow-[0_6px_30px_rgba(169,249,85,0.45)]"
-                @click="showAddressForm = true"
-              >
-                Commander &mdash; {{ formattedTotal }}
-                <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
-              <p class="text-center text-[11px] text-text-muted mt-2">Paiement 100% sécurisé par Stripe</p>
-            </div>
-
-            <!-- Address form -->
-            <Transition
-              enter-active-class="transition-all duration-300 ease-out"
-              enter-from-class="opacity-0 -translate-y-3"
-              enter-to-class="opacity-100 translate-y-0"
+            <p class="text-center text-[11px] text-text-muted mb-2">Paiement 100% sécurisé par Stripe</p>
+            <button
+              class="group w-full bg-[#a9f955] hover:bg-[#9be84a] active:scale-[0.98] text-text font-sans font-semibold text-base sm:text-lg py-4 px-8 rounded-pill cursor-pointer transition-colors duration-150 ease-in-out inline-flex items-center justify-center"
+              @click="showAddressForm = true"
             >
-              <div v-if="showAddressForm">
-                <div class="bg-surface-alt rounded-xl border border-border p-4 sm:p-5 mb-4">
-                  <p class="text-xs text-text font-display font-semibold mb-4">Adresse de livraison</p>
-                  <div class="grid gap-3 text-left">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label for="hero-name" class="block text-[11px] text-text-muted mb-1 font-medium">Nom complet *</label>
-                        <input id="hero-name" v-model="customerName" type="text" required autocomplete="name" placeholder="Jean Dupont"
-                          class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
-                      </div>
-                      <div>
-                        <label for="hero-email" class="block text-[11px] text-text-muted mb-1 font-medium">Email *</label>
-                        <input id="hero-email" v-model="customerEmail" type="email" required autocomplete="email" placeholder="jean@email.com"
-                          class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
-                      </div>
-                    </div>
+              AJOUTER AU PANIER
+            </button>
+          </div>
+          </div>
+          <!-- END BLOC 1 -->
+
+          <!-- Address form (below CTA, pushes other content down) -->
+          <Transition
+            enter-active-class="transition-all duration-300 ease-out"
+            enter-from-class="opacity-0 -translate-y-3"
+            enter-to-class="opacity-100 translate-y-0"
+          >
+            <div v-if="showAddressForm" class="mt-6">
+              <div class="bg-surface-alt rounded-xl border border-border p-4 sm:p-5 relative">
+                <!-- Close button -->
+                <button
+                  type="button"
+                  class="absolute top-3 right-3 w-7 h-7 rounded-full border border-border flex items-center justify-center text-text-muted hover:text-text hover:border-text/30 transition-colors cursor-pointer"
+                  aria-label="Fermer le formulaire"
+                  @click="showAddressForm = false"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                <p class="text-xs text-text font-display font-semibold mb-4">Adresse de livraison</p>
+                <div class="grid gap-3 text-left">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label for="hero-phone" class="block text-[11px] text-text-muted mb-1 font-medium">Téléphone <span class="text-text-muted/60">(optionnel)</span></label>
-                      <input id="hero-phone" v-model="customerPhone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78"
+                      <label for="hero-name" class="block text-[11px] text-text-muted mb-1 font-medium">Nom complet *</label>
+                      <input id="hero-name" v-model="customerName" type="text" required autocomplete="name" placeholder="Jean Dupont"
                         class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                     </div>
                     <div>
-                      <label for="hero-addr" class="block text-[11px] text-text-muted mb-1 font-medium">Adresse *</label>
-                      <input id="hero-addr" v-model="addressLine1" type="text" required autocomplete="address-line1" placeholder="12 rue de la Paix"
+                      <label for="hero-email" class="block text-[11px] text-text-muted mb-1 font-medium">Email *</label>
+                      <input id="hero-email" v-model="customerEmail" type="email" required autocomplete="email" placeholder="jean@email.com"
                         class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                     </div>
-                    <div class="grid grid-cols-[100px_1fr] sm:grid-cols-[130px_1fr] gap-3">
-                      <div>
-                        <label for="hero-cp" class="block text-[11px] text-text-muted mb-1 font-medium">Code postal *</label>
-                        <input id="hero-cp" v-model="postalCode" type="text" required autocomplete="postal-code" placeholder="75001" maxlength="5" inputmode="numeric"
-                          class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
-                      </div>
-                      <div>
-                        <label for="hero-city" class="block text-[11px] text-text-muted mb-1 font-medium">Ville *</label>
-                        <input id="hero-city" v-model="city" type="text" required autocomplete="address-level2" placeholder="Paris"
-                          class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
-                      </div>
+                  </div>
+                  <div>
+                    <label for="hero-phone" class="block text-[11px] text-text-muted mb-1 font-medium">Téléphone <span class="text-text-muted/60">(optionnel)</span></label>
+                    <input id="hero-phone" v-model="customerPhone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78"
+                      class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
+                  </div>
+                  <div>
+                    <label for="hero-addr" class="block text-[11px] text-text-muted mb-1 font-medium">Adresse *</label>
+                    <input id="hero-addr" v-model="addressLine1" type="text" required autocomplete="address-line1" placeholder="12 rue de la Paix"
+                      class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
+                  </div>
+                  <div class="grid grid-cols-[100px_1fr] sm:grid-cols-[130px_1fr] gap-3">
+                    <div>
+                      <label for="hero-cp" class="block text-[11px] text-text-muted mb-1 font-medium">Code postal *</label>
+                      <input id="hero-cp" v-model="postalCode" type="text" required autocomplete="postal-code" placeholder="75001" maxlength="5" inputmode="numeric"
+                        class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
+                    </div>
+                    <div>
+                      <label for="hero-city" class="block text-[11px] text-text-muted mb-1 font-medium">Ville *</label>
+                      <input id="hero-city" v-model="city" type="text" required autocomplete="address-level2" placeholder="Paris"
+                        class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                     </div>
                   </div>
                 </div>
-
-                <!-- Error -->
-                <div v-if="error" class="mb-3 bg-urgency/10 border border-urgency/20 text-urgency text-sm rounded-lg px-3 py-2 flex items-center gap-2">
-                  <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  {{ error }}
-                </div>
-
-                <!-- Pay button -->
-                <button
-                  :disabled="loading || !isAddressValid"
-                  :class="[
-                    'group w-full text-text font-display font-bold text-base sm:text-lg uppercase tracking-wider py-3.5 sm:py-4 px-12 rounded-xl transition-all duration-200 focus:outline-none inline-flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(169,249,85,0.35)] hover:shadow-[0_6px_30px_rgba(169,249,85,0.45)]',
-                    loading || !isAddressValid
-                      ? 'bg-accent/50 cursor-not-allowed'
-                      : 'bg-accent hover:bg-accent-hover cursor-pointer active:scale-[0.98]',
-                  ]"
-                  @click="handleCheckout"
-                >
-                  <span v-if="loading" class="inline-flex items-center gap-2">
-                    <svg class="animate-spin h-5 w-5 text-text" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    Redirection...
-                  </span>
-                  <template v-else>
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    Payer {{ formattedTotal }}
-                    <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </template>
-                </button>
-                <p class="text-center text-[11px] text-text-muted mt-2">Paiement 100% sécurisé par Stripe</p>
               </div>
-            </Transition>
+
+              <!-- Error -->
+              <div v-if="error" class="mt-3 bg-urgency/10 border border-urgency/20 text-urgency text-sm rounded-lg px-3 py-2 flex items-center gap-2">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                {{ error }}
+              </div>
+
+              <!-- Pay button -->
+              <button
+                class="mt-4"
+                :disabled="loading || !isAddressValid"
+                :class="[
+                  'group w-full text-text font-sans font-semibold text-base sm:text-lg py-3 px-8 rounded-pill transition-all duration-150 ease-in-out focus:outline-none inline-flex items-center justify-center gap-3',
+                  loading || !isAddressValid
+                    ? 'bg-accent/50 cursor-not-allowed'
+                    : 'bg-[#a9f955] hover:bg-[#9be84a] cursor-pointer active:scale-[0.98]',
+                ]"
+                @click="handleCheckout"
+              >
+                <span v-if="loading" class="inline-flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5 text-text" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Redirection...
+                </span>
+                <template v-else>
+                  PAYER {{ formattedTotal }}
+                </template>
+              </button>
+              <p class="text-center text-[11px] text-text-muted mt-2">Paiement 100% sécurisé par Stripe</p>
+            </div>
+          </Transition>
+
+          <!-- BLOC 2: Below carousel, still in right column -->
+          <div class="mt-6">
+              <!-- Politique de retour -->
+              <div class="bg-[#f7f7f7] rounded-[0.625rem] p-6 sm:p-8 text-left">
+                <div class="flex items-center gap-3 mb-3">
+                  <img src="https://cdn.shopify.com/s/files/1/0821/0939/9074/files/30-Day_Return_Policy_Icon_Actus_Core_7.png?v=1757438371" alt="Icône de retour" class="w-6 h-6" loading="lazy" />
+                  <p class="text-text text-lg sm:text-xl font-sans font-bold leading-tight">Politique de retour sous 30 jours</p>
+                </div>
+                <p class="text-text/60 text-sm sm:text-base leading-[1.6]">
+                  <strong class="text-text font-bold">Profitez d'échanges sans tracas sous 30 jours !</strong> Échangez votre produit pour n'importe quelle taille, couleur ou style que vous aimez.<br>
+                  Aucune question posée !
+                </p>
+              </div>
+
+              <!-- Description collapsible -->
+              <div class="mt-5 text-left border-t border-b border-border">
+                <button
+                  type="button"
+                  class="group w-full flex items-center justify-between py-4 cursor-pointer"
+                  @click="showDescription = !showDescription"
+                >
+                  <span class="text-text text-sm font-sans font-bold">Déscription</span>
+                  <span
+                    class="w-7 h-7 rounded-full border border-border flex items-center justify-center transition-all duration-300 group-hover:border-text/30"
+                    :class="{ 'rotate-180 border-text/30': showDescription }"
+                  >
+                    <svg width="8" height="6" viewBox="0 0 8 6" fill="none" class="text-text-muted">
+                      <path d="m1 1.5 3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </button>
+                <Transition
+                  enter-active-class="transition-all duration-300 ease-out"
+                  enter-from-class="max-h-0 opacity-0"
+                  enter-to-class="max-h-[500px] opacity-100"
+                  leave-active-class="transition-all duration-200 ease-in"
+                  leave-from-class="max-h-[500px] opacity-100"
+                  leave-to-class="max-h-0 opacity-0"
+                >
+                  <div v-if="showDescription" class="overflow-hidden">
+                    <div class="px-4 pb-4 pt-1 space-y-2.5">
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug">Tissu <strong>100% imperméable</strong> — protège vos affaires en toutes conditions</span>
+                      </div>
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug">Poche <strong>téléphone</strong> dédiée et sécurisée</span>
+                      </div>
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug">Compartiment <strong>portefeuille</strong> et <strong>écouteurs</strong></span>
+                      </div>
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug">Emplacement <strong>gourde</strong> principal — fixation <strong>aimantée</strong>, résiste à <strong>+2 kg</strong> de charge</span>
+                      </div>
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug"><strong>Bandoulière résistante</strong> intégrée pour un transport optimal</span>
+                      </div>
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.97z" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug">Ultra léger — seulement <strong>120g</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                </Transition>
+              </div>
+
           </div>
         </div>
 
@@ -469,6 +559,7 @@ const loading = ref(false)
 const error = ref('')
 const selectedPack = ref('')
 const showAddressForm = ref(false)
+const showDescription = ref(false)
 const customerName = ref('')
 const customerEmail = ref('')
 const customerPhone = ref('')

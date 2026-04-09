@@ -57,7 +57,7 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/': { swr: 3600 },
+    '/': { swr: 300 },
     '/mentions-legales': { swr: 86400 },
     '/cgv': { swr: 86400 },
     '/confidentialite': { swr: 86400 },

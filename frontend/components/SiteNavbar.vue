@@ -55,13 +55,10 @@
 
         <!-- Desktop CTA -->
         <button
-          class="hidden md:inline-flex items-center gap-2 bg-accent text-text py-2.5 px-6 rounded-pill font-display font-semibold text-sm cursor-pointer transition-colors duration-200 focus:outline-none hover:bg-accent-hover"
+          class="hidden md:inline-flex items-center bg-[#a9f955] text-text py-3 px-7 rounded-pill font-sans font-semibold text-base cursor-pointer transition-colors duration-150 ease-in-out focus:outline-none hover:bg-[#9be84a]"
           @click="scrollToSection('#order-section')"
         >
-          Commander
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+          AJOUTER AU PANIER
         </button>
 
         <!-- Mobile hamburger -->
@@ -134,13 +131,10 @@
           </template>
           <div class="pt-2">
             <button
-              class="w-full bg-accent hover:bg-accent-hover text-text font-display font-semibold text-sm uppercase tracking-wider py-3.5 px-6 rounded-pill cursor-pointer transition-colors duration-200 focus:outline-none flex items-center justify-center gap-2"
+              class="w-full bg-[#a9f955] hover:bg-[#9be84a] text-text font-sans font-semibold text-base py-4 px-8 rounded-pill cursor-pointer transition-colors duration-150 ease-in-out focus:outline-none flex items-center justify-center"
               @click="scrollToSection('#order-section'); mobileOpen = false"
             >
-              Commander
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              AJOUTER AU PANIER
             </button>
           </div>
         </div>
@@ -161,9 +155,12 @@ const onClickOutside = (e: MouseEvent) => {
 }
 const activeSection = ref('')
 
-const sectionIds = ['testimonials-section', 'faq-section']
+const sectionIds = ['hero-section', 'problem-section', 'explanation-section', 'testimonials-section', 'faq-section']
 
 const navLinks = [
+  { label: 'Accueil', href: '#hero-section' },
+  { label: 'Solution', href: '#problem-section' },
+  { label: 'Comment ça marche', href: '#explanation-section' },
   { label: 'Avis', href: '#testimonials-section' },
   { label: 'FAQ', href: '#faq-section' },
   { label: 'Suivre ma commande', href: '/suivi', isPage: true, highlight: true },
