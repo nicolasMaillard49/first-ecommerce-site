@@ -14,6 +14,7 @@ async function main() {
   const clipbag = await prisma.product.upsert({
     where: { slug: 'clipbag-magnetic-bottle-bag' },
     update: {
+      name: 'ClipBag',
       images: [
         '/images/product/product-1.png',
         '/images/product/product-2.png',
@@ -24,7 +25,7 @@ async function main() {
       ],
     },
     create: {
-      name: 'ClipBag - Sac Magnétique pour Bouteille',
+      name: 'ClipBag',
       slug: 'clipbag-magnetic-bottle-bag',
       description:
         "Le sac magnétique révolutionnaire pour vos bouteilles d'eau. Conçu pour les sportifs et aventuriers, il se fixe instantanément grâce à sa technologie magnétique puissante. Libérez vos mains pendant vos séances de sport, randonnées ou déplacements quotidiens.",
