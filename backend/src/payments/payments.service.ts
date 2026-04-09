@@ -3,13 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { PrismaService } from '../prisma/prisma.service';
 import { EmailService } from '../email/email.service';
+import { BundlesService } from '../bundles/bundles.service';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
-
-const PACK_CONFIG: Record<string, { qty: number; totalCents: number }> = {
-  solo: { qty: 1, totalCents: 2999 },
-  duo: { qty: 2, totalCents: 4999 },
-  equipe: { qty: 5, totalCents: 9999 },
-};
 
 @Injectable()
 export class PaymentsService {
@@ -19,6 +14,7 @@ export class PaymentsService {
     private configService: ConfigService,
     private prisma: PrismaService,
     private emailService: EmailService,
+    private bundlesService: BundlesService,
   ) {
     this.stripe = new Stripe(this.configService.getOrThrow('STRIPE_SECRET_KEY'));
   }
@@ -28,32 +24,42 @@ export class PaymentsService {
       where: { id: dto.productId },
     });
 
-    const pack = dto.packType ? PACK_CONFIG[dto.packType] : undefined;
-
     let totalCents: number;
     let stripeUnitAmount: number;
-    let stripeQuantity: number;
     let displayName: string;
+    let orderItems: { productId: string; quantity: number; price: number; bundleSlug: string | null }[];
 
-    if (pack) {
-      if (dto.quantity !== pack.qty) {
-        throw new BadRequestException(
-          `Pack "${dto.packType}" requires quantity ${pack.qty}, got ${dto.quantity}`,
-        );
+    if (dto.bundleId) {
+      const bundle = await this.bundlesService.findById(dto.bundleId);
+      if (!bundle.active) {
+        throw new BadRequestException('This bundle is no longer available');
       }
-      totalCents = pack.totalCents;
-      stripeUnitAmount = pack.totalCents;
-      stripeQuantity = 1;
-      displayName = pack.qty > 1 ? `${product.name} x ${pack.qty}` : product.name;
+
+      totalCents = Math.round(bundle.price * 100);
+      stripeUnitAmount = totalCents;
+      displayName = bundle.label;
+
+      const totalQty = bundle.items.reduce((sum, i) => sum + i.quantity, 0);
+      orderItems = bundle.items.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: (bundle.price / totalQty) * item.quantity,
+        bundleSlug: bundle.slug,
+      }));
     } else {
       totalCents = Math.round(product.price * dto.quantity * 100);
-      stripeUnitAmount = Math.round(product.price * 100);
-      stripeQuantity = dto.quantity;
-      displayName = product.name;
+      stripeUnitAmount = totalCents;
+      displayName = dto.quantity > 1 ? `${product.name} x ${dto.quantity}` : product.name;
+
+      orderItems = [{
+        productId: product.id,
+        quantity: dto.quantity,
+        price: product.price,
+        bundleSlug: null,
+      }];
     }
 
     const total = totalCents / 100;
-    const unitPrice = total / dto.quantity;
 
     const order = await this.prisma.order.create({
       data: {
@@ -69,11 +75,7 @@ export class PaymentsService {
         },
         total,
         items: {
-          create: {
-            productId: product.id,
-            quantity: dto.quantity,
-            price: unitPrice,
-          },
+          create: orderItems,
         },
       },
     });
@@ -99,7 +101,7 @@ export class PaymentsService {
             },
             unit_amount: stripeUnitAmount,
           },
-          quantity: stripeQuantity,
+          quantity: 1,
         },
       ],
       metadata: { orderId: order.id, sport: dto.sport || '' },

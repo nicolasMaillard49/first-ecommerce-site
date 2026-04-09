@@ -1,4 +1,4 @@
-import { IsString, IsInt, Min, Max, IsOptional, IsIn, IsEmail, ValidateNested, IsNotEmpty, IsDefined } from 'class-validator';
+import { IsString, IsInt, Min, Max, IsOptional, IsEmail, ValidateNested, IsNotEmpty, IsDefined } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ShippingAddressDto {
@@ -34,8 +34,7 @@ export class CreateCheckoutDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['solo', 'duo', 'equipe', ''])
-  packType?: string;
+  bundleId?: string;
 
   @IsOptional()
   @IsString()

@@ -45,31 +45,13 @@ describe('CreateCheckoutDto', () => {
     expect(errors.some((e) => e.property === 'quantity')).toBe(true);
   });
 
-  it('should pass with valid packType "solo"', async () => {
-    const dto = toDto({ ...validBase, packType: 'solo' });
+  it('should pass with valid bundleId', async () => {
+    const dto = toDto({ ...validBase, bundleId: '550e8400-e29b-41d4-a716-446655440000' });
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);
   });
 
-  it('should pass with valid packType "duo"', async () => {
-    const dto = toDto({ ...validBase, quantity: 2, packType: 'duo' });
-    const errors = await validate(dto);
-    expect(errors).toHaveLength(0);
-  });
-
-  it('should pass with valid packType "equipe"', async () => {
-    const dto = toDto({ ...validBase, quantity: 5, packType: 'equipe' });
-    const errors = await validate(dto);
-    expect(errors).toHaveLength(0);
-  });
-
-  it('should fail with invalid packType', async () => {
-    const dto = toDto({ ...validBase, packType: 'invalid' });
-    const errors = await validate(dto);
-    expect(errors.some((e) => e.property === 'packType')).toBe(true);
-  });
-
-  it('should pass without packType (optional)', async () => {
+  it('should pass without bundleId (optional)', async () => {
     const dto = toDto({ ...validBase, quantity: 3 });
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);

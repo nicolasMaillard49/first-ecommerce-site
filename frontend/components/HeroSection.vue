@@ -158,36 +158,94 @@
             Fixation magnétique instantanée, ultra léger (120g), compatible toutes bouteilles.
           </p>
 
-          <!-- Product name + Pack selection -->
-          <p class="text-text font-display font-semibold text-sm mb-3 hero-fade-in text-left" style="animation-delay: 0.33s">ClipBag :</p>
-          <div class="mb-4 lg:mb-5 hero-fade-in" style="animation-delay: 0.35s">
-            <div class="flex flex-col gap-3">
-              <button
-                v-for="pack in packs"
-                :key="pack.name"
-                :class="[
-                  'relative flex items-center justify-between px-4 py-3 rounded-lg border transition-all duration-200 cursor-pointer focus:outline-none',
-                  selectedPack === pack.name
-                    ? 'border-accent bg-accent/5'
-                    : 'border-border hover:border-accent/30'
-                ]"
-                @click="selectPack(pack.name)"
-              >
-                <div class="flex items-center gap-2 flex-shrink-0 min-w-0">
-                  <span :class="['w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0', selectedPack === pack.name ? 'border-accent-dark' : 'border-border']">
-                    <span v-if="selectedPack === pack.name" class="w-1.5 h-1.5 rounded-full bg-accent-dark" />
-                  </span>
-                  <span class="text-text font-display font-semibold text-sm sm:text-base whitespace-nowrap">{{ pack.label }}</span>
-                  <span class="text-text-muted text-xs sm:text-sm whitespace-nowrap">{{ pack.qty }}x</span>
-                  <span v-if="pack.badge" class="text-urgency text-[10px] sm:text-xs font-display font-bold uppercase whitespace-nowrap">{{ pack.badge }}</span>
-                </div>
-                <div class="flex items-baseline gap-1.5 flex-shrink-0">
-                  <span v-if="pack.oldPriceDisplay" class="text-text-muted line-through text-xs sm:text-sm whitespace-nowrap">{{ pack.oldPriceDisplay }}</span>
-                  <span class="text-text font-display font-medium text-base sm:text-lg tracking-tight whitespace-nowrap">{{ pack.priceDisplay }}</span>
-                </div>
-              </button>
+          <!-- Pack selection -->
+          <div class="mb-4 lg:mb-5 hero-fade-in space-y-5" style="animation-delay: 0.33s">
+            <!-- Packs Goodies (Sport, Kit Complet) -->
+            <div v-if="goodiesBundles.length">
+              <p class="text-text font-display font-semibold text-xs uppercase tracking-wider mb-2 text-left">Packs Premium</p>
+              <div class="flex flex-col gap-3 sm:gap-2">
+                <button
+                  v-for="bundle in goodiesBundles"
+                  :key="bundle.id"
+                  :class="[
+                    'relative flex flex-col gap-2 px-4 py-3 rounded-xl border transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 text-left',
+                    selectedBundleId === bundle.id
+                      ? 'border-accent bg-accent/5'
+                      : 'border-border hover:border-accent/30'
+                  ]"
+                  @click="selectBundle(bundle.id)"
+                >
+                  <span v-if="bundle.slug === 'complet'" class="absolute -top-2.5 right-3 bg-accent text-white text-[11px] font-display font-semibold px-2 py-0.5 rounded-full">Populaire</span>
+                  <!-- Title row: label + 1x ClipBag + badge + price -->
+                  <div class="flex items-center justify-between w-full">
+                    <div class="flex items-center gap-2">
+                      <span :class="['w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0', selectedBundleId === bundle.id ? 'border-accent-dark' : 'border-border']">
+                        <span v-if="selectedBundleId === bundle.id" class="w-2 h-2 rounded-full bg-accent-dark" />
+                      </span>
+                      <span class="text-text font-display font-semibold text-sm sm:text-base">{{ bundle.label }}</span>
+                      <span class="text-text-muted text-xs">1x {{ productStore.product?.name?.split(' - ')[0] || 'ClipBag' }}</span>
+                      <span v-if="bundle.badge" class="text-urgency text-xs font-display font-bold uppercase">{{ bundle.badge }}</span>
+                    </div>
+                    <div class="flex items-baseline gap-1.5">
+                      <span v-if="bundle.comparePrice" class="text-text-muted line-through text-xs">{{ bundle.comparePrice.toFixed(2).replace('.', ',') }}€</span>
+                      <span class="text-text font-display font-semibold text-base sm:text-lg">{{ bundle.price.toFixed(2).replace('.', ',') }}€</span>
+                    </div>
+                  </div>
+                  <!-- Accessory items row with images -->
+                  <div class="flex items-center gap-x-1.5 overflow-x-auto scrollbar-hide">
+                    <template v-for="(item, idx) in bundle.items.filter(i => i.productId !== productStore.product?.id)" :key="item.id">
+                      <span v-if="idx > 0" class="text-text-muted text-xs shrink-0">+</span>
+                      <span v-else class="text-text-muted text-xs shrink-0">+</span>
+                      <div class="flex items-center gap-1.5 shrink-0">
+                        <span class="text-text-muted text-xs whitespace-nowrap">{{ item.product.name }}</span>
+                        <img
+                          v-if="item.product.images?.[0]"
+                          :src="item.product.images[0]"
+                          :alt="item.product.name"
+                          class="w-9 h-9 rounded-md object-cover border border-border bg-surface-alt"
+                        />
+                        <span v-else class="w-9 h-9 rounded-md bg-surface-alt border border-border flex items-center justify-center">
+                          <svg class="w-4 h-4 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                        </span>
+                      </div>
+                    </template>
+                  </div>
+                </button>
+              </div>
             </div>
-            <div class="inline-flex items-center gap-1.5 mt-3 bg-urgency/10 text-urgency text-xs sm:text-sm font-display font-semibold px-3 py-1.5 rounded-full">
+
+            <!-- Packs Groupe (Duo, Equipe) -->
+            <div v-if="groupBundles.length">
+              <p class="text-text font-display font-semibold text-xs uppercase tracking-wider mb-2 text-left">Offres de groupe</p>
+              <div class="flex flex-col gap-3 sm:gap-2">
+                <button
+                  v-for="bundle in groupBundles"
+                  :key="bundle.id"
+                  :class="[
+                    'relative flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+                    selectedBundleId === bundle.id
+                      ? 'border-accent bg-accent/5'
+                      : 'border-border hover:border-accent/30'
+                  ]"
+                  @click="selectBundle(bundle.id)"
+                >
+                  <div class="flex items-center gap-2">
+                    <span :class="['w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0', selectedBundleId === bundle.id ? 'border-accent-dark' : 'border-border']">
+                      <span v-if="selectedBundleId === bundle.id" class="w-2 h-2 rounded-full bg-accent-dark" />
+                    </span>
+                    <span class="text-text font-display font-semibold text-sm sm:text-base">{{ bundle.label }}</span>
+                    <span class="text-text-muted text-xs">{{ bundle.description }}</span>
+                    <span v-if="bundle.badge" class="text-urgency text-xs font-display font-bold uppercase">{{ bundle.badge }}</span>
+                  </div>
+                  <div class="flex items-baseline gap-1.5">
+                    <span v-if="bundle.comparePrice" class="text-text-muted line-through text-xs">{{ bundle.comparePrice.toFixed(2).replace('.', ',') }}€</span>
+                    <span class="text-text font-display font-semibold text-base sm:text-lg">{{ bundle.price.toFixed(2).replace('.', ',') }}€</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div class="inline-flex items-center gap-1.5 bg-urgency/10 text-urgency text-xs sm:text-sm font-display font-semibold px-3 py-1.5 rounded-full">
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
@@ -220,7 +278,7 @@
               <div class="inline-flex items-center bg-surface-alt border border-border rounded-xl">
                 <button
                   class="flex items-center justify-center w-9 h-9 text-text-muted hover:text-text transition-colors cursor-pointer focus:outline-none rounded-l-xl disabled:opacity-30 disabled:cursor-not-allowed"
-                  :disabled="quantity <= 1"
+                  :disabled="quantity <= 1 || !!currentBundle"
                   aria-label="Diminuer"
                   @click="decrementQuantity"
                 >
@@ -229,7 +287,7 @@
                 <span class="w-9 text-center text-text font-display font-bold text-sm select-none">{{ quantity }}</span>
                 <button
                   class="flex items-center justify-center w-9 h-9 text-text-muted hover:text-text transition-colors cursor-pointer focus:outline-none rounded-r-xl disabled:opacity-30 disabled:cursor-not-allowed"
-                  :disabled="quantity >= 10"
+                  :disabled="quantity >= 10 || !!currentBundle"
                   aria-label="Augmenter"
                   @click="incrementQuantity"
                 >
@@ -354,8 +412,7 @@
                   <p class="text-text text-lg sm:text-xl font-sans font-bold leading-tight">Politique de retour sous 30 jours</p>
                 </div>
                 <p class="text-text/60 text-sm sm:text-base leading-[1.6]">
-                  <strong class="text-text font-bold">Profitez d'échanges sans tracas sous 30 jours !</strong> Échangez votre produit pour n'importe quelle taille, couleur ou style que vous aimez.<br>
-                  Aucune question posée !
+                  <strong class="text-text font-bold">Profitez d'échanges sans tracas sous 30 jours !</strong> Si votre produit arrive endommagé ou ne correspond pas à votre commande, nous vous proposons un retour simple et rapide. Votre satisfaction est notre priorité.
                 </p>
               </div>
 
@@ -557,7 +614,6 @@ const resumeAutoplay = () => { autoplayPaused = false }
 const quantity = ref(1)
 const loading = ref(false)
 const error = ref('')
-const selectedPack = ref('')
 const showAddressForm = ref(false)
 const showDescription = ref(false)
 const customerName = ref('')
@@ -575,42 +631,57 @@ const isAddressValid = computed(() =>
   city.value.trim().length >= 1
 )
 
-const UNIT_PRICE = 29.99
-const ORIGINAL_UNIT_PRICE = 49.99
+const bundles = computed(() => productStore.bundles)
+const selectedBundleId = ref('')
 
-interface Pack { name: string; label: string; qty: number; packPrice: number; badge: string; priceDisplay: string; oldPriceDisplay: string }
+const currentBundle = computed(() => bundles.value.find(b => b.id === selectedBundleId.value))
 
-const packs: Pack[] = [
-  { name: 'duo', label: 'Duo', qty: 2, packPrice: 49.99, badge: '-50%', priceDisplay: '49,99\u20AC', oldPriceDisplay: '99,98\u20AC' },
-  { name: 'equipe', label: 'Équipe', qty: 5, packPrice: 99.99, badge: '-60%', priceDisplay: '99,99\u20AC', oldPriceDisplay: '249,95\u20AC' },
-]
+// Bundles goodies = contient des produits differents (Sport, Kit Complet)
+const goodiesBundles = computed(() => bundles.value.filter(b => {
+  const uniqueProducts = new Set(b.items.map(i => i.productId))
+  return uniqueProducts.size > 1
+}))
 
-const currentPack = computed(() => packs.find(p => p.name === selectedPack.value))
+// Bundles groupe = meme produit en plusieurs exemplaires (Duo, Equipe)
+const groupBundles = computed(() => bundles.value.filter(b => {
+  const uniqueProducts = new Set(b.items.map(i => i.productId))
+  return uniqueProducts.size <= 1
+}))
 
-const selectPack = (name: string) => {
-  selectedPack.value = name
-  const pack = packs.find(p => p.name === name)
-  if (pack) {
-    quantity.value = pack.qty
-    fbTrack('AddToCart', { content_name: productStore.product?.name || 'ClipBag', content_ids: [productStore.product?.id || ''], content_type: 'product', value: pack.packPrice, currency: 'EUR' })
+const selectBundle = (id: string) => {
+  if (selectedBundleId.value === id) {
+    selectedBundleId.value = ''
+    quantity.value = 1
+    return
+  }
+  selectedBundleId.value = id
+  quantity.value = 1
+  const bundle = bundles.value.find(b => b.id === id)
+  if (bundle) {
+    fbTrack('AddToCart', { content_name: bundle.label, content_ids: [bundle.id], content_type: 'product', value: bundle.price, currency: 'EUR' })
   }
 }
 
-const decrementQuantity = () => { if (quantity.value > 1) { quantity.value--; syncPackFromQuantity() } }
-const incrementQuantity = () => { if (quantity.value < 10) { quantity.value++; syncPackFromQuantity() } }
-const syncPackFromQuantity = () => { const match = packs.find(p => p.qty === quantity.value); selectedPack.value = match ? match.name : '' }
+const decrementQuantity = () => { if (!currentBundle.value && quantity.value > 1) quantity.value-- }
+const incrementQuantity = () => { if (!currentBundle.value && quantity.value < 10) quantity.value++ }
+
+const unitPrice = computed(() => productStore.product?.price || 29.99)
+const originalUnitPrice = computed(() => productStore.product?.comparePrice || 49.99)
 
 const formattedTotal = computed(() => {
-  const total = currentPack.value ? currentPack.value.packPrice : UNIT_PRICE * quantity.value
-  return `${total.toFixed(2).replace('.', ',')}\u20AC`
+  const total = currentBundle.value ? currentBundle.value.price : unitPrice.value * quantity.value
+  return `${total.toFixed(2).replace('.', ',')}€`
 })
 
-const originalTotal = computed(() => `${(ORIGINAL_UNIT_PRICE * quantity.value).toFixed(2).replace('.', ',')}\u20AC`)
+const originalTotal = computed(() => {
+  if (currentBundle.value?.comparePrice) return `${currentBundle.value.comparePrice.toFixed(2).replace('.', ',')}€`
+  return `${(originalUnitPrice.value * quantity.value).toFixed(2).replace('.', ',')}€`
+})
 
 const savedAmount = computed(() => {
-  const original = ORIGINAL_UNIT_PRICE * quantity.value
-  const actual = currentPack.value ? currentPack.value.packPrice : UNIT_PRICE * quantity.value
-  return `${(original - actual).toFixed(2).replace('.', ',')}\u20AC`
+  const original = currentBundle.value?.comparePrice || originalUnitPrice.value * quantity.value
+  const actual = currentBundle.value ? currentBundle.value.price : unitPrice.value * quantity.value
+  return `${(original - actual).toFixed(2).replace('.', ',')}€`
 })
 
 const handleCheckout = async () => {
@@ -618,15 +689,15 @@ const handleCheckout = async () => {
   loading.value = true
   error.value = ''
   try {
-    const totalValue = currentPack.value ? currentPack.value.packPrice : UNIT_PRICE * quantity.value
-    const pixelParams = { content_name: productStore.product?.name || 'ClipBag', content_ids: [productStore.product?.id || ''], content_type: 'product', num_items: quantity.value, value: totalValue, currency: 'EUR' }
+    const totalValue = currentBundle.value ? currentBundle.value.price : unitPrice.value * quantity.value
+    const pixelParams = { content_name: currentBundle.value?.label || productStore.product?.name || 'ClipBag', content_ids: [currentBundle.value?.id || productStore.product?.id || ''], content_type: 'product', num_items: quantity.value, value: totalValue, currency: 'EUR' }
     fbTrack('AddToCart', pixelParams)
     fbTrack('InitiateCheckout', pixelParams)
     const { apiFetch } = useApi()
     const response = await apiFetch<{ sessionId: string; url: string }>('/payments/create-checkout', {
       method: 'POST',
       body: {
-        productId: productStore.product?.id || '', quantity: quantity.value, packType: selectedPack.value || undefined,
+        productId: productStore.product?.id || '', quantity: quantity.value, bundleId: selectedBundleId.value || undefined,
         customerName: customerName.value.trim(), customerEmail: customerEmail.value.trim(),
         customerPhone: customerPhone.value.trim() || undefined,
         shippingAddress: { line1: addressLine1.value.trim(), city: city.value.trim(), postalCode: postalCode.value.trim(), country: 'FR' },

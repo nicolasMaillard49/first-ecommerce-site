@@ -18,9 +18,32 @@ interface Product {
   active: boolean
 }
 
+interface BundleItem {
+  id: string
+  productId: string
+  quantity: number
+  product: { id: string; name: string; images: string[] }
+}
+
+interface Bundle {
+  id: string
+  slug: string
+  label: string
+  description: string
+  price: number
+  comparePrice: number | null
+  badge: string | null
+  position: number
+  active: boolean
+  items: BundleItem[]
+}
+
+export type { Product, Bundle, BundleItem }
+
 export const useProductStore = defineStore('product', {
   state: () => ({
     product: null as Product | null,
+    bundles: [] as Bundle[],
     loading: false,
   }),
   actions: {
@@ -33,6 +56,10 @@ export const useProductStore = defineStore('product', {
       } finally {
         this.loading = false
       }
+    },
+    async fetchBundles() {
+      const { apiFetch } = useApi()
+      this.bundles = await apiFetch<Bundle[]>('/bundles')
     },
   },
 })

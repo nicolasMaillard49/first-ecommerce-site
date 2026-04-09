@@ -10,6 +10,7 @@ import { AdminModule } from './admin/admin.module';
 import { HealthModule } from './health/health.module';
 import { TrackingModule } from './tracking/tracking.module';
 import { EmailModule } from './email/email.module';
+import { BundlesModule } from './bundles/bundles.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { EmailModule } from './email/email.module';
     ThrottlerModule.forRoot([{ ttl: 60000, limit: 60 }]),
     PrismaModule,
     ProductsModule,
+    BundlesModule,
     PaymentsModule,
     AuthModule,
     AdminModule,

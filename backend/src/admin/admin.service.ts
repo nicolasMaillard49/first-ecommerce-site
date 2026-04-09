@@ -121,6 +121,13 @@ export class AdminService {
     return this.prisma.order.delete({ where: { id } });
   }
 
+  async getProducts() {
+    return this.prisma.product.findMany({
+      orderBy: { createdAt: 'asc' },
+      select: { id: true, name: true, slug: true, costPrice: true, supplierUrl: true, active: true },
+    });
+  }
+
   async updateProduct(id: string, data: UpdateProductDto) {
     return this.prisma.product.update({ where: { id }, data });
   }

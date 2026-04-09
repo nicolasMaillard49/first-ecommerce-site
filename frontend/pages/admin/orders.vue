@@ -9,6 +9,7 @@ interface OrderItem {
   quantity: number
   price: number
   variant: string | null
+  bundleSlug: string | null
   product: {
     name: string
     slug: string
@@ -186,6 +187,13 @@ const copyShippingAddress = (order: Order) => {
   navigator.clipboard.writeText(lines)
   copiedAddress.value = true
   setTimeout(() => { copiedAddress.value = false }, 2000)
+}
+
+const getBundleLabel = (order: Order) => {
+  const slug = order.items?.[0]?.bundleSlug
+  if (!slug) return null
+  const labels: Record<string, string> = { sport: 'Pack Sport', complet: 'Pack Kit Complet', duo: 'Pack Duo', equipe: 'Pack Équipe' }
+  return labels[slug] || `Pack ${slug}`
 }
 
 const getSupplierProductUrl = (order: Order) => {
@@ -613,6 +621,11 @@ onBeforeUnmount(() => {
               <!-- Order items -->
               <div class="bg-surface-darker rounded-xl p-4 border border-white/5 space-y-3">
                 <h3 class="text-sm font-semibold text-white">Articles</h3>
+                <!-- Bundle header -->
+                <div v-if="getBundleLabel(selectedOrder)" class="px-3 py-1.5 bg-brand/10 rounded-lg flex items-center gap-2">
+                  <span class="text-xs font-semibold text-brand">{{ getBundleLabel(selectedOrder) }}</span>
+                  <span class="text-xs text-gray-400">{{ formatPrice(selectedOrder.total) }}</span>
+                </div>
                 <div
                   v-for="item in selectedOrder.items"
                   :key="item.id"
@@ -630,9 +643,15 @@ onBeforeUnmount(() => {
                     <p class="text-sm text-white font-medium truncate">{{ item.product?.name || 'Produit' }}</p>
                     <p v-if="item.variant" class="text-xs text-gray-500 capitalize">{{ item.variant }}</p>
                   </div>
-                  <div class="text-right flex-shrink-0">
-                    <p class="text-sm text-white font-medium">{{ formatPrice(item.price) }}</p>
-                    <p class="text-xs text-gray-500">x{{ item.quantity }}</p>
+                  <div class="flex items-center gap-3 flex-shrink-0">
+                    <a v-if="item.product?.supplierUrl" :href="item.product.supplierUrl" target="_blank" rel="noopener" class="text-[11px] text-orange-400 hover:text-orange-300 flex items-center gap-1">
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+                      Fournisseur
+                    </a>
+                    <div class="text-right">
+                      <p class="text-sm text-white font-medium">{{ formatPrice(item.price) }}</p>
+                      <p class="text-xs text-gray-500">x{{ item.quantity }}</p>
+                    </div>
                   </div>
                 </div>
               </div>

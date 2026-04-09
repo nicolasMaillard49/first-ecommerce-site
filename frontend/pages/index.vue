@@ -52,22 +52,11 @@ useHead({
 const productStore = useProductStore()
 const { track: fbTrack } = useMetaPixel()
 
-await callOnce(async () => {
-  try {
-    await productStore.fetchProduct()
-  } catch (e) {
-    console.error('[SSR] Failed to fetch product:', e)
-  }
-})
+await useAsyncData('product-and-bundles', () =>
+  Promise.all([productStore.fetchProduct(), productStore.fetchBundles()])
+)
 
 onMounted(async () => {
-  if (!productStore.product) {
-    try {
-      await productStore.fetchProduct()
-    } catch (e) {
-      console.error('[Client] Failed to fetch product:', e)
-    }
-  }
   const p = productStore.product
   if (p) {
     fbTrack('ViewContent', {
