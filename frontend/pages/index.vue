@@ -52,8 +52,18 @@ useHead({
 const productStore = useProductStore()
 const { track: fbTrack } = useMetaPixel()
 
-await useAsyncData('product-and-bundles', () =>
-  Promise.all([productStore.fetchProduct(), productStore.fetchBundles()])
+await useAsyncData(
+  'product-and-bundles',
+  async () => {
+    await Promise.all([productStore.fetchProduct(), productStore.fetchBundles()])
+    return { ok: true }
+  },
+  {
+    // Force a refetch if the Pinia store is empty (e.g. returning from
+    // Stripe checkout through a fresh /cancel page load).
+    getCachedData: () =>
+      productStore.product && productStore.bundles.length ? { ok: true } : undefined,
+  }
 )
 
 onMounted(async () => {

@@ -299,7 +299,7 @@
 
           <!-- CTA -->
           <div class="hero-fade-in" style="animation-delay: 0.5s">
-            <p class="text-center text-[11px] text-text-muted mb-2">Paiement 100% sécurisé par Stripe</p>
+            <p class="text-center text-[11px] text-text-muted mb-2">Paiement 100% sécurisé par Stripe &middot; Livraison offerte</p>
             <button
               class="group w-full bg-[#a9f955] hover:bg-[#9be84a] active:scale-[0.98] text-text font-sans font-semibold text-base sm:text-lg py-4 px-8 rounded-pill cursor-pointer transition-colors duration-150 ease-in-out inline-flex items-center justify-center"
               @click="showAddressForm = true"
@@ -399,7 +399,7 @@
                   PAYER {{ formattedTotal }}
                 </template>
               </button>
-              <p class="text-center text-[11px] text-text-muted mt-2">Paiement 100% sécurisé par Stripe</p>
+              <p class="text-center text-[11px] text-text-muted mt-2">Paiement 100% sécurisé par Stripe &middot; Livraison offerte</p>
             </div>
           </Transition>
 

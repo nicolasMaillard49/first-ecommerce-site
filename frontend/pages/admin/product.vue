@@ -69,6 +69,16 @@ const fetchProduct = async () => {
 
 const addImage = () => { form.images.push('') }
 const removeImage = (idx: number) => { form.images.splice(idx, 1) }
+const moveImageUp = (idx: number) => {
+  if (idx <= 0) return
+  const arr = form.images
+  ;[arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]]
+}
+const moveImageDown = (idx: number) => {
+  if (idx >= form.images.length - 1) return
+  const arr = form.images
+  ;[arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]]
+}
 
 const addVideo = () => { form.socialVideos.push({ url: '', title: '', thumbnail: '' }) }
 const removeVideo = (idx: number) => { form.socialVideos.splice(idx, 1) }
@@ -243,14 +253,35 @@ onMounted(fetchProduct)
                 {{ idx + 1 }}
               </span>
 
-              <!-- Delete button -->
-              <button
-                type="button"
-                class="absolute top-1.5 right-1.5 bg-black/60 hover:bg-red-500/80 text-white/70 hover:text-white w-5 h-5 rounded-md flex items-center justify-center transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
-                @click="removeImage(idx)"
-              >
-                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-              </button>
+              <!-- Reorder + delete controls -->
+              <div class="absolute top-1.5 right-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  type="button"
+                  :disabled="idx === 0"
+                  class="bg-black/60 hover:bg-white/20 text-white/70 hover:text-white w-5 h-5 rounded-md flex items-center justify-center transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Monter"
+                  @click="moveImageUp(idx)"
+                >
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" /></svg>
+                </button>
+                <button
+                  type="button"
+                  :disabled="idx === form.images.length - 1"
+                  class="bg-black/60 hover:bg-white/20 text-white/70 hover:text-white w-5 h-5 rounded-md flex items-center justify-center transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Descendre"
+                  @click="moveImageDown(idx)"
+                >
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <button
+                  type="button"
+                  class="bg-black/60 hover:bg-red-500/80 text-white/70 hover:text-white w-5 h-5 rounded-md flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Supprimer"
+                  @click="removeImage(idx)"
+                >
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
 
               <!-- Input -->
               <div class="p-2">
@@ -274,7 +305,7 @@ onMounted(fetchProduct)
             </button>
           </div>
 
-          <p class="text-[10px] text-gray-600">Premiere image = image principale (hero). Glissez les chemins locaux ou URLs externes.</p>
+          <p class="text-[10px] text-gray-600">Premiere image = image principale (hero). Utilisez les fleches haut/bas pour reorganiser l'ordre du carrousel.</p>
         </div>
 
         <!-- Videos -->

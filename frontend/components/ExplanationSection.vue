@@ -25,11 +25,11 @@
               <video
                 ref="videoRef"
                 class="absolute inset-0 w-full h-full object-cover scale-150 rounded-lg"
-                :poster="posterImage"
+                autoplay
                 playsinline
                 loop
                 muted
-                preload="metadata"
+                preload="auto"
               >
                 <source src="/images/product/clipbagPresentation.mp4" type="video/mp4" />
               </video>
@@ -73,30 +73,12 @@
 
 <script setup lang="ts">
 const videoRef = ref<HTMLVideoElement | null>(null)
-const posterImage = computed(() => '/images/product/product-1.png')
-
-let videoObserver: IntersectionObserver | null = null
 
 onMounted(() => {
   if (videoRef.value) {
     videoRef.value.muted = true
-    videoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            videoRef.value?.play()
-          } else {
-            videoRef.value?.pause()
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
-    videoObserver.observe(videoRef.value)
+    // Force play in case autoplay is blocked by the browser (iOS Safari, etc.)
+    videoRef.value.play().catch(() => {})
   }
-})
-
-onUnmounted(() => {
-  if (videoObserver) videoObserver.disconnect()
 })
 </script>
