@@ -145,7 +145,15 @@
           &copy; 2026 ClipBag. Tous droits réservés.
         </p>
         <p class="text-xs text-gray-500">
-          Fait avec soin en France
+          Site conçu par
+          <a
+            href="https://www.nmf-agence.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-400 hover:text-accent transition-colors duration-200 font-medium"
+          >
+            NMF Agence
+          </a>
         </p>
       </div>
     </div>

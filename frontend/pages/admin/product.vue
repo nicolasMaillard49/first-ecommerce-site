@@ -17,9 +17,18 @@ interface Product {
   supplierUrl: string | null
 }
 
+interface ProductListItem {
+  id: string
+  name: string
+  slug: string
+  active: boolean
+}
+
 const { apiFetch } = useApi()
 const authStore = useAuthStore()
 
+const productList = ref<ProductListItem[]>([])
+const selectedProductId = ref('')
 const product = ref<Product | null>(null)
 const loading = ref(true)
 const saving = ref(false)
@@ -39,13 +48,25 @@ const form = reactive({
   socialVideos: [] as { url: string; title: string; thumbnail: string }[],
 })
 
-const fetchProduct = async () => {
+const fetchProductList = async () => {
+  try {
+    productList.value = await apiFetch<ProductListItem[]>('/admin/products', {
+      headers: { Authorization: `Bearer ${authStore.token}` },
+    })
+  } catch (e: any) {
+    if (e?.status === 401) authStore.logout()
+  }
+}
+
+const fetchProduct = async (id?: string) => {
   loading.value = true
   error.value = ''
   try {
-    product.value = await apiFetch<Product>('/admin/product', {
+    const query = id ? `?id=${id}` : ''
+    product.value = await apiFetch<Product>(`/admin/product${query}`, {
       headers: { Authorization: `Bearer ${authStore.token}` },
     })
+    selectedProductId.value = product.value.id
     form.name = product.value.name
     form.description = product.value.description
     form.price = product.value.price
@@ -65,6 +86,10 @@ const fetchProduct = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const switchProduct = (id: string) => {
+  if (id !== product.value?.id) fetchProduct(id)
 }
 
 const addImage = () => { form.images.push('') }
@@ -119,14 +144,29 @@ const saveProduct = async () => {
   }
 }
 
-onMounted(fetchProduct)
+onMounted(async () => {
+  await fetchProductList()
+  await fetchProduct()
+})
 </script>
 
 <template>
   <div>
     <!-- Header + Save -->
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold text-white tracking-tight">Modifier le produit</h1>
+      <div class="flex items-center gap-4">
+        <h1 class="text-2xl font-bold text-white tracking-tight">Modifier le produit</h1>
+        <select
+          v-if="productList.length > 1"
+          :value="selectedProductId"
+          class="bg-white/[0.05] border border-white/10 rounded-lg text-white text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-brand/50 cursor-pointer"
+          @change="switchProduct(($event.target as HTMLSelectElement).value)"
+        >
+          <option v-for="p in productList" :key="p.id" :value="p.id" class="bg-[#1a1a2e] text-white">
+            {{ p.name }}{{ !p.active ? ' (inactif)' : '' }}
+          </option>
+        </select>
+      </div>
       <button
         v-if="product && !loading"
         :disabled="saving"

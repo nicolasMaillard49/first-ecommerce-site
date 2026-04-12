@@ -132,7 +132,10 @@ export class AdminService {
     return this.prisma.product.update({ where: { id }, data });
   }
 
-  async getProduct() {
-    return this.prisma.product.findFirst();
+  async getProduct(id?: string) {
+    if (id) {
+      return this.prisma.product.findUnique({ where: { id } });
+    }
+    return this.prisma.product.findFirst({ where: { active: true } });
   }
 }

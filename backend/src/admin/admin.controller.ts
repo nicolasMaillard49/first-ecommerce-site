@@ -73,8 +73,8 @@ export class AdminController {
   }
 
   @Get('product')
-  getProduct() {
-    return this.adminService.getProduct();
+  getProduct(@Query('id') id?: string) {
+    return this.adminService.getProduct(id);
   }
 
   @Put('product/:id')
