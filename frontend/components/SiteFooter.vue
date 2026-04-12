@@ -69,9 +69,9 @@
         <!-- Column 4: Payment methods -->
         <div>
           <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Paiement sécurisé</h4>
-          <div class="flex flex-wrap gap-3 mb-6">
+          <div class="grid grid-cols-4 gap-2 mb-6 w-full">
             <!-- Visa -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <svg class="h-5" viewBox="0 0 48 32" fill="none">
                 <rect width="48" height="32" rx="4" fill="#1A1F71"/>
                 <path d="M19.5 21.5h-3l1.9-11.7h3l-1.9 11.7zm12.8-11.4c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.7 3.1 1.2.6 1.6.9 1.6 1.4 0 .8-.9 1.1-1.8 1.1-1.2 0-1.8-.2-2.8-.6l-.4-.2-.4 2.5c.7.3 2 .6 3.3.6 3.2 0 5.3-1.5 5.3-3.8 0-1.3-.8-2.2-2.5-3-1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 1 0 1.7.2 2.2.4l.3.1.3-2.4zm7.9-.3h-2.3c-.7 0-1.3.2-1.6.9l-4.4 10.8h3.2l.6-1.8h3.8l.4 1.8h2.8l-2.5-11.7zm-3.7 7.5l1.2-3.2.5-1.5.3 1.5.7 3.2h-2.7zM17 9.8l-2.8 8-.3-1.5c-.5-1.8-2.2-3.8-4.1-4.8l2.7 10h3.2l4.8-11.7H17z" fill="white"/>
@@ -79,7 +79,7 @@
               </svg>
             </div>
             <!-- Mastercard -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <svg class="h-5" viewBox="0 0 48 32" fill="none">
                 <rect width="48" height="32" rx="4" fill="#252525"/>
                 <circle cx="19" cy="16" r="8" fill="#EB001B"/>
@@ -88,17 +88,17 @@
               </svg>
             </div>
             <!-- CB -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <span class="text-xs font-display font-semibold text-gray-400">CB</span>
             </div>
             <!-- Stripe -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <svg class="h-4" viewBox="0 0 60 25" fill="none">
                 <path d="M60 12.5C60 5.6 55.4 0 48.1 0c-7.4 0-12.4 5.6-12.4 12.4 0 8.2 5.5 12.5 13.4 12.5 3.9 0 6.8-.9 9-2.1V18c-2.2 1.1-4.7 1.8-7.9 1.8-3.1 0-5.9-1.1-6.3-4.9h15.8c0-.4.3-2.1.3-3.4zM44 9.3c0-3.6 2.2-5.1 4.2-5.1 2 0 4 1.5 4 5.1H44zm-17.3-9C24.6.3 23.4 1.7 22.9 2.6l-.2-2.3h-5.6v32.1l6.4-1.4V25c.5.4 1.3.9 2.7.9 5.4 0 10.4-4.4 10.4-13.9-.1-8.8-5.1-12.7-9.9-12.7zM25 19.6c-.9 0-1.4-.3-1.8-.7v-9.4c.4-.5 1-8 1.8-.8 2.8 0 4.7 3.1 4.7 6.4 0 3.5-1.8 6.5-4.7 6.5zM14.4 0l-6.5 1.4v5.1L0 8.2v4.9h1.5v8c0 5.1 2.4 6.9 5.8 6.9 1.7 0 3-.4 4-.8V22c-.7.3-2.5.8-3.8.8-1.7 0-2.4-.7-2.4-2.7v-6.2h4V9.1H5.1V2.5l6.5-1.4V.1l2.8-.1z" fill="#6772E5"/>
               </svg>
             </div>
             <!-- Apple Pay -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <svg class="h-5" viewBox="0 0 48 32" fill="none">
                 <rect width="48" height="32" rx="4" fill="#000"/>
                 <path d="M15.2 10.5c-.5.6-1.3 1-2 1-.1-.8.3-1.6.7-2.1.5-.6 1.3-1 2-1 .1.8-.2 1.6-.7 2.1zm.7 1.1c-1.1-.1-2.1.6-2.6.6-.5 0-1.4-.6-2.2-.6-1.2 0-2.2.7-2.8 1.7-1.2 2-.3 5 .8 6.7.6.8 1.2 1.7 2.1 1.7.8 0 1.2-.5 2.2-.5s1.3.5 2.2.5c.9 0 1.5-.9 2.1-1.7.6-.9.9-1.8.9-1.8-1-.4-1.8-1.5-1.8-2.8 0-1.1.6-2.1 1.5-2.7-.6-.8-1.5-1.2-2.4-1.1z" fill="white"/>
@@ -106,7 +106,7 @@
               </svg>
             </div>
             <!-- Google Pay -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <svg class="h-5" viewBox="0 0 48 32" fill="none">
                 <rect width="48" height="32" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width=".5"/>
                 <path d="M22.3 16.1v3.8h-1.2V10h3.2c.8 0 1.5.3 2 .8.6.5.8 1.1.8 1.9s-.3 1.4-.8 1.9c-.5.5-1.2.8-2 .8h-2zm0-4.9v3.7h2c.5 0 .9-.2 1.3-.5.3-.3.5-.8.5-1.3 0-.5-.2-1-.5-1.3-.3-.4-.8-.5-1.3-.5h-2z" fill="#3C4043"/>
@@ -119,7 +119,7 @@
               </svg>
             </div>
             <!-- Samsung Pay -->
-            <div class="flex items-center justify-center w-16 h-10 bg-white/5 border border-white/10 rounded-lg">
+            <div class="flex items-center justify-center h-10 bg-white/5 border border-white/10 rounded-lg">
               <svg class="h-4" viewBox="0 0 48 20" fill="none">
                 <path d="M5.8 7.4C5.5 5.6 3.8 4.8 2 5.2c-.7.1-1.3.5-1.6 1-.3.4-.3.9-.1 1.3.2.5.7.8 1.5.9l1.5.2c.6.1 1 .3 1 .7 0 .5-.5.8-1.2.8-.8 0-1.3-.3-1.5-.9l-1.3.4c.3 1 1.2 1.6 2.7 1.6 1.7 0 2.8-.8 2.8-2.1 0-1.1-.8-1.7-2.1-1.9l-1.1-.2c-.5-.1-.9-.2-.9-.6 0-.4.4-.7 1-.7.6 0 1.1.3 1.2.8l1.9-.5z" fill="#1428A0"/>
                 <path d="M9.9 5.2c-1 0-1.7.4-2.1 1v-.9H6.4v5.9h1.5V8.4c0-.8.5-1.4 1.3-1.4.7 0 1.1.5 1.1 1.2v3h1.5V8c0-1.7-.7-2.8-1.9-2.8z" fill="#1428A0"/>
@@ -139,11 +139,8 @@
         </div>
       </div>
 
-      <!-- Bottom bar -->
-      <div class="border-t border-white/10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-xs text-gray-500">
-          &copy; 2026 ClipBag. Tous droits réservés.
-        </p>
+      <!-- NMF Agence credit — above separator so it's visible on mobile -->
+      <div class="text-center pb-4">
         <p class="text-xs text-gray-500">
           Site conçu par
           <a
@@ -154,6 +151,13 @@
           >
             NMF Agence
           </a>
+        </p>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="border-t border-white/10 py-6 pb-24 sm:pb-6 flex items-center justify-center">
+        <p class="text-xs text-gray-500">
+          &copy; 2026 ClipBag. Tous droits réservés.
         </p>
       </div>
     </div>

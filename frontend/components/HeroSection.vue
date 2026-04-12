@@ -297,63 +297,81 @@
             </div>
           </div>
 
-          <!-- CTA -->
+          <!-- CTA / Address Form — morphing container -->
           <div class="hero-fade-in" style="animation-delay: 0.5s">
-            <p class="text-center text-[11px] text-text-muted mb-2">Paiement 100% sécurisé par Stripe &middot; Livraison offerte</p>
-            <button
-              class="group w-full bg-[#a9f955] hover:bg-[#9be84a] active:scale-[0.98] text-text font-sans font-semibold text-base sm:text-lg py-4 px-8 rounded-pill cursor-pointer transition-colors duration-150 ease-in-out inline-flex items-center justify-center"
-              @click="showAddressForm = true"
-            >
-              AJOUTER AU PANIER
-            </button>
-          </div>
-          </div>
-          <!-- END BLOC 1 -->
+            <!-- Security text — collapses when form opens -->
+            <div class="overflow-hidden transition-all duration-400 ease-out"
+                 :class="showAddressForm ? 'max-h-0 opacity-0 mb-0' : 'max-h-8 opacity-100 mb-2'">
+              <p class="text-center text-[11px] text-text-muted">Paiement 100% sécurisé par Stripe &middot; Livraison offerte</p>
+            </div>
 
-          <!-- Address form (below CTA, pushes other content down) -->
-          <Transition
-            enter-active-class="transition-all duration-300 ease-out"
-            enter-from-class="opacity-0 -translate-y-3"
-            enter-to-class="opacity-100 translate-y-0"
-          >
-            <div v-if="showAddressForm" class="mt-6">
-              <div class="bg-surface-alt rounded-xl border border-border p-4 sm:p-5 relative">
+            <!-- Morph container: pill button ↔ form card -->
+            <div
+              class="morph-container relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+              :class="showAddressForm
+                ? 'bg-surface-alt rounded-xl border border-border shadow-[0_4px_24px_rgba(0,0,0,0.06)]'
+                : 'bg-[#a9f955] rounded-pill hover:bg-[#9be84a] active:scale-[0.98] cursor-pointer'"
+              @click="!showAddressForm ? (showAddressForm = true) : null"
+            >
+              <!-- Button label — collapses out -->
+              <div
+                class="transition-all duration-300 ease-out text-center"
+                :class="showAddressForm
+                  ? 'max-h-0 py-0 opacity-0 pointer-events-none'
+                  : 'max-h-20 py-4 opacity-100'"
+              >
+                <span class="text-text font-sans font-semibold text-base sm:text-lg px-8 select-none">AJOUTER AU PANIER</span>
+              </div>
+
+              <!-- Form content — expands in -->
+              <div
+                class="transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                :class="showAddressForm
+                  ? 'max-h-[700px] opacity-100 p-4 sm:p-5'
+                  : 'max-h-0 opacity-0 p-0 overflow-hidden pointer-events-none'"
+              >
                 <!-- Close button -->
                 <button
                   type="button"
-                  class="absolute top-3 right-3 w-7 h-7 rounded-full border border-border flex items-center justify-center text-text-muted hover:text-text hover:border-text/30 transition-colors cursor-pointer"
+                  class="absolute top-3 right-3 w-7 h-7 rounded-full border border-border flex items-center justify-center text-text-muted hover:text-text hover:border-text/30 transition-colors cursor-pointer z-10"
                   aria-label="Fermer le formulaire"
-                  @click="showAddressForm = false"
+                  @click.stop="showAddressForm = false"
                 >
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
-                <p class="text-xs text-text font-display font-semibold mb-4">Adresse de livraison</p>
+
+                <p class="text-xs text-text font-display font-semibold mb-4 morph-field" style="--field-i: 0">Adresse de livraison</p>
                 <div class="grid gap-3 text-left">
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label for="hero-name" class="block text-[11px] text-text-muted mb-1 font-medium">Nom complet *</label>
-                      <input id="hero-name" v-model="customerName" type="text" required autocomplete="name" placeholder="Jean Dupont"
+                    <div class="morph-field" style="--field-i: 1">
+                      <label for="hero-lastname" class="block text-[11px] text-text-muted mb-1 font-medium">Nom *</label>
+                      <input id="hero-lastname" v-model="customerLastName" type="text" required autocomplete="family-name" placeholder="Dupont"
                         class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                     </div>
-                    <div>
-                      <label for="hero-email" class="block text-[11px] text-text-muted mb-1 font-medium">Email *</label>
-                      <input id="hero-email" v-model="customerEmail" type="email" required autocomplete="email" placeholder="jean@email.com"
+                    <div class="morph-field" style="--field-i: 2">
+                      <label for="hero-firstname" class="block text-[11px] text-text-muted mb-1 font-medium">Prénom *</label>
+                      <input id="hero-firstname" v-model="customerFirstName" type="text" required autocomplete="given-name" placeholder="Jean"
                         class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                     </div>
                   </div>
-                  <div>
+                  <div class="morph-field" style="--field-i: 3">
+                    <label for="hero-email" class="block text-[11px] text-text-muted mb-1 font-medium">Email *</label>
+                    <input id="hero-email" v-model="customerEmail" type="email" required autocomplete="email" placeholder="jean@email.com"
+                      class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
+                  </div>
+                  <div class="morph-field" style="--field-i: 4">
                     <label for="hero-phone" class="block text-[11px] text-text-muted mb-1 font-medium">Téléphone <span class="text-text-muted/60">(optionnel)</span></label>
                     <input id="hero-phone" v-model="customerPhone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78"
                       class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                   </div>
-                  <div>
+                  <div class="morph-field" style="--field-i: 5">
                     <label for="hero-addr" class="block text-[11px] text-text-muted mb-1 font-medium">Adresse *</label>
                     <input id="hero-addr" v-model="addressLine1" type="text" required autocomplete="address-line1" placeholder="12 rue de la Paix"
                       class="w-full bg-white border border-border rounded-lg px-3 py-2.5 text-text text-sm placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
                   </div>
-                  <div class="grid grid-cols-[100px_1fr] sm:grid-cols-[130px_1fr] gap-3">
+                  <div class="grid grid-cols-[100px_1fr] sm:grid-cols-[130px_1fr] gap-3 morph-field" style="--field-i: 6">
                     <div>
                       <label for="hero-cp" class="block text-[11px] text-text-muted mb-1 font-medium">Code postal *</label>
                       <input id="hero-cp" v-model="postalCode" type="text" required autocomplete="postal-code" placeholder="75001" maxlength="5" inputmode="numeric"
@@ -366,42 +384,45 @@
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Error -->
-              <div v-if="error" class="mt-3 bg-urgency/10 border border-urgency/20 text-urgency text-sm rounded-lg px-3 py-2 flex items-center gap-2">
-                <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                {{ error }}
-              </div>
-
-              <!-- Pay button -->
-              <button
-                class="mt-4"
-                :disabled="loading || !isAddressValid"
-                :class="[
-                  'group w-full text-text font-sans font-semibold text-base sm:text-lg py-3 px-8 rounded-pill transition-all duration-150 ease-in-out focus:outline-none inline-flex items-center justify-center gap-3',
-                  loading || !isAddressValid
-                    ? 'bg-accent/50 cursor-not-allowed'
-                    : 'bg-[#a9f955] hover:bg-[#9be84a] cursor-pointer active:scale-[0.98]',
-                ]"
-                @click="handleCheckout"
-              >
-                <span v-if="loading" class="inline-flex items-center gap-2">
-                  <svg class="animate-spin h-5 w-5 text-text" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                <!-- Error -->
+                <div v-if="error" class="mt-3 bg-urgency/10 border border-urgency/20 text-urgency text-sm rounded-lg px-3 py-2 flex items-center gap-2 morph-field" style="--field-i: 7">
+                  <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                  Redirection...
-                </span>
-                <template v-else>
-                  PAYER {{ formattedTotal }}
-                </template>
-              </button>
-              <p class="text-center text-[11px] text-text-muted mt-2">Paiement 100% sécurisé par Stripe &middot; Livraison offerte</p>
+                  {{ error }}
+                </div>
+
+                <!-- Pay button -->
+                <button
+                  class="mt-4 morph-field"
+                  style="--field-i: 7"
+                  :disabled="loading || !isAddressValid"
+                  :class="[
+                    'group w-full text-text font-sans font-semibold text-base sm:text-lg py-3 px-8 rounded-pill transition-all duration-150 ease-in-out focus:outline-none inline-flex items-center justify-center gap-3',
+                    loading || !isAddressValid
+                      ? 'bg-accent/50 cursor-not-allowed'
+                      : 'bg-[#a9f955] hover:bg-[#9be84a] cursor-pointer active:scale-[0.98]',
+                  ]"
+                  @click.stop="handleCheckout"
+                >
+                  <span v-if="loading" class="inline-flex items-center gap-2">
+                    <svg class="animate-spin h-5 w-5 text-text" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Redirection...
+                  </span>
+                  <template v-else>
+                    PAYER {{ formattedTotal }}
+                  </template>
+                </button>
+                <p class="text-center text-[11px] text-text-muted mt-2 morph-field" style="--field-i: 8">Paiement 100% sécurisé par Stripe &middot; Livraison offerte</p>
+              </div>
             </div>
-          </Transition>
+          </div>
+          </div>
+          <!-- END BLOC 1 -->
 
           <!-- BLOC 2: Below carousel, still in right column -->
           <div class="mt-6">
@@ -443,6 +464,12 @@
                 >
                   <div v-if="showDescription" class="overflow-hidden">
                     <div class="px-4 pb-4 pt-1 space-y-2.5">
+                      <div class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                        </svg>
+                        <span class="text-text text-xs sm:text-sm leading-snug">Système de <strong>fixation magnétique</strong> — s'accroche instantanément à toute surface métallique</span>
+                      </div>
                       <div class="flex items-start gap-2.5">
                         <svg class="w-4 h-4 text-accent-dark flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -616,7 +643,8 @@ const loading = ref(false)
 const error = ref('')
 const showAddressForm = ref(false)
 const showDescription = ref(false)
-const customerName = ref('')
+const customerLastName = ref('')
+const customerFirstName = ref('')
 const customerEmail = ref('')
 const customerPhone = ref('')
 const addressLine1 = ref('')
@@ -624,7 +652,8 @@ const postalCode = ref('')
 const city = ref('')
 
 const isAddressValid = computed(() =>
-  customerName.value.trim().length >= 2 &&
+  customerLastName.value.trim().length >= 2 &&
+  customerFirstName.value.trim().length >= 2 &&
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.value) &&
   addressLine1.value.trim().length >= 3 &&
   /^\d{5}$/.test(postalCode.value.trim()) &&
@@ -698,7 +727,7 @@ const handleCheckout = async () => {
       method: 'POST',
       body: {
         productId: productStore.product?.id || '', quantity: quantity.value, bundleId: selectedBundleId.value || undefined,
-        customerName: customerName.value.trim(), customerEmail: customerEmail.value.trim(),
+        customerName: (customerFirstName.value.trim() + ' ' + customerLastName.value.trim()), customerEmail: customerEmail.value.trim(),
         customerPhone: customerPhone.value.trim() || undefined,
         shippingAddress: { line1: addressLine1.value.trim(), city: city.value.trim(), postalCode: postalCode.value.trim(), country: 'FR' },
       },
@@ -771,9 +800,25 @@ onUnmounted(() => { stopAutoplay() })
 @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
 .trust-marquee:hover .trust-marquee__track { animation-play-state: paused; }
 
+/* Morph container — staggered field reveal */
+.morph-field {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.morph-container:not(.rounded-pill) .morph-field {
+  animation: morph-field-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(0.15s + var(--field-i, 0) * 0.05s);
+}
+@keyframes morph-field-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-fade-in, .hero-image-in { animation: none; opacity: 1; transform: none; }
   .carousel-next-enter-active, .carousel-next-leave-active, .carousel-prev-enter-active, .carousel-prev-leave-active { transition: none; }
   .trust-marquee__track, .adbar__track { animation: none; }
+  .morph-field { opacity: 1; transform: none; animation: none; }
+  .morph-container { transition: none; }
 }
 </style>

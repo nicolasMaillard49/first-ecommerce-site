@@ -77,10 +77,23 @@ export class AdminService {
   }
 
   async updateOrderStatus(id: string, status: string) {
-    return this.prisma.order.update({
+    const order = await this.prisma.order.update({
       where: { id },
       data: { status: status as any },
     });
+
+    // Send shipping notification when status changes to SHIPPED
+    if (status === 'SHIPPED' && order.trackingNumber && order.customerEmail) {
+      this.emailService.sendShippingNotification({
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        trackingNumber: order.trackingNumber,
+        trackingUrl: order.trackingUrl || undefined,
+      });
+    }
+
+    return order;
   }
 
   async updateOrderTracking(id: string, data: UpdateOrderTrackingDto) {
