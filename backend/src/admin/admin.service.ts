@@ -83,12 +83,12 @@ export class AdminService {
     });
 
     // Send shipping notification when status changes to SHIPPED
-    if (status === 'SHIPPED' && order.trackingNumber && order.customerEmail) {
+    if (status === 'SHIPPED' && order.customerEmail) {
       this.emailService.sendShippingNotification({
         orderNumber: order.orderNumber,
         customerName: order.customerName,
         customerEmail: order.customerEmail,
-        trackingNumber: order.trackingNumber,
+        trackingNumber: order.trackingNumber || undefined,
         trackingUrl: order.trackingUrl || undefined,
       });
     }

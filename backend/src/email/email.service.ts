@@ -23,7 +23,7 @@ export interface ShippingEmailData {
   orderNumber: number;
   customerName: string;
   customerEmail: string;
-  trackingNumber: string;
+  trackingNumber?: string;
   trackingUrl?: string;
 }
 

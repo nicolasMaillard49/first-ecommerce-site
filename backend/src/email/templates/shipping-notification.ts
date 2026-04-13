@@ -29,6 +29,7 @@ export function shippingNotificationTemplate(data: ShippingEmailData): string {
         Bonne nouvelle ! Votre commande <strong>${orderNum}</strong> a ete expediee.
       </p>
 
+      ${data.trackingNumber ? `
       <!-- Tracking -->
       <div style="margin: 28px 0;">
         <p style="margin: 0 0 8px; font-weight: 600; color: #374151; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -43,9 +44,14 @@ export function shippingNotificationTemplate(data: ShippingEmailData): string {
       <div style="text-align: center; margin: 32px 0 16px;">
         ${trackingLink}
       </div>
+      ` : `
+      <p style="color: #6b7280; font-size: 15px;">
+        Vous recevrez votre numero de suivi par email tres prochainement.
+      </p>
+      `}
 
       <p style="color: #9ca3af; font-size: 13px; text-align: center; margin: 24px 0 0;">
-        Le delai de livraison est generalement de 10 a 20 jours ouvrables.
+        Delai de livraison estime : 5 a 7 jours ouvrables.
         <br>Vous pouvez aussi suivre votre commande sur
         <a href="https://clipbag.shop/suivi?order=${data.orderNumber}" style="color: #10b981;">clipbag.shop/suivi</a>.
       </p>
