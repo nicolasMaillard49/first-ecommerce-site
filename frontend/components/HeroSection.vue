@@ -567,17 +567,8 @@ const { track: fbTrack } = useMetaPixel()
 // === Gallery ===
 const productImages = computed(() => {
   const imgs = productStore.product?.images
-  if (imgs && imgs.length > 0) {
-    const idx = imgs.findIndex((img: string) => img.includes('product-2'))
-    if (idx > 0) {
-      const reordered = [...imgs]
-      const [item] = reordered.splice(idx, 1)
-      reordered.unshift(item)
-      return reordered
-    }
-    return imgs
-  }
-  return ['/images/product/product-2.png', '/images/product/product-1.png', '/images/product/product-3.png', '/images/product/product-4.png', '/images/product/product-5.png', '/images/product/product-6.png']
+  if (imgs && imgs.length > 0) return imgs
+  return ['/images/product/product-1.png', '/images/product/product-2.png', '/images/product/product-3.png', '/images/product/product-4.png', '/images/product/product-5.png', '/images/product/product-6.png']
 })
 
 const currentImageIndex = ref(0)
