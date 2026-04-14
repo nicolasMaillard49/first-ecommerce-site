@@ -58,12 +58,6 @@ await useAsyncData(
     await Promise.all([productStore.fetchProduct(), productStore.fetchBundles()])
     return { ok: true }
   },
-  {
-    // Force a refetch if the Pinia store is empty (e.g. returning from
-    // Stripe checkout through a fresh /cancel page load).
-    getCachedData: () =>
-      productStore.product && productStore.bundles.length ? { ok: true } : undefined,
-  }
 )
 
 onMounted(async () => {
