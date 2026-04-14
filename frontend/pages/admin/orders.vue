@@ -156,10 +156,27 @@ const savingSupplier = ref(false)
 const savingTracking = ref(false)
 const copiedAddress = ref(false)
 const successMsg = ref('')
+const sendingReminder = ref(false)
 
 const showSuccess = (msg: string) => {
   successMsg.value = msg
   setTimeout(() => { successMsg.value = '' }, 3000)
+}
+
+const sendReminder = async () => {
+  if (!selectedOrder.value || sendingReminder.value) return
+  sendingReminder.value = true
+  try {
+    await apiFetch(`/admin/orders/${selectedOrder.value.id}/reminder`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${authStore.token}` },
+    })
+    showSuccess(`Email de relance envoye a ${selectedOrder.value.customerEmail}`)
+  } catch (e: any) {
+    error.value = e?.data?.message || 'Erreur lors de l\'envoi de la relance'
+  } finally {
+    sendingReminder.value = false
+  }
 }
 
 const openOrder = (order: Order) => {
@@ -440,6 +457,26 @@ onBeforeUnmount(() => {
                 <div class="text-right">
                   <p class="text-xs text-gray-500">Cree le</p>
                   <p class="text-sm text-gray-300">{{ formatDate(selectedOrder.createdAt) }}</p>
+                </div>
+              </div>
+
+              <!-- Reminder button for PENDING orders -->
+              <div v-if="selectedOrder.status === 'PENDING' && selectedOrder.customerEmail" class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-semibold text-amber-400">Commande non finalisee</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Le client n'a pas termine son paiement</p>
+                  </div>
+                  <button
+                    :disabled="sendingReminder"
+                    class="px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 text-sm font-medium rounded-lg hover:bg-amber-500/30 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                    @click="sendReminder"
+                  >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                    </svg>
+                    {{ sendingReminder ? 'Envoi...' : 'Relancer par email' }}
+                  </button>
                 </div>
               </div>
 

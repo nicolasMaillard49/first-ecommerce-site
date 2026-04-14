@@ -129,6 +129,30 @@ export class AdminService {
     });
   }
 
+  async sendReminder(id: string) {
+    const order = await this.prisma.order.findUnique({
+      where: { id },
+      include: { items: { include: { product: true } } },
+    });
+    if (!order) throw new Error('Commande introuvable');
+    if (order.status !== 'PENDING') throw new Error('Seules les commandes en attente peuvent être relancées');
+    if (!order.customerEmail) throw new Error('Pas d\'email client');
+
+    await this.emailService.sendAbandonedCartReminder({
+      orderNumber: order.orderNumber,
+      customerName: order.customerName,
+      customerEmail: order.customerEmail,
+      total: order.total,
+      items: order.items.map((item) => ({
+        name: item.product?.name || 'Produit',
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    });
+
+    return { success: true, email: order.customerEmail };
+  }
+
   async deleteOrder(id: string) {
     await this.prisma.orderItem.deleteMany({ where: { orderId: id } });
     return this.prisma.order.delete({ where: { id } });

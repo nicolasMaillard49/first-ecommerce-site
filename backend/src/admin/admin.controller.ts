@@ -42,6 +42,11 @@ export class AdminController {
     return this.adminService.updateOrderSupplier(id, dto);
   }
 
+  @Post('orders/:id/reminder')
+  sendReminder(@Param('id') id: string) {
+    return this.adminService.sendReminder(id);
+  }
+
   @Delete('orders/:id')
   deleteOrder(@Param('id') id: string) {
     return this.adminService.deleteOrder(id);

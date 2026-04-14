@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
 import { orderConfirmationTemplate } from './templates/order-confirmation';
 import { shippingNotificationTemplate } from './templates/shipping-notification';
+import { abandonedCartTemplate, AbandonedCartEmailData } from './templates/abandoned-cart';
 
 export interface OrderEmailData {
   orderNumber: number;
@@ -84,6 +85,23 @@ export class EmailService {
       } catch (error) {
         this.logger.error(`Failed to send admin notification`, error);
       }
+    }
+  }
+
+  async sendAbandonedCartReminder(data: AbandonedCartEmailData) {
+    try {
+      const orderNum = `GS-${String(data.orderNumber).padStart(5, '0')}`;
+      const result = await this.resend.emails.send({
+        from: this.from,
+        to: data.customerEmail,
+        subject: `Votre panier vous attend ! Commande #${orderNum}`,
+        html: abandonedCartTemplate(data),
+      });
+      this.logger.log(`Abandoned cart reminder sent to ${data.customerEmail} (${result.data?.id})`);
+      return result;
+    } catch (error) {
+      this.logger.error(`Failed to send abandoned cart reminder to ${data.customerEmail}`, error);
+      throw error;
     }
   }
 
