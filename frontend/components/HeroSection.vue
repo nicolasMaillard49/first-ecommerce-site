@@ -568,7 +568,7 @@ const { track: fbTrack } = useMetaPixel()
 const productImages = computed(() => {
   const imgs = productStore.product?.images
   if (imgs && imgs.length > 0) return imgs
-  return ['/images/product/product-1.png', '/images/product/product-2.png', '/images/product/product-3.png', '/images/product/product-4.png', '/images/product/product-5.png', '/images/product/product-6.png']
+  return ['/images/product/product-7.png', '/images/product/product-2.png', '/images/product/product-1.png', '/images/product/product-8.png', '/images/product/product-3.png', '/images/product/product-4.png', '/images/product/product-5.png', '/images/product/product-6.png']
 })
 
 const currentImageIndex = ref(0)
